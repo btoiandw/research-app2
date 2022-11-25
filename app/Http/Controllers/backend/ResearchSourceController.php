@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\backend;
 
 use App\Models\ResearchSource;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller as Controller;
 
 class ResearchSourceController extends Controller
 {

@@ -41,15 +41,18 @@ Route::group([
 
 Route::group([
     'prefix'=>'user',
-    'middleware'=>['auth']
+    'middleware'=>['auth'],
+    'namespace'=>'App\Http\Controllers\backend'
 ], function(){
     Route::get('dashboard',[UserController::class,'index'])->name('user.dashboard');
-    Route::post('insert-research',[UserController::class,'insertResearch'])->name('insert-research');
+    Route::resource('research','ResearchController');
+    //Route::post('insert-research',[UserController::class,'insertResearch'])->name('insert-research');
 });
 
 Route::group([
     'prefix'=>'director',
-    'middleware'=>['auth']
+    'middleware'=>['auth'],
+    
 ], function(){
     Route::get('dashboard',[DirectorController::class,'index'])->name('director.dashboard');
     Route::get('profile',[DirectorController::class,'profile'])->name('director.profile');
