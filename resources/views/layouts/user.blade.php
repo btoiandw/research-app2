@@ -78,7 +78,7 @@
         /* font-weight: bold;*/
         /*text-align: center;*/
         position: relative;
-        top: 112px;
+        top: 80px;
     }
     /* .dropdown-link{
         background: #E14D2A;
@@ -162,7 +162,7 @@
             </div>
         </nav>
 
-        <main class="wrapper">
+        <main class="wrapper ">
 
             @yield('content')
 

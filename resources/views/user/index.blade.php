@@ -17,7 +17,7 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 @section('content')
 
-    <div class="container">
+    <div class="container py-5">
         <div class="row justify-content-around mb-4 align-items-center">
             <div class="col-4 header">
                 หน้าหลัก
