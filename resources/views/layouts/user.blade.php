@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>
+    <link rel="icon" href="https://research.kpru.ac.th/th/image/LogoRDI.png" type="image/icon type">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -56,7 +57,7 @@
         display: block;
         background-color: #fe4343;
         color: #EEEEEE;
-           
+
     }
 
     .custom-toggler .navbar-toggler-icon {
@@ -80,6 +81,7 @@
         position: relative;
         top: 80px;
     }
+
     /* .dropdown-link{
         background: #E14D2A;
         color: #fff;
@@ -92,7 +94,10 @@
             <div class="container">
                 <a class="navbar-brand text" href="{{ url('/') }}">
                     <img src="{{ asset('img/logo-kpru.png') }}" width="50px" height="60px" alt="logo" />
+                    <img src="https://research.kpru.ac.th/th/image/LogoRDI.png" width="50px" height="60px"
+                        alt="research-logo">
                 </a>
+                <span class="text-light font-weight-bold" style="font-size: 25px;">RDI-KPRU</span>
                 <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -172,6 +177,12 @@
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
     </script>
     @include('sweetalert::alert')
 

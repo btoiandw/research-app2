@@ -1,4 +1,4 @@
-@section('title', 'User dashboard')
+@section('title', 'Research')
 @extends('layouts.user')
 <!--  jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -72,7 +72,7 @@
                         {{ csrf_field() }}
                         <div class=" card-body">
                             <div class="row mb-3">
-                                <label for="year_research" class="col-sm-2 col-form-label">ปีงบประมาณ</label>
+                                <label for="year_research" class="col-sm-2 col-form-label text-right">ปีงบประมาณ</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="year_research"
                                         value="{{ date('Y') + 544 }}" name="year_research">
@@ -84,7 +84,7 @@
 
                             <div class="row mb-3">
                                 <label for="research_nameTH"
-                                    class="col-sm-2 col-form-label">ชื่อโครงร่างงานวิจัย&emsp;&emsp;ภาษาไทย</label>
+                                    class="col-sm-2 col-form-label text-right">&emsp;&emsp;ชื่อโครงร่างงานวิจัยภาษาไทย</label>
                                 <div class=" col-sm-10">
                                     <textarea class="form-control" id="research_nameTH" name="research_nameTH"></textarea>
                                 </div>
@@ -94,7 +94,7 @@
                             </div>
                             <div class="row mb-3">
                                 <label for="research_nameEN"
-                                    class="col-sm-2 col-form-label">ชื่อโครงร่างงานวิจัย&emsp;&emsp;ภาษาอังกฤษ</label>
+                                    class="col-sm-2 col-form-label text-right">&emsp;&emsp;ชื่อโครงร่างงานวิจัยภาษาอังกฤษ</label>
                                 <div class=" col-sm-10">
                                     <textarea class="form-control" id="research_nameEN" name="research_nameEN"></textarea>
                                 </div>
@@ -104,64 +104,69 @@
                                 @endif
                             </div>
                             <div class="mb-3">
-                                <label for="message-text" class="row col-sm-2 col-form-label">รายชื่อนักวิจัย</label>
+
                                 <div class="card">
-                                    <table class="table" id="tableTap" name="tableTap">
-                                        <thead align="center">
-                                            <tr>
-                                                <th width="400px">ชื่อ-นามสกุล</th>
-                                                <th width="">สังกัด/คณะ</th>
-                                                <th width="200px">บทบาทในการวิจัย</th>
-                                                <th width="200px">ร้อยละในการวิจัย</th>
-                                                <th width="50px"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody align="center" id="roleResearch">
-                                            <tr>
-                                                <td>
-                                                    <input type="text" name="researcher[]" id="researcher"
-                                                        class="form-control">
+                                    <label for="message-text"style="text-align: center;font-weight:600;font-size:18px"
+                                        class="col-form-label">รายชื่อนักวิจัย</label>
+                                    <div class=" card-body">
+                                        <table class="table table-responsive" id="tableTap" name="tableTap">
+                                            <thead align="center">
+                                                <tr>
+                                                    <th width="400px">ชื่อ-นามสกุล</th>
+                                                    <th width="">สังกัด/คณะ</th>
+                                                    <th width="200px">บทบาทในการวิจัย</th>
+                                                    <th width="200px">ร้อยละในการวิจัย</th>
+                                                    <th width="50px"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody align="center" id="roleResearch">
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="researcher[]" id="researcher"
+                                                            class="form-control">
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-select" id="faculty" name="faculty[]">
+                                                            <option value="">--เลือกสังกัด/คณะ--</option>
+                                                            @foreach ($list_fac as $row)
+                                                                @if ($row->major == '0')
+                                                                    <option value="{{ $row->id }} ">
+                                                                        {{ $row->organizational }}</option>
+                                                                @else
+                                                                    <option value="{{ $row->id }}">
+                                                                        {{ $row->organizational }}&nbsp;&nbsp;{{ $row->major }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-select " name="role-research[]"
+                                                            id="role-research">
+                                                            <option value="หัวหน้าโครงการวิจัย">หัวหน้าโครงการวิจัย</option>
+                                                            <option value="ผู้ร่วมวิจัย">ผู้ร่วมวิจัย</option>
+                                                        </select>
 
-                                                </td>
-                                                <td>
-                                                    <select class="form-select" id="faculty" name="faculty[]">
-                                                        <option value="">--เลือกสังกัด/คณะ--</option>
-                                                        @foreach ($list_fac as $row)
-                                                            @if ($row->major == '0')
-                                                                <option value="{{ $row->id }}">
-                                                                    {{ $row->organizational }}</option>
-                                                            @else
-                                                                <option value="{{ $row->id }}">
-                                                                    {{ $row->organizational }}&nbsp;&nbsp;{{ $row->major }}
-                                                                </option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select class="form-select " name="role-research[]" id="role-research">
-                                                        <option value="หัวหน้าโครงการวิจัย">หัวหน้าโครงการวิจัย</option>
-                                                        <option value="ผู้ร่วมวิจัย">ผู้ร่วมวิจัย</option>
-                                                    </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" class="form-control" name="pc[]"
+                                                            id="pc" placeholder="0.00" />
 
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control" name="pc[]" id="pc"
-                                                        placeholder="0.00" />
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" name="addBtn[]" class="btn btn-info"
+                                                            id="addBtn">+</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-                                                </td>
-                                                <td>
-                                                    <button type="button" name="addBtn[]" class="btn btn-info"
-                                                        id="addBtn">+</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label for="message-text" class="col-sm-2 col-form-label">แหล่งทุนวิจัย</label>
+                                <label for="message-text" class="col-sm-2 col-form-label text-right">แหล่งทุนวิจัย</label>
                                 <div class="col-sm-10">
                                     <select class="form-select" id="source_id" name="source_id">
                                         <option value="">--เลือกแหล่งทุน--</option>
@@ -178,7 +183,7 @@
 
                             </div>
                             <fieldset class="row mb-3">
-                                <legend class="col-form-label col-sm-2 pt-0">ประเภทงานวิจัย</legend>
+                                <legend class="col-form-label col-sm-2 pt-0 text-right">ประเภทงานวิจัย</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="type" id="type"
@@ -201,7 +206,7 @@
                             </fieldset>
 
                             <div class="row mb-3">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">คำสำคัญ</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label text-right">คำสำคัญ</label>
                                 <div class="col-sm-10">
                                     <textarea name="keyword" id="keyword" placeholder="คำสำคัญในการวิจัย" class="form-control"></textarea>
                                 </div>
@@ -211,19 +216,20 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">พื้นที่ในการวิจัย</label>
+                                <label for="inputEmail3"
+                                    class="col-sm-2 col-form-label text-right">พื้นที่ในการวิจัย</label>
                                 <div class="row col-sm-10">
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" placeholder="ที่อยู่"
+                                        <input type="text" class="form-control" placeholder="ที่อยู่" name="address"
                                             aria-label="ที่อยู่">
                                     </div>
                                     <div class="col-sm">
-                                        <input type="text" class="form-control" placeholder="จังหวัด"
+                                        <input type="text" class="form-control" placeholder="จังหวัด" name="city"
                                             aria-label="จังหวัด">
                                     </div>
                                     <div class="col-sm">
                                         <input type="text" class="form-control" placeholder="รหัสไปรษณีย์"
-                                            aria-label="รหัสไปรษณีย์">
+                                            name="zipcode" aria-label="รหัสไปรษณีย์">
                                     </div>
                                 </div>
                             </div>
@@ -236,48 +242,66 @@
                             </div> --}}
 
                             <div class="row mb-3">
+                                <label for="inputEmail3"
+                                    class="col-sm-2 col-form-label text-right">วันที่เริ่มต้นการวิจัย</label>
+                                <div class="row col-sm-10">
+                                    <div class="col-sm">
+                                        <input class="form-control" id="sdate" name="sdate"
+                                            placeholder="MM/DD/YYY" type="date" />
+                                        @if ($errors->has('sdate'))
+                                            <span class="text-danger">{{ $errors->first('sdate') }}</span>
+                                        @endif
+                                    </div>
+                                    <label for="inputEmail3"
+                                        class="col-sm-2 col-form-label text-right">วันที่สิ้นสุดการวิจัย</label>
+                                    <div class="col-sm">
+                                        <div class="col-sm">
+                                            <input class="form-control" id="edate" name="edate"
+                                                placeholder="MM/DD/YYY" type="date" />
+                                            @if ($errors->has('edate'))
+                                                <span class="text-danger">{{ $errors->first('edate') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="row mb-3">
+                                <label for="inputEmail3"
+                                    class="col-sm-2 col-form-label text-right">งบประมาณการวิจัย</label>
+                                <div class="col-sm-10">
+                                    <input name="budage" id="budage" type="number" placeholder="0.00"
+                                        class="form-control">
+                                    @if ($errors->has('budage'))
+                                        <span class="text-danger">{{ $errors->first('budage') }}</span>
+                                    @endif
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="">วันที่เริ่มต้นการวิจัย</label>
-                                <input class="form-control" id="sdate" name="sdate" placeholder="MM/DD/YYY"
-                                    type="date" />
-                                @if ($errors->has('sdate'))
-                                    <span class="text-danger">{{ $errors->first('sdate') }}</span>
-                                @endif
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label text-right">ไฟล์ Word</label>
+                                <div class=" col-sm-10">
+                                    <input type="file" name="word" id="word" class=" form-control">
+                                    <span class="text-danger">*ไฟล์ .doc และ .docx เท่านั้น</span>
+                                    @if ($errors->has('word'))
+                                        <span class="text-danger">{{ $errors->first('word') }}</span>
+                                    @endif
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="">วันที่สิ้นสุดการวิจัย</label>
-                                <input class="form-control" id="edate" name="edate" placeholder="MM/DD/YYY"
-                                    type="date" />
-                                @if ($errors->has('edate'))
-                                    <span class="text-danger">{{ $errors->first('edate') }}</span>
-                                @endif
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label text-right">ไฟล์ PDF</label>
+                                <div class=" col-sm-10">
+                                    <input type="file" name="pdf" id="pdf" class=" form-control">
+                                    <span class="text-danger">*ไฟล์ .pdf เท่านั้น</span>
+                                    @if ($errors->has('pdf'))
+                                        <span class="text-danger">{{ $errors->first('pdf') }}</span>
+                                    @endif
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label>งบประมาณการวิจัย</label>
-                                <input name="budage" id="budage" type="number" placeholder="0.00"
-                                    class="form-control form-floating" />
-                                @if ($errors->has('budage'))
-                                    <span class="text-danger">{{ $errors->first('budage') }}</span>
-                                @endif
-                            </div>
-                            <div class="mb-3">
-                                <input type="file" name="word" id="word" class=" form-control">
-                                <span class="text-danger">*ไฟล์ .doc และ .docx เท่านั้น</span>
-                                @if ($errors->has('word'))
-                                    <span class="text-danger">{{ $errors->first('word') }}</span>
-                                @endif
-                            </div>
-                            <div class="mb-3">
-                                <input type="file" name="pdf" id="pdf" class=" form-control">
-                                <span class="text-danger">*ไฟล์ .pdf เท่านั้น</span>
-                                @if ($errors->has('pdf'))
-                                    <span class="text-danger">{{ $errors->first('pdf') }}</span>
-                                @endif
-                            </div>
-                            <div class="card-footer text-center">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
+
+                            <div class="card-footer text-center" style="background-color: #fff">
+                                <a href="{{ route('user.dashboard') }}" type="button" class="btn btn-danger">ยกเลิก</a>
                                 <input type="submit" value="ยืนยัน" name="submit" class="btn btn-primary">
                             </div>
                     </form>
@@ -296,6 +320,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+
     <script>
         var has_error = {{ $errors->count() > 0 ? 'true' : 'false' }};
         if (has_error) {
@@ -308,27 +333,34 @@
             });
         }
     </script>
+
     <script type="text/javascript">
         $(document).ready(function() {
-            var i = 1;
+        var i = 1;
 
-            $('#addBtn').click(function() {
+        $('#addBtn').click(function() {
                 i++;
-                var tr = '<tr id="row' + i + '">';
-                tr = tr +
-                    '<td><input type="text" name="researcher[]" id="researcher" class="form-control"></td>';
-                tr = tr + '<td><input type="text" class="form-control" name="faculty[]" id="faculty" ></td>'
-                tr = tr +
-                    '<td><select class="form-select " name="role-research[]" id="role-research"><option value="หัวหน้าโครงการวิจัย">หัวหน้าโครงการวิจัย</option><option value="ผู้ร่วมวิจัย" selected>ผู้ร่วมวิจัย</option></select></td>';
-                tr = tr +
-                    '<td><input type="number" class="form-control" name="pc[]" id="pc"placeholder="0.00" /></td>';
-                tr = tr +
-                    '<td><button type="button" id="btnDel" class="btn btn-danger" >-</button></td>';
-                tr = tr + '</tr>';
-                $('#roleResearch').append(tr);
+                var tr = '<tr id="row' + i + '">' +
+                    '<td><input type="text" name="researcher[]" id="researcher" class="form-control"></td>' +
+                    '<td><select class="form-select" id="faculty" name="faculty[]"><option value="">--เลือกสังกัด/คณะ--</option> ' +
+                    '@foreach ($list_fac as $row)' +
+                        '@if ($row->major == '0')'+
+                            '<option value = "{{ $row->id }}" >{{ $row->organizational }} </option>'+
+                        '@else'+
+                            '<option value = "{{ $row->id }}" >{{ $row->organizational }} &nbsp;&nbsp;{{ $row->major }}</option>'+
+                        '@endif'+
+                    '@endforeach'+
+        /* tr = tr + select_option(); */
+        +
+        '</td>' +
+        '<td><select class="form-select " name="role-research[]" id="role-research"><option value="หัวหน้าโครงการวิจัย">หัวหน้าโครงการวิจัย</option><option value="ผู้ร่วมวิจัย" selected>ผู้ร่วมวิจัย</option></select></td>' +
+        '<td><input type="number" class="form-control" name="pc[]" id="pc"placeholder="0.00" /></td>' +
+        '<td><button type="button" id="btnDel" class="btn btn-danger" >-</button></td>' +
+        '</tr>';
+        $('#roleResearch').append(tr);
 
-                //alert('id:'.$id.'name:'.$name.'major:'.$major);
-            });
+        //alert('id:'.$id.'name:'.$name.'major:'.$major);
+        });
         });
         $(document).on('click', '#btnDel', function() {
             $(this).closest('tr').remove();
@@ -338,7 +370,7 @@
             var date_input = $('input[name="date"]'); //our date input has the name "date"
             var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
             var options = {
-                format: 'mm/dd/yyyy',
+                format: 'dd/mm/yyyy',
                 container: container,
                 todayHighlight: true,
                 autoclose: true,
