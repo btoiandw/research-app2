@@ -1,7 +1,9 @@
 @section('title', 'Login')
 @include('main')
+{{-- <link href="{{ asset("css/animate.css")}}" rel="stylesheet" type="text/css" /> --}}
 <link href="{{ asset('css/login.css') }}" rel="stylesheet">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <div class="contact-form">
     <div class="d-grid d-md-flex justify-content-md-center">
         <img alt="" class="avatar" src="{{ asset('img/logo-kpru.png') }}">
@@ -61,4 +63,5 @@
 
     });
 </script>
+
 <!-- END: page scripts -->

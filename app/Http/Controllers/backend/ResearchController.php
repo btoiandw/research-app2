@@ -52,7 +52,7 @@ class ResearchController extends Controller
     public function store(Request $request)
     {
         //
-         $validation = $request->validate(
+        /* $validation = $request->validate(
             [
                 'year_research' => 'required|max:4',
                 'research_nameTH' => 'required|unique:research,research_th',
@@ -95,7 +95,7 @@ class ResearchController extends Controller
                 'address.required' => 'โปรดระบุพื้นที่ในการวิจัย',
                 'city.required' => 'โปรดระบุพื้นที่ในการวิจัย',
                 'zipcode.required' => 'โปรดระบุพื้นที่ในการวิจัย',
-                /* 'area_research.required' => '', */
+                'area_research.required' => '', 
                 'sdate.required' => 'โปรดระบุวันที่เริ่มทำการวิจัย',
                 'edate.required' => 'โปรดระบุวันที่สิ้นสุดการทำการวิจัย',
                 'budage.required' => 'โปรดระบุจำนวนเงินในการทำการวิจัย',
@@ -104,7 +104,7 @@ class ResearchController extends Controller
                 'word.mimes' => 'โปรดระบุไฟล์ word เท่านั้น',
                 'pdf.mimes' => 'โปรดระบุเป็นไฟล์ pdf เท่านั้น'
             ]
-        );
+        ); */
 
         //dd($request->pc);
         $pc = collect($request->pc);  //collect=>จับ array เป็นกลุ่มเพื่อนับจำนวน
@@ -119,10 +119,28 @@ class ResearchController extends Controller
             Alert::error('ร้อยละบทบาทในการวิจัยไม่ควรน้อยกว่า 100');
             return redirect()->route('research.index');
         } else {
+            if ($filew = $request->file('word')) {
+                if ($filep = $request->file('pdf')) {
+                    $namep = $filep->getClientOriginalName();
+                    $name = $filew->getClientOriginalName();
 
+                    if ($filew->move('uploads/research', $name)) { //move=>เซฟในโฟลเดอร์ images=>ชื่อโฟลเดอร์ $name=>ชื่อไฟล์  ->จะอยู่ในโฟลเดอร์ public
+                        if ($filep->move('uploads/research', $namep)) {
+                            $post = new Research();
+                            $post->research_id = 1;
+                            $post->word_file = $name;
+                            $post->pdf_file = $namep;
+                            $post->save();
+
+                            return redirect()->route('user.dashboard');
+                        }
+                    }
+                }
+            }
+            return redirect()->back();
         }
 
-        
+
 
         //dd($sumpc);
     }

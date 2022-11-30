@@ -22,7 +22,7 @@ use App\Http\Controllers\DirectorController;
 }); */
 
 Route::get('/', function(){
-    return redirect()->route('login');
+    return view('loading');
 });
 
 Auth::routes();
@@ -33,7 +33,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group([
     'prefix'=>'admin',
-    'middleware'=>['auth']
+    'middleware'=>['IsAdmin']
 ], function(){
     Route::get('dashboard',[AdminController::class,'index'])->name('admin.dashboard');
     Route::get('profile',[AdminController::class,'profile'])->name('admin.profile');
@@ -41,7 +41,7 @@ Route::group([
 
 Route::group([
     'prefix'=>'user',
-    'middleware'=>['auth'],
+    'middleware'=>['Isuser'],
     'namespace'=>'App\Http\Controllers\backend'
 ], function(){
     Route::get('dashboard',[UserController::class,'index'])->name('user.dashboard');
@@ -51,7 +51,7 @@ Route::group([
 
 Route::group([
     'prefix'=>'director',
-    'middleware'=>['auth'],
+    'middleware'=>['IsDirector'],
     
 ], function(){
     Route::get('dashboard',[DirectorController::class,'index'])->name('director.dashboard');
