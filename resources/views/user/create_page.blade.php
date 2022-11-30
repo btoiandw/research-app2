@@ -17,7 +17,7 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <style>
     .body {
-        background: #B2B2B2;
+        background: #F9F9F9;
         width: 100%;
     }
 
@@ -76,9 +76,9 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="year_research"
                                         value="{{ date('Y') + 544 }}" name="year_research">
-                                    @if ($errors->has('year_research'))
+                                    {{-- @if ($errors->has('year_research'))
                                         <span class="text-danger">{{ $errors->first('year_research') }}</span>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
 
@@ -88,9 +88,9 @@
                                 <div class=" col-sm-10">
                                     <textarea class="form-control" id="research_nameTH" name="research_nameTH"></textarea>
                                 </div>
-                                @if ($errors->has('research_nameTH'))
+                                {{-- @if ($errors->has('research_nameTH'))
                                     <span class="text-danger">{{ $errors->first('research_nameTH') }}</span>
-                                @endif
+                                @endif --}}
                             </div>
                             <div class="row mb-3">
                                 <label for="research_nameEN"
@@ -98,10 +98,10 @@
                                 <div class=" col-sm-10">
                                     <textarea class="form-control" id="research_nameEN" name="research_nameEN"></textarea>
                                 </div>
-
+{{-- 
                                 @if ($errors->has('research_nameEN'))
                                     <span class="text-danger">{{ $errors->first('research_nameEN') }}</span>
-                                @endif
+                                @endif --}}
                             </div>
                             <div class="mb-3">
 
@@ -115,12 +115,15 @@
                                                     <th width="400px">ชื่อ-นามสกุล</th>
                                                     <th width="">สังกัด/คณะ</th>
                                                     <th width="200px">บทบาทในการวิจัย</th>
-                                                    <th width="200px">ร้อยละในการวิจัย</th>
-                                                    <th width="50px"></th>
+                                                    <th width="200px">ร้อยละบทบาทในการวิจัย</th>
+                                                    <th width="50px"> 
+                                                        <button type="button" name="addBtn" class="btn btn-info"
+                                                            id="addBtn">+</button>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody align="center" id="roleResearch">
-                                                <tr>
+                                                <tr id="row[]">
                                                     <td>
                                                         <input type="text" name="researcher[]" id="researcher"
                                                             class="form-control">
@@ -143,19 +146,18 @@
                                                     <td>
                                                         <select class="form-select " name="role-research[]"
                                                             id="role-research">
-                                                            <option value="หัวหน้าโครงการวิจัย">หัวหน้าโครงการวิจัย</option>
+                                                            <option value="หัวหน้าโครงการวิจัย" selected readonly>หัวหน้าโครงการวิจัย</option>
                                                             <option value="ผู้ร่วมวิจัย">ผู้ร่วมวิจัย</option>
                                                         </select>
 
                                                     </td>
                                                     <td>
                                                         <input type="number" class="form-control" name="pc[]"
-                                                            id="pc" placeholder="0.00" />
-
-                                                    </td>
+                                                            id="pc" placeholder="0.00"{{--   onchange="Vpc()"onKeyUp="Vpc();" --}} />
+                                                    <input type="hidden" name="sum[]" id="sum">
+                                                        </td>
                                                     <td>
-                                                        <button type="button" name="addBtn[]" class="btn btn-info"
-                                                            id="addBtn">+</button>
+                                                       
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -176,9 +178,9 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('source_id'))
+                                    {{-- @if ($errors->has('source_id'))
                                         <span class="text-danger">{{ $errors->first('source_id') }}</span>
-                                    @endif
+                                    @endif --}}
                                 </div>
 
                             </div>
@@ -186,23 +188,23 @@
                                 <legend class="col-form-label col-sm-2 pt-0 text-right">ประเภทงานวิจัย</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="type" id="type"
+                                        <input class="form-check-input" type="checkbox" name="type" id="type"
                                             value="ชุมชนท้องถิ่น">
                                         <label class="form-check-label" for="type">
                                             ชุมชนท้องถิ่น
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="type" id="type"
+                                        <input class="form-check-input" type="checkbox" name="type" id="type"
                                             value="ศิลปวัฒนธรรม">
                                         <label class="form-check-label" for="gridRadios2">
                                             ศิลปวัฒนธรรม
                                         </label>
                                     </div>
                                 </div>
-                                @if ($errors->has('type'))
+                                {{-- @if ($errors->has('type'))
                                     <span class="text-danger">{{ $errors->first('type') }}</span>
-                                @endif
+                                @endif --}}
                             </fieldset>
 
                             <div class="row mb-3">
@@ -210,9 +212,9 @@
                                 <div class="col-sm-10">
                                     <textarea name="keyword" id="keyword" placeholder="คำสำคัญในการวิจัย" class="form-control"></textarea>
                                 </div>
-                                @if ($errors->has('keyword'))
+                                {{-- @if ($errors->has('keyword'))
                                     <span class="text-danger">{{ $errors->first('keyword') }}</span>
-                                @endif
+                                @endif --}}
                             </div>
 
                             <div class="row mb-3">
@@ -248,9 +250,9 @@
                                     <div class="col-sm">
                                         <input class="form-control" id="sdate" name="sdate"
                                             placeholder="MM/DD/YYY" type="date" />
-                                        @if ($errors->has('sdate'))
+                                        {{-- @if ($errors->has('sdate'))
                                             <span class="text-danger">{{ $errors->first('sdate') }}</span>
-                                        @endif
+                                        @endif --}}
                                     </div>
                                     <label for="inputEmail3"
                                         class="col-sm-2 col-form-label text-right">วันที่สิ้นสุดการวิจัย</label>
@@ -258,9 +260,9 @@
                                         <div class="col-sm">
                                             <input class="form-control" id="edate" name="edate"
                                                 placeholder="MM/DD/YYY" type="date" />
-                                            @if ($errors->has('edate'))
+                                            {{-- @if ($errors->has('edate'))
                                                 <span class="text-danger">{{ $errors->first('edate') }}</span>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </div>
@@ -272,9 +274,9 @@
                                 <div class="col-sm-10">
                                     <input name="budage" id="budage" type="number" placeholder="0.00"
                                         class="form-control">
-                                    @if ($errors->has('budage'))
+                                   {{--  @if ($errors->has('budage'))
                                         <span class="text-danger">{{ $errors->first('budage') }}</span>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
 
@@ -283,9 +285,9 @@
                                 <div class=" col-sm-10">
                                     <input type="file" name="word" id="word" class=" form-control">
                                     <span class="text-danger">*ไฟล์ .doc และ .docx เท่านั้น</span>
-                                    @if ($errors->has('word'))
+                                    {{-- @if ($errors->has('word'))
                                         <span class="text-danger">{{ $errors->first('word') }}</span>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
 
@@ -294,9 +296,9 @@
                                 <div class=" col-sm-10">
                                     <input type="file" name="pdf" id="pdf" class=" form-control">
                                     <span class="text-danger">*ไฟล์ .pdf เท่านั้น</span>
-                                    @if ($errors->has('pdf'))
+                                    {{-- @if ($errors->has('pdf'))
                                         <span class="text-danger">{{ $errors->first('pdf') }}</span>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
 
@@ -335,10 +337,20 @@
     </script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-        var i = 1;
+        /* function Vpc(){
+            //var row = document.getElementById('row[]').value;
+            var inpc = document.getElementById('pc[]');
+            var re = [];
 
-        $('#addBtn').click(function() {
+            for(let i=1; i<inpc.length;i++){
+                re.push(inpc[i]);
+            }
+            console.log(re);
+        } */
+        $(document).ready(function() {
+            var i = 1;
+
+            $('#addBtn').click(function() {
                 i++;
                 var tr = '<tr id="row' + i + '">' +
                     '<td><input type="text" name="researcher[]" id="researcher" class="form-control"></td>' +
@@ -350,17 +362,17 @@
                             '<option value = "{{ $row->id }}" >{{ $row->organizational }} &nbsp;&nbsp;{{ $row->major }}</option>'+
                         '@endif'+
                     '@endforeach'+
-        /* tr = tr + select_option(); */
-        +
-        '</td>' +
-        '<td><select class="form-select " name="role-research[]" id="role-research"><option value="หัวหน้าโครงการวิจัย">หัวหน้าโครงการวิจัย</option><option value="ผู้ร่วมวิจัย" selected>ผู้ร่วมวิจัย</option></select></td>' +
-        '<td><input type="number" class="form-control" name="pc[]" id="pc"placeholder="0.00" /></td>' +
-        '<td><button type="button" id="btnDel" class="btn btn-danger" >-</button></td>' +
-        '</tr>';
-        $('#roleResearch').append(tr);
+                    /* tr = tr + select_option(); */
+                    +
+                    '</td>' +
+                    '<td><select class="form-select" name="role-research[]" id="role-research"><option value="หัวหน้าโครงการวิจัย">หัวหน้าโครงการวิจัย</option><option value="ผู้ร่วมวิจัย" selected readonly>ผู้ร่วมวิจัย</option></select></td>' +
+                    '<td><input type="number" class="form-control" name="pc[]" id="pc"placeholder="0.00" onchange="Vpc()" /></td>' +
+                    '<td><button type="button" id="btnDel" class="btn btn-danger" >-</button></td>' +
+                    '</tr>';
+                    $('#roleResearch').append(tr);
 
-        //alert('id:'.$id.'name:'.$name.'major:'.$major);
-        });
+                    //alert('id:'.$id.'name:'.$name.'major:'.$major);
+                });
         });
         $(document).on('click', '#btnDel', function() {
             $(this).closest('tr').remove();

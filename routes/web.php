@@ -22,7 +22,7 @@ use App\Http\Controllers\DirectorController;
 }); */
 
 Route::get('/', function(){
-    return view('auth.login');
+    return redirect()->route('login');
 });
 
 Auth::routes();

@@ -19,5 +19,9 @@ class UserController extends Controller
         return view('user.index',['list_research'=>$list_research]);
     }
 
+    /* public function create_research(){
+        return 
+    } */
+
    
 }

@@ -52,7 +52,7 @@ class ResearchController extends Controller
     public function store(Request $request)
     {
         //
-        $validation = $request->validate(
+         $validation = $request->validate(
             [
                 'year_research' => 'required|max:4',
                 'research_nameTH' => 'required|unique:research,research_th',
@@ -64,15 +64,15 @@ class ResearchController extends Controller
                 'role-research' => 'required',
                 'role-research.*' => 'required',
                 'pc' => 'required',
-                'pc.*' => 'required',
+                'pc.*' => 'required|',
                 'source_id' => 'required',
                 'type' => 'required',
                 'keyword' => 'required',
                 'address' => 'required',
                 'city' => 'required',
                 'zipcode' => 'required',
-                'sdate' => 'required|date',
-                'edate' => 'required|date',
+                'sdate' => 'required|date|after:tomorrow',
+                'edate' => 'required|date|after:start_date',
                 'budage' => 'required|numeric',
                 'word' => 'required|file|mimes:doc,docx',
                 'pdf' => 'required|file|mimes:pdf'
@@ -92,7 +92,10 @@ class ResearchController extends Controller
                 'source_id.required' => 'โปรดระบุชื่อแหล่งทุน',
                 'type.required' => 'โปรดระบุประเภทในการวิจัย',
                 'keyword.required' => 'โปรดระบุคำสำคัญในการวิจัย',
-                'area_research.required' => 'โปรดระบุพื้นที่ในการวิจัย',
+                'address.required' => 'โปรดระบุพื้นที่ในการวิจัย',
+                'city.required' => 'โปรดระบุพื้นที่ในการวิจัย',
+                'zipcode.required' => 'โปรดระบุพื้นที่ในการวิจัย',
+                /* 'area_research.required' => '', */
                 'sdate.required' => 'โปรดระบุวันที่เริ่มทำการวิจัย',
                 'edate.required' => 'โปรดระบุวันที่สิ้นสุดการทำการวิจัย',
                 'budage.required' => 'โปรดระบุจำนวนเงินในการทำการวิจัย',
@@ -102,6 +105,26 @@ class ResearchController extends Controller
                 'pdf.mimes' => 'โปรดระบุเป็นไฟล์ pdf เท่านั้น'
             ]
         );
+
+        //dd($request->pc);
+        $pc = collect($request->pc);  //collect=>จับ array เป็นกลุ่มเพื่อนับจำนวน
+        $sumpc = $pc->reduce(function ($value, $sum) { //reduce => ค่าทุกตัวบวกกัน
+            return $sum + $value;
+        });
+
+        if ($sumpc > 100) {
+            Alert::error('ร้อยละบทบาทในการวิจัยไม่ควรเกิน 100');
+            return redirect()->route('research.index');
+        } elseif ($sumpc < 100) {
+            Alert::error('ร้อยละบทบาทในการวิจัยไม่ควรน้อยกว่า 100');
+            return redirect()->route('research.index');
+        } else {
+
+        }
+
+        
+
+        //dd($sumpc);
     }
 
     /**

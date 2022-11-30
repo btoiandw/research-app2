@@ -130,17 +130,14 @@
                                 <a class="nav-link nav-text" href="{{ route('user.dashboard') }}">{{ __('หน้าหลัก') }}</a>
                             </li>
 
-                            <li class="nav-item dropdown">
+                            <li class="nav-item text dropdown">
                                 <a class="nav-link nav-text dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    href="{{ route('user.dashboard') }}">{{ __('โครงร่างงานวิจัย') }}</a>
+                                    aria-expanded="false">{{ __('โครงร่างงานวิจัย') }}</a>
                                 <ul class="dropdown-menu dropdown-link">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item dropdown-link" href="#">Something else here</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">หน้าหลัก</a></li>
+                                    <li><a class="dropdown-item" href="#">โครงการทั้งหมด</a></li>
+                                    <li><a class="dropdown-item" href="#">ฟอร์ตัวอย่าง</a></li>
+
                                 </ul>
                             </li>
                             <li class="nav-item">
@@ -181,9 +178,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
-    </script>
+
     @include('sweetalert::alert')
 
 </body>
