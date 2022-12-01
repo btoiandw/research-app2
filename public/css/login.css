@@ -9,7 +9,7 @@ body:before {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    background-image: url('https://e-student.kpru.ac.th/web2016/img/blur-background05.jpg?fbclid=IwAR012GpoeWw6iwGTXRWBv2AdH-oK6eIBg9wSeNYkU1dr8fB5FihWf4MLSs4');
+    background:url("../img/blur-background05.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -38,7 +38,7 @@ body:before {
     width: 100px;
     overflow: hidden;
     top: calc(-150px/2);
-    left:calc(350px/2);
+    left: calc(350px/2);
 }
 
 .contact-form h4 {
