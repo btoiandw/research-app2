@@ -95,13 +95,13 @@ class ResearchController extends Controller
                 'address.required' => 'โปรดระบุพื้นที่ในการวิจัย',
                 'city.required' => 'โปรดระบุพื้นที่ในการวิจัย',
                 'zipcode.required' => 'โปรดระบุพื้นที่ในการวิจัย',
-                'area_research.required' => '', 
+                /* 'area_research.required' => '',  
                 'sdate.required' => 'โปรดระบุวันที่เริ่มทำการวิจัย',
                 'edate.required' => 'โปรดระบุวันที่สิ้นสุดการทำการวิจัย',
                 'budage.required' => 'โปรดระบุจำนวนเงินในการทำการวิจัย',
                 'word.required' => 'โปรดระบุไฟล์ word และเป็นไฟล์ word เท่านั้น',
                 'pdf.required' => 'โปรดระบุไฟล์ pdf และเป็นไฟล์ pdf เท่านั้น',
-                'word.mimes' => 'โปรดระบุไฟล์ word เท่านั้น',
+                'word.mimes' => 'โปรดระบุไฟล์ word เท่านั้น', 
                 'pdf.mimes' => 'โปรดระบุเป็นไฟล์ pdf เท่านั้น'
             ]
         ); */
@@ -119,7 +119,10 @@ class ResearchController extends Controller
             Alert::error('ร้อยละบทบาทในการวิจัยไม่ควรน้อยกว่า 100');
             return redirect()->route('research.index');
         } else {
-            if ($filew = $request->file('word')) {
+
+            dd($request->pdf,$request->word);
+            
+            /* if ($filew = $request->file('word')) {
                 if ($filep = $request->file('pdf')) {
                     $namep = $filep->getClientOriginalName();
                     $name = $filew->getClientOriginalName();
@@ -131,13 +134,11 @@ class ResearchController extends Controller
                             $post->word_file = $name;
                             $post->pdf_file = $namep;
                             $post->save();
-
-                            return redirect()->route('user.dashboard');
                         }
                     }
                 }
-            }
-            return redirect()->back();
+            } */
+
         }
 
 

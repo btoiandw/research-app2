@@ -1,20 +1,5 @@
 @section('title', 'Research')
 @extends('layouts.user')
-<!--  jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
-<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
-
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Bootstrap Date-Picker Plugin -->
-<script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <style>
     .body {
         background: #F9F9F9;
@@ -27,7 +12,7 @@
 </style>
 @section('content')
     <div class="body">
-        <div class="container py-5">
+        <div class="container-fluid py-5 px-lg-5">
             {{--  <div class="row justify-content-around mb-4 align-items-center">
                 <div class="col-4 header">
                     
@@ -72,53 +57,53 @@
                         {{ csrf_field() }}
                         <div class=" card-body">
                             <div class="row mb-3">
-                                <label for="year_research" class="col-sm-2 col-form-label text-right">ปีงบประมาณ</label>
+                                <label for="year_research" class="col-sm-2 col-form-label" align="right">ปีงบประมาณ</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="year_research"
                                         value="{{ date('Y') + 544 }}" name="year_research">
-                                    {{-- @if ($errors->has('year_research'))
+                                    @if ($errors->has('year_research'))
                                         <span class="text-danger">{{ $errors->first('year_research') }}</span>
-                                    @endif --}}
+                                    @endif
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <label for="research_nameTH"
-                                    class="col-sm-2 col-form-label text-right">&emsp;&emsp;ชื่อโครงร่างงานวิจัยภาษาไทย</label>
+                                    class="col-sm-2 col-form-label " align="right">{{--&emsp;&emsp; --}}ชื่อโครงร่างงานวิจัยภาษาไทย</label>
                                 <div class=" col-sm-10">
                                     <textarea class="form-control" id="research_nameTH" name="research_nameTH"></textarea>
+                                    @if ($errors->has('research_nameTH'))
+                                        <span class="text-danger">{{ $errors->first('research_nameTH') }}</span>
+                                    @endif
                                 </div>
-                                {{-- @if ($errors->has('research_nameTH'))
-                                    <span class="text-danger">{{ $errors->first('research_nameTH') }}</span>
-                                @endif --}}
+                                
                             </div>
                             <div class="row mb-3">
                                 <label for="research_nameEN"
-                                    class="col-sm-2 col-form-label text-right">&emsp;&emsp;ชื่อโครงร่างงานวิจัยภาษาอังกฤษ</label>
+                                    class="col-sm-2 col-form-label" align="right">{{-- &emsp;&emsp; --}}ชื่อโครงร่างงานวิจัยภาษาอังกฤษ</label>
                                 <div class=" col-sm-10">
                                     <textarea class="form-control" id="research_nameEN" name="research_nameEN"></textarea>
+                                    @if ($errors->has('research_nameEN'))
+                                        <span class="text-danger">{{ $errors->first('research_nameEN') }}</span>
+                                    @endif 
                                 </div>
-{{-- 
-                                @if ($errors->has('research_nameEN'))
-                                    <span class="text-danger">{{ $errors->first('research_nameEN') }}</span>
-                                @endif --}}
+                                
                             </div>
                             <div class="mb-3">
 
-                                <div class="card">
-                                    <label for="message-text"style="text-align: center;font-weight:600;font-size:18px"
-                                        class="col-form-label">รายชื่อนักวิจัย</label>
-                                    <div class=" card-body">
+                                <div class="card" style="border: none">
+                                    <label for="message-text"style="text-align:left;font-weight:600;font-size:18px;background:#fff;border:none" class="pt-3 py-0 card-header"
+                                        >รายชื่อนักวิจัย</label>
+                                    <div class="card-body pt-0">
                                         <table class="table table-responsive" id="tableTap" name="tableTap">
                                             <thead align="center">
                                                 <tr>
-                                                    <th width="400px">ชื่อ-นามสกุล</th>
-                                                    <th width="">สังกัด/คณะ</th>
-                                                    <th width="200px">บทบาทในการวิจัย</th>
-                                                    <th width="200px">ร้อยละบทบาทในการวิจัย</th>
-                                                    <th width="50px"> 
-                                                        <button type="button" name="addBtn" class="btn btn-info"
-                                                            id="addBtn">+</button>
+                                                    <th width="600px">ชื่อ-นามสกุล</th>
+                                                    <th width="600px">สังกัด/คณะ</th>
+                                                    <th width="300px">บทบาทในการวิจัย</th>
+                                                    <th width="300px">ร้อยละบทบาทในการวิจัย</th>
+                                                    <th width=""> 
+                                                        
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -157,7 +142,8 @@
                                                     <input type="hidden" name="sum[]" id="sum">
                                                         </td>
                                                     <td>
-                                                       
+                                                       <button type="button" name="addBtn" class="btn btn-info"
+                                                            id="addBtn">+</button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -168,7 +154,7 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="message-text" class="col-sm-2 col-form-label text-right">แหล่งทุนวิจัย</label>
+                                <label for="message-text" class="col-sm-2 col-form-label" align="right">แหล่งทุนวิจัย</label>
                                 <div class="col-sm-10">
                                     <select class="form-select" id="source_id" name="source_id">
                                         <option value="">--เลือกแหล่งทุน--</option>
@@ -178,14 +164,14 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    {{-- @if ($errors->has('source_id'))
+                                    @if ($errors->has('source_id'))
                                         <span class="text-danger">{{ $errors->first('source_id') }}</span>
-                                    @endif --}}
+                                    @endif
                                 </div>
 
                             </div>
                             <fieldset class="row mb-3">
-                                <legend class="col-form-label col-sm-2 pt-0 text-right">ประเภทงานวิจัย</legend>
+                                <legend class="col-form-label col-sm-2 pt-0" align="right">ประเภทงานวิจัย</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="type" id="type"
@@ -201,37 +187,48 @@
                                             ศิลปวัฒนธรรม
                                         </label>
                                     </div>
+                                    @if ($errors->has('type'))
+                                        <span class="text-danger">{{ $errors->first('type') }}</span>
+                                    @endif
                                 </div>
-                                {{-- @if ($errors->has('type'))
-                                    <span class="text-danger">{{ $errors->first('type') }}</span>
-                                @endif --}}
+                               
                             </fieldset>
 
                             <div class="row mb-3">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label text-right">คำสำคัญ</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label" align="right">คำสำคัญ</label>
                                 <div class="col-sm-10">
                                     <textarea name="keyword" id="keyword" placeholder="คำสำคัญในการวิจัย" class="form-control"></textarea>
+                                    @if ($errors->has('keyword'))
+                                        <span class="text-danger">{{ $errors->first('keyword') }}</span>
+                                    @endif
                                 </div>
-                                {{-- @if ($errors->has('keyword'))
-                                    <span class="text-danger">{{ $errors->first('keyword') }}</span>
-                                @endif --}}
+                                
                             </div>
 
                             <div class="row mb-3">
                                 <label for="inputEmail3"
-                                    class="col-sm-2 col-form-label text-right">พื้นที่ในการวิจัย</label>
+                                    class="col-sm-2 col-form-label" align="right">พื้นที่ในการวิจัย</label>
                                 <div class="row col-sm-10">
                                     <div class="col-sm-7">
                                         <input type="text" class="form-control" placeholder="ที่อยู่" name="address"
                                             aria-label="ที่อยู่">
+                                            @if ($errors->has('address'))
+                                                <span class="text-danger">{{ $errors->first('address') }}</span>
+                                            @endif
                                     </div>
                                     <div class="col-sm">
                                         <input type="text" class="form-control" placeholder="จังหวัด" name="city"
                                             aria-label="จังหวัด">
+                                            @if ($errors->has('city'))
+                                                <span class="text-danger">{{ $errors->first('city') }}</span>
+                                            @endif
                                     </div>
                                     <div class="col-sm">
                                         <input type="text" class="form-control" placeholder="รหัสไปรษณีย์"
                                             name="zipcode" aria-label="รหัสไปรษณีย์">
+                                            @if ($errors->has('zipcode'))
+                                                <span class="text-danger">{{ $errors->first('zipcode') }}</span>
+                                            @endif
                                     </div>
                                 </div>
                             </div>
@@ -245,24 +242,24 @@
 
                             <div class="row mb-3">
                                 <label for="inputEmail3"
-                                    class="col-sm-2 col-form-label text-right">วันที่เริ่มต้นการวิจัย</label>
+                                    class="col-sm-2 col-form-label" align="right">วันที่เริ่มต้นการวิจัย</label>
                                 <div class="row col-sm-10">
                                     <div class="col-sm">
                                         <input class="form-control" id="sdate" name="sdate"
                                             placeholder="MM/DD/YYY" type="date" />
-                                        {{-- @if ($errors->has('sdate'))
+                                        @if ($errors->has('sdate'))
                                             <span class="text-danger">{{ $errors->first('sdate') }}</span>
-                                        @endif --}}
+                                        @endif
                                     </div>
                                     <label for="inputEmail3"
-                                        class="col-sm-2 col-form-label text-right">วันที่สิ้นสุดการวิจัย</label>
+                                        class="col-sm-2 col-form-label " align="right">วันที่สิ้นสุดการวิจัย</label>
                                     <div class="col-sm">
                                         <div class="col-sm">
                                             <input class="form-control" id="edate" name="edate"
                                                 placeholder="MM/DD/YYY" type="date" />
-                                            {{-- @if ($errors->has('edate'))
+                                            @if ($errors->has('edate'))
                                                 <span class="text-danger">{{ $errors->first('edate') }}</span>
-                                            @endif --}}
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -270,35 +267,35 @@
 
                             <div class="row mb-3">
                                 <label for="inputEmail3"
-                                    class="col-sm-2 col-form-label text-right">งบประมาณการวิจัย</label>
+                                    class="col-sm-2 col-form-label" align="right">งบประมาณการวิจัย</label>
                                 <div class="col-sm-10">
                                     <input name="budage" id="budage" type="number" placeholder="0.00"
                                         class="form-control">
-                                   {{--  @if ($errors->has('budage'))
+                                    @if ($errors->has('budage'))
                                         <span class="text-danger">{{ $errors->first('budage') }}</span>
-                                    @endif --}}
+                                    @endif
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label text-right">ไฟล์ Word</label>
+                                <label class="col-sm-2 col-form-label " align="right">ไฟล์ Word</label>
                                 <div class=" col-sm-10">
                                     <input type="file" name="word" id="word" class=" form-control">
                                     <span class="text-danger">*ไฟล์ .doc และ .docx เท่านั้น</span>
-                                    {{-- @if ($errors->has('word'))
+                                    @if ($errors->has('word'))
                                         <span class="text-danger">{{ $errors->first('word') }}</span>
-                                    @endif --}}
+                                    @endif
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label text-right">ไฟล์ PDF</label>
+                                <label class="col-sm-2 col-form-label" align="right">ไฟล์ PDF</label>
                                 <div class=" col-sm-10">
                                     <input type="file" name="pdf" id="pdf" class=" form-control">
                                     <span class="text-danger">*ไฟล์ .pdf เท่านั้น</span>
-                                    {{-- @if ($errors->has('pdf'))
+                                    @if ($errors->has('pdf'))
                                         <span class="text-danger">{{ $errors->first('pdf') }}</span>
-                                    @endif --}}
+                                    @endif
                                 </div>
                             </div>
 
@@ -311,18 +308,6 @@
             </div>
         </div>
     </div>
-
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
-
     <script>
         var has_error = {{ $errors->count() > 0 ? 'true' : 'false' }};
         if (has_error) {
