@@ -26,4 +26,11 @@ class Research extends Model
         'research_summary_feedback',
         'research_status'
     ];
+
+    public function user(){
+        return $this->belongsToMany(User::class);
+    }
+    public function source(){
+        return $this->hasOne(ResearchSource::class,'research_source_id','research_source_id');
+    }
 }

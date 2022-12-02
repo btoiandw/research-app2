@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller as Controller;
 use App\Models\User;
+use Illuminate\Support\Arr;
 
 class ResearchController extends Controller
 {
@@ -98,20 +99,46 @@ class ResearchController extends Controller
                 'address.required' => 'โปรดระบุพื้นที่ในการวิจัย',
                 'city.required' => 'โปรดระบุพื้นที่ในการวิจัย',
                 'zipcode.required' => 'โปรดระบุพื้นที่ในการวิจัย',
-                /* 'area_research.required' => '',  
+                //'area_research.required' => '',  
                 'sdate.required' => 'โปรดระบุวันที่เริ่มทำการวิจัย',
                 'edate.required' => 'โปรดระบุวันที่สิ้นสุดการทำการวิจัย',
                 'budage.required' => 'โปรดระบุจำนวนเงินในการทำการวิจัย',
                 'word.required' => 'โปรดระบุไฟล์ word และเป็นไฟล์ word เท่านั้น',
                 'pdf.required' => 'โปรดระบุไฟล์ pdf และเป็นไฟล์ pdf เท่านั้น',
-                'word.mimes' => 'โปรดระบุไฟล์ word เท่านั้น', 
+                'word.mimes' => 'โปรดระบุไฟล์ word เท่านั้น',
                 'pdf.mimes' => 'โปรดระบุเป็นไฟล์ pdf เท่านั้น'
             ]
         ); */
 
-        $reYear=$request->year_research;
-        $id_re=1;
-        $status=0;
+        $re_id = DB::table('research')->count();
+        if ($re_id == 0) {
+            $id = 1;
+        } else {
+            $id = $re_id + 1;
+        }
+        //dd($id);
+        $reYear = $request->year_research;
+        $status = 0; //รอการตรวจสอบ
+
+        //หา id user ตามชื่อที่กรอกมา
+        $result = array();
+        $rc = $request->researcher;
+        $us = array();
+        $result = DB::table('users')->whereIn('name', $rc)->get(); //whereIn ใช้กับ where array
+        for ($i = 0; $i <= sizeof($rc); $i++) {
+            if (empty($result[$i])) {
+                $us[$i] = collect($rc[$i]);
+                /* $sumus = $us[$i]->reduce(function ($value, $sum) { //reduce => ค่าทุกตัวบวกกัน
+                    return $sum."".$value;
+                }); */
+                //Alert::error('ไม่พบข้อมูลชื่อ-นามสกุลนักวิจัย', $us);
+                //return redirect()->back();
+                dd($rc, $result, sizeof($rc), $us,$i);
+            }
+            
+        }
+
+
 
         $pc = collect($request->pc);  //collect=>จับ array เป็นกลุ่มเพื่อนับจำนวน
         $sumpc = $pc->reduce(function ($value, $sum) { //reduce => ค่าทุกตัวบวกกัน
@@ -120,15 +147,12 @@ class ResearchController extends Controller
 
         if ($sumpc > 100) {
             Alert::error('ร้อยละบทบาทในการวิจัยไม่ควรเกิน 100');
-            return redirect()->route('research.index');
+            return redirect()->back();
         } elseif ($sumpc < 100) {
             Alert::error('ร้อยละบทบาทในการวิจัยไม่ควรน้อยกว่า 100');
-            return redirect()->route('research.index');
+            return redirect()->back();
         } else {
-            //หา id user ตามชื่อที่กรอกมา
-            $result = array();
-            $rc = $request->researcher;
-            $result = DB::table('users')->whereIn('name', $rc)->get(); //whereIn ใช้กับ where array
+
 
             //จัดการกับไฟล์
             if ($filew = $request->file('word')) {
@@ -140,25 +164,33 @@ class ResearchController extends Controller
                     //แยกชื่ออกจากนามสกุลไฟล์ word
                     $eNamew = explode('.', $name);
                     $infow = end($eNamew);
-
-
+                    //mix name+status to file name
+                    $fileName_w = $id . "_" . $status . "." . $infow; //ทำการรวมตัวแปร $id กับ $status และ $infow
                     //แยกชื่ออกจากนามสกุลไฟล์ pdf
                     $eNamep = explode('.', $namep);
                     $infop = end($eNamep);
-                    /* if ($filew->move('uploads/research', $name)) { //move=>เซฟในโฟลเดอร์ ''=>''แรกชื่อโฟลเดอร์ $name=>ชื่อไฟล์  ->จะอยู่ในโฟลเดอร์ public
-                        if ($filep->move('uploads/research', $namep)) {
+                    $fileName_p = $id . "_" . $status . "." . $infop;
+
+                    $path = 'uploads/research/' . $reYear . '/' . $id;
+                    //$filew->move('uploads/research/'.$reYear.'/'.$id_re, $fileName_w);
+                    if ($filew->move($path, $fileName_w)) { //move=>เซฟในโฟลเดอร์ ''=>''แรกชื่อโฟลเดอร์ $name=>ชื่อไฟล์  ->จะอยู่ในโฟลเดอร์ public
+                        if ($filep->move($path, $fileName_p)) {
                             $post = new Research();
                             $post->research_id = 1;
-                            $post->word_file = $name;
-                            $post->pdf_file = $namep;
+                            $post->word_file = $fileName_w;
+                            $post->pdf_file = $fileName_p;
                             //$post->save();
                         }
-                    } */
+                    }
                 }
             }
         }
 
-        dd($result, $rc, $sumpc, $pc, $namep, $name, $infow,$infop, $request->all());
+
+        $user_fac = array();
+        $user_fac = DB::table('users')->select('users.*', 'faculties.organizational', 'faculties.major')->join('faculties', 'users.organization_id', '=', 'faculties.id')->whereIn('users.name', $rc)->get();
+        //dd($user_fac);
+        dd($id, $user_fac, $result, $rc, $sumpc, $pc, $namep, $name, $fileName_w, $fileName_p, $request->all());
     }
 
     /**

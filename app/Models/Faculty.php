@@ -13,4 +13,11 @@ class Faculty extends Model
         'organizational',
         'major'
     ];
+
+    public function research(){
+        return $this->hasOne(Research::class,'id','id');
+    }
+    public function user(){
+        return $this->belongsTo(User::class,'organization_id','id');
+    }
 }

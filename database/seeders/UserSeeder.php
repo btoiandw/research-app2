@@ -22,37 +22,43 @@ class UserSeeder extends Seeder
                 'name' => 'Super Admin',
                 'email' => 'admin@gmail.com',
                 'password' => bcrypt('123456'),
-                'role' => '1'
+                'role' => '1',
+                'organization_id'=>'48'
             ],
             [
                 'name' => 'user',
                 'email' => 'user@gmail.com',
                 'password' => bcrypt('123456'),
-                'role' => '0'
+                'role' => '0',
+                'organization_id'=>'30'
             ],
             [
                 'name' => 'director',
                 'email' => 'director@gmail.com',
                 'password' => bcrypt('123456'),
-                'role' => '2'
+                'role' => '2',
+                'organization_id'=>0
             ],
             [
-                'name' => 'พัชราวรรรณ เกิดพันธ์',
+                'name' => 'พัชราวรรณ เกิดพันธ์',
                 'email' => 'biw@gmail.com',
                 'password' => bcrypt('123456'),
-                'role' => '0'
+                'role' => '0',
+                'organization_id'=>'30'
             ],
             [
                 'name' => 'พรทิพย์ แซ่ฟุ้ง',
                 'email' => 'pim@gmail.com',
                 'password' => bcrypt('123456'),
-                'role' => '0'
+                'role' => '0',
+                'organization_id'=>'30'
             ],
             [
                 'name' => 'วิรุฬศักดิ์ ชัยรินทร์',
                 'email' => 'tar@gmail.com',
                 'password' => bcrypt('123456'),
-                'role' => '0'
+                'role' => '0',
+                'organization_id'=>'30'
             ]
         ];
         foreach($user as $key => $value){

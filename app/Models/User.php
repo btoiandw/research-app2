@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'role',
         'password',
+        'organization_id',
     ];
 
     /**
@@ -42,4 +43,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function research()
+    {
+        return $this->belongsToMany(Research::class);
+    }
+
+    public function organization_id(){
+        return $this->hasOne(Faculty::class,'organization_id','id');
+    }
 }
