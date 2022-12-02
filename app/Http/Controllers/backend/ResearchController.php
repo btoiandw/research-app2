@@ -11,6 +11,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller as Controller;
+use App\Models\User;
 
 class ResearchController extends Controller
 {
@@ -22,6 +23,7 @@ class ResearchController extends Controller
     public function index()
     {
         //
+        $list_user = DB::table('users')->get();
         $list_fac = DB::table('faculties')->get();
         $list_source = DB::table('research_sources')->get();
         return view(
@@ -29,6 +31,7 @@ class ResearchController extends Controller
             [
                 'list_source' => $list_source,
                 'list_fac' => $list_fac,
+                'list_user' => $list_user
             ]
         );
     }
@@ -106,7 +109,10 @@ class ResearchController extends Controller
             ]
         ); */
 
-        //dd($request->pc);
+        $reYear=$request->year_research;
+        $id_re=1;
+        $status=0;
+
         $pc = collect($request->pc);  //collect=>จับ array เป็นกลุ่มเพื่อนับจำนวน
         $sumpc = $pc->reduce(function ($value, $sum) { //reduce => ค่าทุกตัวบวกกัน
             return $sum + $value;
@@ -119,31 +125,40 @@ class ResearchController extends Controller
             Alert::error('ร้อยละบทบาทในการวิจัยไม่ควรน้อยกว่า 100');
             return redirect()->route('research.index');
         } else {
+            //หา id user ตามชื่อที่กรอกมา
+            $result = array();
+            $rc = $request->researcher;
+            $result = DB::table('users')->whereIn('name', $rc)->get(); //whereIn ใช้กับ where array
 
-            dd($request->pdf,$request->word);
-            
-            /* if ($filew = $request->file('word')) {
+            //จัดการกับไฟล์
+            if ($filew = $request->file('word')) {
                 if ($filep = $request->file('pdf')) {
+
                     $namep = $filep->getClientOriginalName();
                     $name = $filew->getClientOriginalName();
 
-                    if ($filew->move('uploads/research', $name)) { //move=>เซฟในโฟลเดอร์ images=>ชื่อโฟลเดอร์ $name=>ชื่อไฟล์  ->จะอยู่ในโฟลเดอร์ public
+                    //แยกชื่ออกจากนามสกุลไฟล์ word
+                    $eNamew = explode('.', $name);
+                    $infow = end($eNamew);
+
+
+                    //แยกชื่ออกจากนามสกุลไฟล์ pdf
+                    $eNamep = explode('.', $namep);
+                    $infop = end($eNamep);
+                    /* if ($filew->move('uploads/research', $name)) { //move=>เซฟในโฟลเดอร์ ''=>''แรกชื่อโฟลเดอร์ $name=>ชื่อไฟล์  ->จะอยู่ในโฟลเดอร์ public
                         if ($filep->move('uploads/research', $namep)) {
                             $post = new Research();
                             $post->research_id = 1;
                             $post->word_file = $name;
                             $post->pdf_file = $namep;
-                            $post->save();
+                            //$post->save();
                         }
-                    }
+                    } */
                 }
-            } */
-
+            }
         }
 
-
-
-        //dd($sumpc);
+        dd($result, $rc, $sumpc, $pc, $namep, $name, $infow,$infop, $request->all());
     }
 
     /**

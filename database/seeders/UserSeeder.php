@@ -35,6 +35,24 @@ class UserSeeder extends Seeder
                 'email' => 'director@gmail.com',
                 'password' => bcrypt('123456'),
                 'role' => '2'
+            ],
+            [
+                'name' => 'พัชราวรรรณ เกิดพันธ์',
+                'email' => 'biw@gmail.com',
+                'password' => bcrypt('123456'),
+                'role' => '0'
+            ],
+            [
+                'name' => 'พรทิพย์ แซ่ฟุ้ง',
+                'email' => 'pim@gmail.com',
+                'password' => bcrypt('123456'),
+                'role' => '0'
+            ],
+            [
+                'name' => 'วิรุฬศักดิ์ ชัยรินทร์',
+                'email' => 'tar@gmail.com',
+                'password' => bcrypt('123456'),
+                'role' => '0'
             ]
         ];
         foreach($user as $key => $value){

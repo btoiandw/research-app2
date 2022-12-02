@@ -110,8 +110,9 @@
                     <img src="{{ asset('img/logo-kpru.png') }}" width="50px" height="60px" alt="logo" />
                     <img src="https://research.kpru.ac.th/th/image/LogoRDI.png" width="50px" height="60px"
                         alt="research-logo">
+                    <span class="text-light font-weight-bold" style="font-size: 25px;">RDI-KPRU</span>
                 </a>
-                <span class="text-light font-weight-bold" style="font-size: 25px;">RDI-KPRU</span>
+
                 <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -179,10 +180,8 @@
         </nav>
 
         <main class="wrapper ">
-
+            {{ Auth::user()->name }}
             @yield('content')
-
-
         </main>
     </div>
     <!-- JavaScript Bundle with Popper -->
