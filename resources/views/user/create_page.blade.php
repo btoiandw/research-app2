@@ -25,7 +25,7 @@
             @if ($errors->any())
                 <!-- ตรวจสอบว่ามี Error ของ validation ขึ้นมาหรือเปล่า -->
 
-                <div class="alert alert-danger" id="ERROR_COPY" style="display:none;">
+                <div class="alert alert-danger" id="ERROR_COPY" {{-- style="display:none;" --}}>
                     <ul style="list-style: none;">
                         @foreach ($errors->all() as $error)
                             <!-- ทำการ วน Loop เพื่อแสดง Error ของ validation ขึ้นมาทั้งหมด -->
@@ -174,14 +174,14 @@
                                 <legend class="col-form-label col-sm-2 pt-0" align="right">ประเภทงานวิจัย</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="type" id="type"
+                                        <input class="form-check-input" type="checkbox" name="type[]" id="type"
                                             value="ชุมชนท้องถิ่น">
                                         <label class="form-check-label" for="type">
                                             ชุมชนท้องถิ่น
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="type" id="type"
+                                        <input class="form-check-input" type="checkbox" name="type[]" id="type"
                                             value="ศิลปวัฒนธรรม">
                                         <label class="form-check-label" for="gridRadios2">
                                             ศิลปวัฒนธรรม
@@ -198,6 +198,7 @@
                                 <label for="inputEmail3" class="col-sm-2 col-form-label" align="right">คำสำคัญ</label>
                                 <div class="col-sm-10">
                                     <textarea name="keyword" id="keyword" placeholder="คำสำคัญในการวิจัย" class="form-control"></textarea>
+                                    <span class="text-danger">โปรดใช้เครื่องหมาย , ในการคั่นคำ</span>
                                     @if ($errors->has('keyword'))
                                         <span class="text-danger">{{ $errors->first('keyword') }}</span>
                                     @endif

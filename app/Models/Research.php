@@ -24,7 +24,8 @@ class Research extends Model
         'word_file',
         'pdf_file',
         'research_summary_feedback',
-        'research_status'
+        'research_status',
+        'year_research'
     ];
 
     public function user(){

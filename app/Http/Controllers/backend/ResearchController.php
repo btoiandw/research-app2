@@ -11,6 +11,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller as Controller;
+use App\Models\sendResearch;
 use App\Models\User;
 use Illuminate\Support\Arr;
 
@@ -71,6 +72,7 @@ class ResearchController extends Controller
                 'pc.*' => 'required|',
                 'source_id' => 'required',
                 'type' => 'required',
+                'type.*' => 'required',
                 'keyword' => 'required',
                 'address' => 'required',
                 'city' => 'required',
@@ -95,6 +97,7 @@ class ResearchController extends Controller
                 'pc.*.required' => 'โปรดระบุร้อยละบทบาทในการวิจัย',
                 'source_id.required' => 'โปรดระบุชื่อแหล่งทุน',
                 'type.required' => 'โปรดระบุประเภทในการวิจัย',
+                'type.*.required' => 'โปรดระบุประเภทในการวิจัย',
                 'keyword.required' => 'โปรดระบุคำสำคัญในการวิจัย',
                 'address.required' => 'โปรดระบุพื้นที่ในการวิจัย',
                 'city.required' => 'โปรดระบุพื้นที่ในการวิจัย',
@@ -110,6 +113,21 @@ class ResearchController extends Controller
             ]
         ); */
 
+        $type = $request->type;
+        //$cType = count($type);
+        $allType = array();
+        if (count($request->type) > 1) {
+            $allType = $type[0] . "," . $type[1];
+        } else {
+            $allType = $type;
+        }
+        //dd($type, count($type), $allType);
+        $address = $request->address;
+        $city = $request->city;
+        $zipcode = $request->zipcode;
+        $area = $address . "_" . $city . "_" . $zipcode;
+
+        //dd($type,$allType,$request->all());
         $re_id = DB::table('research')->count();
         if ($re_id == 0) {
             $id = 1;
@@ -127,19 +145,24 @@ class ResearchController extends Controller
         $result = DB::table('users')->whereIn('name', $rc)->get(); //whereIn ใช้กับ where array
         for ($i = 0; $i <= sizeof($rc); $i++) {
             if (empty($result[$i])) {
-                $us[$i] = collect($rc[$i]);
-                /* $sumus = $us[$i]->reduce(function ($value, $sum) { //reduce => ค่าทุกตัวบวกกัน
-                    return $sum."".$value;
-                }); */
-                //Alert::error('ไม่พบข้อมูลชื่อ-นามสกุลนักวิจัย', $us);
-                //return redirect()->back();
-                dd($rc, $result, sizeof($rc), $us,$i);
+                $us = $request->researcher[$i];
+                Alert::error('ไม่พบข้อมูลชื่อ-นามสกุลนักวิจัย', $us);
+                return redirect()->back();
+                //dd($rc, $result, sizeof($rc), $us,$i);
             }
-            
         }
 
-
-
+        $user_fac = array();
+        $user_fac = DB::table('users')->select('users.*', 'faculties.organizational', 'faculties.major')->join('faculties', 'users.organization_id', '=', 'faculties.id')->whereIn('users.name', $rc)->get();
+        /* for ($i = 0; $i <= sizeof($request->researcher); $i++) {
+            if ($user_fac->isEmpty()) {
+                $us = collect($request->researcher);
+                Alert::error('ไม่พบข้อมูลชื่อ-นามสกุลนักวิจัย', $us);
+                return redirect()->back();
+                //dd($rc, $result, sizeof($rc), $us,$i);
+            }
+        } */
+        //เช็คค่าร้อยละงานวิจัยว่าครบ100มั้ย 
         $pc = collect($request->pc);  //collect=>จับ array เป็นกลุ่มเพื่อนับจำนวน
         $sumpc = $pc->reduce(function ($value, $sum) { //reduce => ค่าทุกตัวบวกกัน
             return $sum + $value;
@@ -152,12 +175,10 @@ class ResearchController extends Controller
             Alert::error('ร้อยละบทบาทในการวิจัยไม่ควรน้อยกว่า 100');
             return redirect()->back();
         } else {
-
-
             //จัดการกับไฟล์
             if ($filew = $request->file('word')) {
                 if ($filep = $request->file('pdf')) {
-
+                    //get ชื่อไฟล์จากที่กรอก
                     $namep = $filep->getClientOriginalName();
                     $name = $filew->getClientOriginalName();
 
@@ -176,9 +197,25 @@ class ResearchController extends Controller
                     if ($filew->move($path, $fileName_w)) { //move=>เซฟในโฟลเดอร์ ''=>''แรกชื่อโฟลเดอร์ $name=>ชื่อไฟล์  ->จะอยู่ในโฟลเดอร์ public
                         if ($filep->move($path, $fileName_p)) {
                             $post = new Research();
-                            $post->research_id = 1;
+                            $post->research_id = $id;
+                            $post->research_th = $request->research_nameTH;
+                            $post->research_en = $request->research_nameEN;
+                            $post->research_source_id = $request->source_id;
+                            $post->type_research_id = $allType;
+                            $post->keyword = $request->keyword;
+                            $post->date_research_start = $request->sdate;
+                            $post->date_research_end = $request->edate;
+                            $post->research_area = $area;
+                            $post->budage_research = $request->budage;
                             $post->word_file = $fileName_w;
                             $post->pdf_file = $fileName_p;
+                            $post->research_status = $status;
+                            $post->year_research = $reYear;
+
+
+
+
+                            dd($user_fac, $post, $request->all());
                             //$post->save();
                         }
                     }
@@ -186,11 +223,7 @@ class ResearchController extends Controller
             }
         }
 
-
-        $user_fac = array();
-        $user_fac = DB::table('users')->select('users.*', 'faculties.organizational', 'faculties.major')->join('faculties', 'users.organization_id', '=', 'faculties.id')->whereIn('users.name', $rc)->get();
         //dd($user_fac);
-        dd($id, $user_fac, $result, $rc, $sumpc, $pc, $namep, $name, $fileName_w, $fileName_p, $request->all());
     }
 
     /**
