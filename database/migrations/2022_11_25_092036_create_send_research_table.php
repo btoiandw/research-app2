@@ -16,6 +16,7 @@ class CreateSendResearchTable extends Migration
         Schema::create('send_research', function (Blueprint $table) {
             $table->unsignedInteger('research_id');
             $table->unsignedInteger('id');
+            $table->integer('pc');
         });
     }
 

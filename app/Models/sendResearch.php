@@ -10,7 +10,7 @@ class sendResearch extends Model
     use HasFactory;
 
     protected $fillable =[
-        'id',
+        'id'=>'array',
         'research_id',
         'pc'
     ];

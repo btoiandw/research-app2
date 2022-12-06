@@ -142,8 +142,8 @@ class ResearchController extends Controller
         $result = array();
         $rc = $request->researcher;
         $us = array();
-        $result = DB::table('users')->whereIn('name', $rc)->get(); //whereIn ใช้กับ where array
-        for ($i = 0; $i <= sizeof($rc); $i++) {
+        $result = DB::table('users')->whereIn('name', $rc)->get('id'); //whereIn ใช้กับ where array
+        for ($i = 0; $i < sizeof($rc); $i++) {
             if (empty($result[$i])) {
                 $us = $request->researcher[$i];
                 Alert::error('ไม่พบข้อมูลชื่อ-นามสกุลนักวิจัย', $us);
@@ -153,15 +153,8 @@ class ResearchController extends Controller
         }
 
         $user_fac = array();
-        $user_fac = DB::table('users')->select('users.*', 'faculties.organizational', 'faculties.major')->join('faculties', 'users.organization_id', '=', 'faculties.id')->whereIn('users.name', $rc)->get();
-        /* for ($i = 0; $i <= sizeof($request->researcher); $i++) {
-            if ($user_fac->isEmpty()) {
-                $us = collect($request->researcher);
-                Alert::error('ไม่พบข้อมูลชื่อ-นามสกุลนักวิจัย', $us);
-                return redirect()->back();
-                //dd($rc, $result, sizeof($rc), $us,$i);
-            }
-        } */
+        $user_fac = DB::table('users')->select('users.id', 'users.organization_id', 'faculties.organizational', 'faculties.major')->join('faculties', 'users.organization_id', '=', 'faculties.id')->whereIn('users.name', $rc)->get();
+
         //เช็คค่าร้อยละงานวิจัยว่าครบ100มั้ย 
         $pc = collect($request->pc);  //collect=>จับ array เป็นกลุ่มเพื่อนับจำนวน
         $sumpc = $pc->reduce(function ($value, $sum) { //reduce => ค่าทุกตัวบวกกัน
@@ -211,12 +204,19 @@ class ResearchController extends Controller
                             $post->pdf_file = $fileName_p;
                             $post->research_status = $status;
                             $post->year_research = $reYear;
+                           
 
+                            foreach($request->researcher as $name){
+                                DB::insert('insert into send_research(research_id,id) values(?,?,?)',$id,[$name],$pc);
+                            }
 
+                            /* $send_user->research_id = $id;
+                            $send_user->id = $result;
+                            $send_user->pc = $request->pc; */
+                            $post->save();
+                            //$send_user->save();
 
-
-                            dd($user_fac, $post, $request->all());
-                            //$post->save();
+                            //dd($user_fac, $result, $send_user, $post, $request->all());
                         }
                     }
                 }
