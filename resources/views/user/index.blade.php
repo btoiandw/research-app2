@@ -1,6 +1,8 @@
 @section('title', 'Research')
 @extends('layouts.user')
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 @section('content')
 
     <div class="container-fluid py-5 px-lg-5">
@@ -27,37 +29,72 @@
         </div>
 
         <div class="row justify-content-center">
-            <div class="card">
-                <table class="table table-hover text-center">
-                    <thead>
-                        <tr>
-                            <th scope="col">ลำดับ</th>
-                            <th scope="col">ชื่อโครงร่างงานวิจัย</th>
-                            <th scope="col">รายละเอียด</th>
-                            <th scope="col">สถานะ</th>
-                            <th scope="col">จัดการ</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{--  <tr>
-                            <th scope="row">1</th>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-secondary">รายละเอียด</button>
-                            </td>
-                            <td></td>
-                            <td>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                                    <button class="btn btn-warning me-md-2" type="button">แก้ไข</button>
-                                    <button class="btn btn-danger" type="button">ยกเลิก</button>
-                                </div>
-                            </td>
-                        </tr> --}}
-                    </tbody>
-                </table>
-            </div>
+            @if (! $list_res->isEmpty())
+                <div class="card">
+                    <table class="table table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">ลำดับ</th>
+                                <th scope="col">ชื่อโครงร่างงานวิจัย</th>
+                                <th scope="col">รายละเอียด</th>
+                                <th scope="col">สถานะ</th>
+                                <th scope="col">จัดการ</th>
 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                ($i=1)
+                            @endphp
+                            @foreach ($list_res as $items)
+                                <tr>
+                                    <td>
+                                        {{ $i++ }}
+                                    </td>
+                                    <td>
+                                        {{ $items->research_th }}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-secondary">
+
+                                            รายละเอียด
+                                        </button>
+                                    </td>
+                                    {{-- 0=รอตรวจสอบ, 1=ไม่ผ่าน/ปรับปรุงครั้งที่ 1, 2=ไม่ผ่าน/ปรับปรุงครั้งที่ 2, 3=ไม่ผ่าน/ปรับปรุงครั้งที่ 3, 4=ผ่าน, 5=ยกเลิก --}}
+                                    <td>
+                                        @if ($items->research_status == 0)
+                                            รอตรวจสอบ
+                                        @elseif ($items->research_status == 1)
+                                            ไม่ผ่าน/ปรับปรุงครั้งที่ 1
+                                        @elseif ($items->research_status == 2)
+                                            ไม่ผ่าน/ปรับปรุงครั้งที่ 2
+                                        @elseif ($items->research_status == 3)
+                                            ไม่ผ่าน/ปรับปรุงครั้งที่ 3
+                                        @elseif ($items->research_status == 4)
+                                            ผ่าน
+                                        @elseif ($items->research_status == 5)
+                                            ยกเลิก
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                            <button class="btn btn-warning me-md-1" type="button">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                แก้ไข
+                                            </button>
+                                            <button class="btn btn-danger" type="button">
+                                                <i class="fa-solid fa-xmark"></i>
+                                                ยกเลิก
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
         </div>
     </div>
 

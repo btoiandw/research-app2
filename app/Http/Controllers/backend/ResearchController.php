@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller as Controller;
 use App\Models\sendResearch;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Redirect;
 
 class ResearchController extends Controller
 {
@@ -57,15 +59,15 @@ class ResearchController extends Controller
     public function store(Request $request)
     {
         //
-        /* $validation = $request->validate(
+        $validation = $request->validate(
             [
                 'year_research' => 'required|max:4',
                 'research_nameTH' => 'required|unique:research,research_th',
                 'research_nameEN' => 'required|unique:research,research_en',
                 'researcher' => 'required',
                 'researcher.*' => 'required',
-                'faculty' => 'required',
-                'faculty.*' => 'required',
+                //'faculty' => 'required',
+                //'faculty.*' => 'required', 
                 'role-research' => 'required',
                 'role-research.*' => 'required',
                 'pc' => 'required',
@@ -89,8 +91,8 @@ class ResearchController extends Controller
                 'research_nameEN.required' => 'โปรดระบุชื่อโครงร่างภาษาอังกฤษ',
                 'researcher.required' => 'โปรดระบุชื่อนักวิจัย',
                 'researcher.*.required' => 'โปรดระบุชื่อนักวิจัย',
-                'faculty.required' => 'โปรดระบุสังกัด/คณะ',
-                'faculty.*.required' => 'โปรดระบุสังกัด/คณะ',
+                //'faculty.required' => 'โปรดระบุสังกัด/คณะ',
+                //'faculty.*.required' => 'โปรดระบุสังกัด/คณะ', 
                 'role-research.required' => 'โปรดระบุบทบาทในการวิจัย',
                 'role-research.*.required' => 'โปรดระบุบทบาทในการวิจัย',
                 'pc.required' => 'โปรดระบุร้อยละบทบาทในการวิจัย',
@@ -111,13 +113,13 @@ class ResearchController extends Controller
                 'word.mimes' => 'โปรดระบุไฟล์ word เท่านั้น',
                 'pdf.mimes' => 'โปรดระบุเป็นไฟล์ pdf เท่านั้น'
             ]
-        ); */
+        );
 
         $type = $request->type;
         //$cType = count($type);
         $allType = array();
         if (count($request->type) > 1) {
-            $allType = $type[0] . "," . $type[1];
+            $allType = $type[0] . "_" . $type[1];
         } else {
             $allType = $type;
         }
@@ -130,16 +132,16 @@ class ResearchController extends Controller
         //dd($type,$allType,$request->all());
         $re_id = DB::table('research')->count();
         if ($re_id == 0) {
-            $id = 1;
+            $id_re = 1;
         } else {
-            $id = $re_id + 1;
+            $id_re = $re_id + 1;
         }
         //dd($id);
         $reYear = $request->year_research;
         $status = 0; //รอการตรวจสอบ
 
         //หา id user ตามชื่อที่กรอกมา
-        $result = array();
+
         $rc = $request->researcher;
         $us = array();
         $result = DB::table('users')->whereIn('name', $rc)->get('id'); //whereIn ใช้กับ where array
@@ -179,51 +181,90 @@ class ResearchController extends Controller
                     $eNamew = explode('.', $name);
                     $infow = end($eNamew);
                     //mix name+status to file name
-                    $fileName_w = $id . "_" . $status . "." . $infow; //ทำการรวมตัวแปร $id กับ $status และ $infow
+                    $fileName_w = $id_re . "_" . $status . "." . $infow; //ทำการรวมตัวแปร $id กับ $status และ $infow
                     //แยกชื่ออกจากนามสกุลไฟล์ pdf
                     $eNamep = explode('.', $namep);
                     $infop = end($eNamep);
-                    $fileName_p = $id . "_" . $status . "." . $infop;
+                    $fileName_p = $id_re . "_" . $status . "." . $infop;
 
-                    $path = 'uploads/research/' . $reYear . '/' . $id;
+                    $path = 'uploads/research/' . $reYear . '/' . $id_re;
                     //$filew->move('uploads/research/'.$reYear.'/'.$id_re, $fileName_w);
                     if ($filew->move($path, $fileName_w)) { //move=>เซฟในโฟลเดอร์ ''=>''แรกชื่อโฟลเดอร์ $name=>ชื่อไฟล์  ->จะอยู่ในโฟลเดอร์ public
                         if ($filep->move($path, $fileName_p)) {
-                            $post = new Research();
-                            $post->research_id = $id;
-                            $post->research_th = $request->research_nameTH;
-                            $post->research_en = $request->research_nameEN;
-                            $post->research_source_id = $request->source_id;
-                            $post->type_research_id = $allType;
-                            $post->keyword = $request->keyword;
-                            $post->date_research_start = $request->sdate;
-                            $post->date_research_end = $request->edate;
-                            $post->research_area = $area;
-                            $post->budage_research = $request->budage;
-                            $post->word_file = $fileName_w;
-                            $post->pdf_file = $fileName_p;
-                            $post->research_status = $status;
-                            $post->year_research = $reYear;
-                           
 
-                            foreach($request->researcher as $name){
-                                DB::insert('insert into send_research(research_id,id) values(?,?,?)',$id,[$name],$pc);
+
+                            DB::beginTransaction();
+                            try {
+                                DB::insert(
+                                    'insert into research (research_id, research_th,research_en,research_source_id,type_research_id,keyword,date_research_start,date_research_end,research_area,budage_research,word_file,pdf_file,research_status,year_research) values (?, ?,?, ?,?, ?,?, ?,?, ?,?, ?,?, ?)',
+                                    [
+                                        $id_re,
+                                        $request->research_nameTH,
+                                        $request->research_nameEN,
+                                        $request->source_id,
+                                        $allType,
+                                        $request->keyword,
+                                        $request->sdate,
+                                        $request->edate,
+                                        $area,
+                                        $request->budage,
+                                        $fileName_w,
+                                        $fileName_p,
+                                        $reYear,
+                                        $status
+                                    ]
+                                );
+
+                                /* for ($i = 0; $i < sizeof($rc); $i++) {
+                                    DB::insert('insert into send_research (research_id,id,pc) values (?, ?,?)', [$id_re, $result[$i], $request->pc[$i]]);
+                                } */
+                                //dd($post);
+                                DB::commit();
+                                Alert::success('insert successfully!.');
+                                return redirect()->route('user.dashboard');
+                            } catch (Exception $e) {
+                                dd('error', $e);
                             }
 
-                            /* $send_user->research_id = $id;
-                            $send_user->id = $result;
-                            $send_user->pc = $request->pc; */
-                            $post->save();
-                            //$send_user->save();
-
-                            //dd($user_fac, $result, $send_user, $post, $request->all());
+                            /* for ($i = 0; $i < sizeof($rc); $i++) {
+                                $data = [
+                                    'research_id' => $id_re,
+                                    'id' => $result[$i],
+                                    'pc' => $request->pc[$i]
+                                ];
+                                /* $send = new sendResearch();
+                                $send-> = ;
+                                $send-> = ;
+                                $send-> = ; 
+                            }
+                            DB::beginTransaction();
+                            try {
+                                $post->save();
+                                //sendResearch::insert($data);
+                                DB::commit();
+                                Alert::success('insert successfully!.');
+                                return redirect()->route('user.dashboard');
+                            } catch (Exception $e) {
+                                
+                                DB::rollBack();
+                                Alert::error('insert fail');
+                                return redirect()->back();
+                            } */
                         }
                     }
                 }
             }
         }
 
-        //dd($user_fac);
+        //
+
+        //$send = array();
+
+
+        //dd($user_fac, $result, $send_user, $post, $request->all());
+
+        //dd($send, $post);
+
     }
 
     /**

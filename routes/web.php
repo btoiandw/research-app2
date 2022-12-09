@@ -48,7 +48,7 @@ Route::group([
     'middleware'=>['Isuser'],
     'namespace'=>'App\Http\Controllers\backend'
 ], function(){
-    Route::get('dashboard',[UserController::class,'index'])->name('user.dashboard');
+    Route::get('dashboard',[UserController::class,'showResearch'])->name('user.dashboard');
     Route::resource('research','ResearchController');
     //Route::post('insert-research',[UserController::class,'insertResearch'])->name('insert-research');
 });

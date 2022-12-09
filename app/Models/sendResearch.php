@@ -9,11 +9,14 @@ class sendResearch extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
-        'id'=>'array',
+    protected $fillable = [
+        'id',
         'research_id',
         'pc'
     ];
-
-    
+    /* protected $casts = [
+        'id' => 'array',
+        'research_id' => 'array',
+        'pc' => 'array'
+    ]; */
 }
