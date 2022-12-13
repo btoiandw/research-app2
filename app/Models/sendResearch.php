@@ -9,6 +9,8 @@ class sendResearch extends Model
 {
     use HasFactory;
 
+    protected $table=['send_research'];
+
     protected $fillable = [
         'id',
         'research_id',

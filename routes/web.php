@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\backend\DetailResearch;
+use App\Http\Controllers\DetailResearch as ControllersDetailResearch;
 use App\Http\Controllers\DirectorController;
 
 /*
@@ -22,7 +24,7 @@ use App\Http\Controllers\DirectorController;
 }); */
 
 Route::get('/', function(){
-    return view('loading');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -37,10 +39,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group([
     'prefix'=>'admin',
-    'middleware'=>['IsAdmin']
+    'middleware'=>['IsAdmin'],
+    'namespace'=>'App\Http\Controllers\backend'
 ], function(){
-    Route::get('dashboard',[AdminController::class,'index'])->name('admin.dashboard');
-    Route::get('profile',[AdminController::class,'profile'])->name('admin.profile');
+    Route::get('dashboard','AdminController@index')->name('admin.dashboard');
+    Route::resource('admin','AdminController');
+    //Route::get('profile',[AdminController::class,'profile'])->name('admin.profile');
+    
+    //Route::get('detail/{id}',[AdminController::class,'showDetail'])->name('show-detail');
 });
 
 Route::group([

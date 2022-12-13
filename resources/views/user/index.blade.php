@@ -32,14 +32,15 @@
 
             @if (! $list_res->isEmpty())
                 <div class="card">
-                    <table class="table table-hover text-center">
+                    <table class="table table-hover text-center justify-content-center">
                         <thead>
-                            <tr>
+                            <tr align="center">
                                 <th scope="col">ลำดับ</th>
                                 <th scope="col">ชื่อโครงร่างงานวิจัย</th>
-                                <th scope="col">รายละเอียด</th>
-                                <th scope="col">สถานะ</th>
-                                <th scope="col">จัดการ</th>
+                                <th scope="col" width="200px">บทบาทในงานวิจัย</th>
+                                <th scope="col" width="150px">รายละเอียด</th>
+                                <th scope="col" width="150px">สถานะ</th>
+                                <th scope="col" width="200px">จัดการ</th>
 
                             </tr>
                         </thead>
@@ -49,15 +50,21 @@
                             @endphp
                             @foreach ($list_res as $items)
                                 <tr>
-                                    <td>
+                                    <th>
                                         {{ $i++ }}
-                                    </td>
+                                    </th>
                                     <td>
                                         {{ $items->research_th }}
                                     </td>
                                     <td>
+                                        @if ($items->pc >= 50)
+                                            หัวหน้าโครงการวิจัย
+                                        @else
+                                            ผู้ร่วมวิจัย
+                                        @endif
+                                    </td>
+                                    <td>
                                         <button class="btn btn-secondary">
-
                                             รายละเอียด
                                         </button>
                                     </td>

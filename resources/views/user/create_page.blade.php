@@ -38,8 +38,8 @@
 
 
             <div class="row justify-content-center">
-                <div class="card box-z">
-                    <div class="card-header" style="background-color: #fff;">
+                {{-- <div class="card box-z">
+                    <div class="card-header" style="background-color: #fff;"> --}}
                         <div class="row justify-content-around align-items-center">
                             <div class="col-4">
                                 <h4 class=" text-dark">เพิ่มโครงร่างงานวิจัย</h4>
@@ -51,7 +51,7 @@
                             </div>
                         </div>
 
-                    </div>
+                   {{--  </div> --}}
                     <form id="form-insert" name="form-insert" method="POST" action="{{ route('research.store') }}"
                         enctype="multipart/form-data">
                         {{ csrf_field() }}
@@ -305,7 +305,7 @@
                                 <input type="submit" value="ยืนยัน" name="submit" class="btn btn-primary">
                             </div>
                     </form>
-                </div>
+                {{-- </div> --}}
             </div>
         </div>
     </div>

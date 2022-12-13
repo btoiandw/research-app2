@@ -10,6 +10,8 @@ class ResearchSource extends Model
 {
     use HasFactory;
 
+    //protected $table = ['research_sources'];
+
     protected $fillable = [
         'research_sources_id',
         'research_source_name',
@@ -18,7 +20,8 @@ class ResearchSource extends Model
         'ex_research',
     ];
 
-    public function research(){
-        return $this->belongsTo(Research::class,'research_source_id','research_source_id');
+    public function research()
+    {
+        return $this->belongsTo(Research::class, 'research_source_id', 'research_source_id');
     }
 }

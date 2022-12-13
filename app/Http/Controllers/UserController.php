@@ -23,7 +23,7 @@ class UserController extends Controller
     public function showResearch()
     {
         $list_res = DB::table('research')
-                        ->select('research.*')
+                        ->select('research.*','send_research.*','users.*')
                         ->join('send_research','research.research_id','=','send_research.research_id')
                         ->join('users','send_research.id','=','users.id')
                         ->whereIn('send_research.id',Auth::user())

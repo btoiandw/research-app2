@@ -193,38 +193,49 @@ class ResearchController extends Controller
                         if ($filep->move($path, $fileName_p)) {
 
 
-                            DB::beginTransaction();
-                            try {
-                                DB::insert(
-                                    'insert into research (research_id, research_th,research_en,research_source_id,type_research_id,keyword,date_research_start,date_research_end,research_area,budage_research,word_file,pdf_file,research_status,year_research) values (?, ?,?, ?,?, ?,?, ?,?, ?,?, ?,?, ?)',
-                                    [
-                                        $id_re,
-                                        $request->research_nameTH,
-                                        $request->research_nameEN,
-                                        $request->source_id,
-                                        $allType,
-                                        $request->keyword,
-                                        $request->sdate,
-                                        $request->edate,
-                                        $area,
-                                        $request->budage,
-                                        $fileName_w,
-                                        $fileName_p,
-                                        $reYear,
-                                        $status
-                                    ]
-                                );
+                            /* DB::beginTransaction();
+                            try { */
+                            DB::insert(
+                                'insert into research (research_id, research_th,research_en,research_source_id,type_research_id,keyword,date_research_start,date_research_end,research_area,budage_research,word_file,pdf_file,research_status,year_research) values (?, ?,?, ?,?, ?,?, ?,?, ?,?, ?,?, ?)',
+                                //$op = 
+                                [
+                                    $id_re,
+                                    $request->research_nameTH,
+                                    $request->research_nameEN,
+                                    $request->source_id,
+                                    $allType,
+                                    $request->keyword,
+                                    $request->sdate,
+                                    $request->edate,
+                                    $area,
+                                    $request->budage,
+                                    $fileName_w,
+                                    $fileName_p,
+                                    $reYear,
+                                    $status
+                                ]
 
-                                /* for ($i = 0; $i < sizeof($rc); $i++) {
-                                    DB::insert('insert into send_research (research_id,id,pc) values (?, ?,?)', [$id_re, $result[$i], $request->pc[$i]]);
-                                } */
-                                //dd($post);
-                                DB::commit();
-                                Alert::success('insert successfully!.');
-                                return redirect()->route('user.dashboard');
-                            } catch (Exception $e) {
-                                dd('error', $e);
+
+                            );
+                            for ($i = 0; $i < sizeof($rc); $i++) {
+                                DB::insert(
+                                    'insert into send_research (research_id,id,pc) values (?, ?,?)',
+                                    $ur=
+                                    [$id_re, $result[$i], $request->pc[$i]]
+                                );
                             }
+
+                            //dd($op,$ur);
+
+
+                            //dd($post);
+                            DB::commit();
+                            Alert::success('insert successfully!.');
+                            return redirect()->route('user.dashboard');
+                            /* } catch (Exception $e) {
+                                //dd('error', $e);
+                                DB::rollBack();
+                            } */
 
                             /* for ($i = 0; $i < sizeof($rc); $i++) {
                                 $data = [
