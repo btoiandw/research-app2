@@ -62,11 +62,13 @@ class AdminController extends Controller
         /* $data_id = DB::table('research')->where('research_id', '=', $id)->get();
         $send = DB::select('select id from send_research where research_id = ?', [$id]); */
         $data = DB::table('research')
-            ->select('research.*', 'send_research.*', 'users.*')
+            ->select('research.*', 'send_research.*', 'users.*','research_sources.*','faculties.*')
             ->join('send_research', 'research.research_id', '=', 'send_research.research_id')
+            ->join('research_sources','research.research_source_id','=','research_sources.research_sources_id')
             ->join('users', 'send_research.id', '=', 'users.id')
+            ->join('faculties','users.organization_id','=','faculties.id')
             ->where('research.research_id', $id)
-            ->first();
+            ->get();
 
         /* $dq = $data->map(function ($da,$key) {
             return [

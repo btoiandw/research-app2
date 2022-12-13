@@ -21,20 +21,7 @@
                 {{-- <a class="btn btn-primary" href="{{ route('research.index') }}">เพิ่มโครงร่างงานวิจัย</a> --}}
             </div>
         </div>
-        {{-- <div class="row col-md-12 mb-3">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <div class="col-rt-3 equal-height">
-                    <div class="sb-example-3">
-                        <!-- partial:index.partial.html -->
-                        <div class="search__container">
-                            <input class="search__input" type="text" placeholder="Search">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div> --}}
-
+        
         <div class="row justify-content-center">
             @if (!$list_res->isEmpty())
                 <div class="card">
