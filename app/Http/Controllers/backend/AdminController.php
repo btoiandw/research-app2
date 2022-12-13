@@ -29,6 +29,22 @@ class AdminController extends Controller
         return view('admin.index', compact('list_res'));
     }
 
+    public function viewFilePDF($id){
+        //dd($id);
+        $p=DB::table('research')->select('*')->where('research_id','=',$id)->get();
+        $pdf=$p[0]->pdf_file;
+        $path='uploads/research/'.$p[0]->year_research.'/'.$p[0]->research_id;
+        $file=$path.'/'.$pdf;
+        return response()->file($file);
+    }
+    public function viewFileWord($id){
+        $p=DB::table('research')->select('*')->where('research_id','=',$id)->get();
+        $word=$p[0]->word_file;
+        $path='uploads/research/'.$p[0]->year_research.'/'.$p[0]->research_id;
+        $file=$path.'/'.$word;
+        return response()->file($file);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -58,9 +74,7 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
-        /* $data_id = DB::table('research')->where('research_id', '=', $id)->get();
-        $send = DB::select('select id from send_research where research_id = ?', [$id]); */
+        
         $data = DB::table('research')
             ->select('research.*', 'send_research.*', 'users.*','research_sources.*','faculties.*')
             ->join('send_research', 'research.research_id', '=', 'send_research.research_id')
@@ -69,23 +83,8 @@ class AdminController extends Controller
             ->join('faculties','users.organization_id','=','faculties.id')
             ->where('research.research_id', $id)
             ->get();
-
-        /* $dq = $data->map(function ($da,$key) {
-            return [
-                'id'=>$da->research_id,
-                'nameTH'=>$da->research_th,
-
-            ];
-        }); */
-
-        //$dq=$data->pluck('research_id','research_th');
-        //$sUser=DB::select('select * from users where id = ?', [$send]);
-        //dd($data);
-        //dd($dq->all());
-        //return 
         return view('admin.show-detail',['data'=>$data]);
-        //return redirect()->route('admin.dashboard',['data_id'=>$data_id]);
-        //return view('admin.show-detail',['data_id'=>$data_id]);
+        
     }
 
     /**

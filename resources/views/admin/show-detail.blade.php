@@ -30,7 +30,7 @@
                 </div>
                 <div class="mb-3 row">
 
-                    <label class="col-form-label">รายชื่อนักวิจัย</label>
+                    <label class="col-form-label fw-bold">รายชื่อนักวิจัย</label>
                     <div class="card-body pt-0">
                         <table class="table table-responsive" id="tableTap" name="tableTap">
                             <thead align="center">
@@ -116,8 +116,8 @@
 
                     <div class="mb-3 row">
                         <div class="d-grid gap-2 d-md-flex mx-auto">
-                            <a class="btn btn-warning" href="uploads/research/{{ $data[0]->year_research }}/{{ $data[0]->research_id }}/{{ $data[0]->word_file }}" target="_blank">WORD FILE</a>
-                            <a class="btn btn-warning" href="uploads/research/{{ $data[0]->year_research }}/{{ $data[0]->research_id }}/{{ $data[0]->pdf_file }}" target="_blank">PDF FILE</a>
+                            <a class="btn btn-warning" href="{{ route('view-word',$data[0]->research_id)}}" target="_blank">WORD FILE</a>
+                            <a class="btn btn-warning" href="{{ route('view-pdf',$data[0]->research_id)}}" target="_blank">PDF FILE</a>
                         </div>
                     </div>
                 </div>
@@ -128,5 +128,5 @@
             </div>
         </div>
     </div>
-
+   
 @endsection

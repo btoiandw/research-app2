@@ -44,6 +44,8 @@ Route::group([
 ], function(){
     Route::get('dashboard','AdminController@index')->name('admin.dashboard');
     Route::resource('admin','AdminController');
+    Route::get('view/pdf/{id}','AdminController@viewFilePDF')->name('view-pdf');
+    Route::get('view/word/{id}','AdminController@viewFileWord')->name('view-word');
     //Route::get('profile',[AdminController::class,'profile'])->name('admin.profile');
     
     //Route::get('detail/{id}',[AdminController::class,'showDetail'])->name('show-detail');
