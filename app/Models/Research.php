@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Research extends Model
 {
     use HasFactory;
-    protected $table=['research'];
-
+    protected $table = ['research'];
+    protected $primary = [
+        'research_id',
+        'date_upload_file',
+    ];
     protected $fillable = [
         'research_id',
         'date_upload_file',
@@ -29,10 +32,12 @@ class Research extends Model
         'year_research'
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsToMany(User::class);
     }
-    public function source(){
-        return $this->hasOne(ResearchSource::class,'research_source_id','research_source_id');
+    public function source()
+    {
+        return $this->hasOne(ResearchSource::class, 'research_source_id', 'research_source_id');
     }
 }

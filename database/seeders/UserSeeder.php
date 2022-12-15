@@ -59,6 +59,34 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('123456'),
                 'role' => '0',
                 'organization_id'=>'30'
+            ],
+            [
+                'name' => 'ผศ.ดร.ฆัมภิชา ตันติสันติสม',
+                'email' => 'khumphicha@gmail.com',
+                'password' => bcrypt('123456'),
+                'role' => '2',
+                'organization_id'=>30
+            ],
+            [
+                'name' => 'ผศ.พรหมเมศ วีระพันธ์',
+                'email' => 'Phrommet@gmail.com',
+                'password' => bcrypt('123456'),
+                'role' => '2',
+                'organization_id'=>30
+            ],
+            [
+                'name' => 'ผศ.บุณยกฤต รัตนพันธุ์',
+                'email' => 'boonyakrit.kpru@gmail.com',
+                'password' => bcrypt('123456'),
+                'role' => '2',
+                'organization_id'=>35
+            ],
+            [
+                'name' => 'ผศ.ดร.ชญาดา กลิ่นจันทร์',
+                'email' => 'chayada.aor@gmail.com',
+                'password' => bcrypt('123456'),
+                'role' => '2',
+                'organization_id'=>36
             ]
         ];
         foreach($user as $key => $value){

@@ -42,7 +42,7 @@
 
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="AssessmentResults"
-                                    id="AssessmentResults3" value="ผ่าน" disabled>
+                                    id="AssessmentResults3" value="ผ่าน" {{-- disabled --}}>
                                 <label class="form-check-label" for="AssessmentResults3">ผ่าน</label>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                     <div class="mb-3 row">
                         <label class="col-sm-2 col-form-label fw-bold">ข้อเสนอแนะ</label>
                         <div class="col-sm-10">
-                            <textarea onkeyup="suggestion()" class="form-control" name="suggestion" id="suggestion" rows="20"></textarea>
+                            <textarea onkeyup="sugges()" class="form-control" name="suggestion" id="suggestion" rows="20"></textarea>
                         </div>
                     </div>
 
@@ -62,7 +62,8 @@
                         </div>
                     </div>
 
-                    <div class=" card-footer d-grid gap-2 d-md-flex justify-content-md-center" style="background-color: #fff">
+                    <div class=" card-footer d-grid gap-2 d-md-flex justify-content-md-center"
+                        style="background-color: #fff">
                         <a href="{{ route('admin.dashboard') }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
                         <button class="btn btn-success" type="button">บันทึก</button>
                     </div>
@@ -70,9 +71,11 @@
             </div>
         </div>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
+        integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        function suggestion(val) {
+        function sugges(val) {
             var x = document.getElementById("suggestion");
             //x.value = x.value.toUpperCase();
             console.log("value is: " + x.value);

@@ -83,10 +83,10 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <button class="btn btn-success">
+                                        <a href="{{ route('view-director',$items->research_id) }}" class="btn btn-success">
                                             <i class="fa-solid fa-plus"></i>
                                             กรรมการ
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -97,39 +97,4 @@
         </div>
 
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-    <!-- Script -->
-    {{-- <script type='text/javascript'>
-        $(document).ready(function() {
-
-            $('#empTable').on('click', '.viewdetails', function() {
-                var empid = $(this).attr('data-id');
-
-                if (empid > 0) {
-
-                    // AJAX request
-                    var url = "{{ route('show', [':empid']) }}";
-                    url = url.replace(':empid', empid);
-
-                    // Empty modal data
-                    $('#tblempinfo tbody').empty();
-
-                    $.ajax({
-                        url: url,
-                        dataType: 'json',
-                        success: function(response) {
-
-                            // Add employee details
-                            $('#tblempinfo tbody').html(response.html);
-
-                            // Display Modal
-                            $('#empModal').modal('show');
-                        }
-                    });
-                }
-            });
-
-        });
-    </script> --}}
 @endsection

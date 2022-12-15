@@ -14,6 +14,7 @@ class CreateSendResearchTable extends Migration
     public function up()
     {
         Schema::create('send_research', function (Blueprint $table) {
+            $table->integer('send_id')->primary();
             $table->integer('research_id');
             $table->integer('id');
             $table->integer('pc');

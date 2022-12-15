@@ -47,6 +47,7 @@ Route::group([
     Route::get('view/pdf/{id}','AdminController@viewFilePDF')->name('view-pdf');
     Route::get('view/word/{id}','AdminController@viewFileWord')->name('view-word');
     Route::get('refer/{id}','AdminController@viewReferDe')->name('view-refer');
+    Route::get('add/director/{id}','AdminController@viewAddDirector')->name('view-director');
     //Route::get('profile',[AdminController::class,'profile'])->name('admin.profile');
     
     //Route::get('detail/{id}',[AdminController::class,'showDetail'])->name('show-detail');

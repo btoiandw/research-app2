@@ -74,7 +74,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id=0)
+    public function show($id = 0)
     {
         $data = DB::table('research')
             ->select('research.*', 'send_research.*', 'users.*', 'research_sources.*', 'faculties.*')
@@ -122,16 +122,37 @@ class AdminController extends Controller
         //
     }
 
-    public function viewReferDe($id){
+    public function viewReferDe($id)
+    {
         $data = DB::table('research')
-            ->select('research.*', 'send_research.*', 'users.*', 'research_sources.*', 'faculties.*')
+            ->select('research.*'/* , 'send_research.*', 'users.*', 'research_sources.*', 'faculties.*' */)
             ->join('send_research', 'research.research_id', '=', 'send_research.research_id')
-            ->join('research_sources', 'research.research_source_id', '=', 'research_sources.research_sources_id')
+            /* ->join('research_sources', 'research.research_source_id', '=', 'research_sources.research_sources_id')
             ->join('users', 'send_research.id', '=', 'users.id')
-            ->join('faculties', 'users.organization_id', '=', 'faculties.id')
+            ->join('faculties', 'users.organization_id', '=', 'faculties.id') */
             ->where('research.research_id', $id)
             ->get();
 
         return view('admin.refer-de', ['data' => $data]);
+    }
+
+    public function viewAddDirector($id)
+    {
+        $data = DB::table('research')
+            ->select('research.*'/* , 'send_research.*', 'users.*', 'research_sources.*', 'faculties.*' */)
+            ->join('send_research', 'research.research_id', '=', 'send_research.research_id')
+            /* ->join('research_sources', 'research.research_source_id', '=', 'research_sources.research_sources_id')
+            ->join('users', 'send_research.id', '=', 'users.id')
+            ->join('faculties', 'users.organization_id', '=', 'faculties.id') */
+            ->where('research.research_id', $id)
+            ->get();
+
+        $list_direc = DB::table('users')
+                        ->select('users.*','faculties.*')
+                        ->join('faculties','users.organization_id','=','faculties.id')
+                        ->where('role', '=', '2')
+                        ->get();
+
+        return view('admin.add-director', ['data' => $data, 'list_direc' => $list_direc]);
     }
 }
