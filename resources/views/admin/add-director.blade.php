@@ -64,6 +64,12 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class=" card-footer d-grid gap-2 d-md-flex justify-content-md-center"
+                        style="background-color: #fff">
+                        <a href="{{ route('admin.dashboard') }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
+                        <button class="btn btn-success" type="button">บันทึก</button>
+                    </div>
                 </form>
             </div>
 

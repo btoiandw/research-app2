@@ -16,7 +16,8 @@
 
         <div class="row justify-content-center">
             <div class=" card col-12" style="border: none">
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="{{ route('refer-add') }}" method="post" enctype="multipart/form-data">
+                    @csrf
                     <input type="hidden" name="research_id" id="research_id" value="{{ $data[0]->research_id }}">
                     <div class="mb-3 row">
                         <label class="col-sm-3 col-form-label fw-bold">ชื่อโครงร่างงานวิจัยภาษาไทย</label>
@@ -50,7 +51,7 @@
                     <div class="mb-3 row">
                         <label class="col-sm-2 col-form-label fw-bold">ข้อเสนอแนะ</label>
                         <div class="col-sm-10">
-                            <textarea onkeyup="sugges()" class="form-control" name="suggestion" id="suggestion" rows="20"></textarea>
+                            <textarea {{-- onkeyup="sugges()" --}} class="form-control" name="suggestion" id="suggestion" rows="20"></textarea>
                         </div>
                     </div>
 
@@ -65,7 +66,7 @@
                     <div class=" card-footer d-grid gap-2 d-md-flex justify-content-md-center"
                         style="background-color: #fff">
                         <a href="{{ route('admin.dashboard') }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
-                        <button class="btn btn-success" type="button">บันทึก</button>
+                        <input class="btn btn-success" type="submit" name="submit" id="submit" value="บันทึก">
                     </div>
                 </form>
             </div>
@@ -74,7 +75,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
         integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
+   {{--  <script>
         function sugges(val) {
             var x = document.getElementById("suggestion");
             //x.value = x.value.toUpperCase();
@@ -84,5 +85,5 @@
                 file.style.display = "none";
             }
         }
-    </script>
+    </script> --}}
 @endsection

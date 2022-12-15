@@ -135,6 +135,16 @@ class AdminController extends Controller
 
         return view('admin.refer-de', ['data' => $data]);
     }
+    public function addRefer(Request $request)
+    {
+        //DB::update('update research set research_summary_feedback = ?,research_status=? where research_id = ?', [$request->suggestion,'1',$$request->research_id]);
+        $data = DB::table('research')
+            ->where('research_id', $request->research_id)
+           //->update(['research_summary_feedback'=>$request->suggestion,'research_status'=>'1'])
+            ->get();
+        dd($request->all(), $data[0]);
+        return redirect()->route('admin.dashboard');
+    }
 
     public function viewAddDirector($id)
     {
@@ -148,10 +158,10 @@ class AdminController extends Controller
             ->get();
 
         $list_direc = DB::table('users')
-                        ->select('users.*','faculties.*')
-                        ->join('faculties','users.organization_id','=','faculties.id')
-                        ->where('role', '=', '2')
-                        ->get();
+            ->select('users.*', 'faculties.*')
+            ->join('faculties', 'users.organization_id', '=', 'faculties.id')
+            ->where('role', '=', '2')
+            ->get();
 
         return view('admin.add-director', ['data' => $data, 'list_direc' => $list_direc]);
     }
