@@ -73,9 +73,7 @@
                                 value="{{ $data[0]->type_research_id }}">
                         </div>
                     </div>
-                    <div class="mb-3 row">
 
-                    </div>
                     <div class="mb-3 row">
                         <label class="col-sm-2 col-form-label fw-bold">คำสำคัญ</label>
                         <div class="col-sm-9">
@@ -116,17 +114,23 @@
 
                     <div class="mb-3 row">
                         <div class="d-grid gap-2 d-md-flex mx-auto">
-                            <a class="btn btn-warning" href="{{ route('view-word',$data[0]->research_id)}}" target="_blank">WORD FILE</a>
-                            <a class="btn btn-warning" href="{{ route('view-pdf',$data[0]->research_id)}}" target="_blank">PDF FILE</a>
+                            <a class="btn btn-warning" href="{{ route('view-word', $data[0]->research_id) }}"
+                                target="_blank">WORD FILE</a>
+                            <a class="btn btn-warning" href="{{ route('view-pdf', $data[0]->research_id) }}"
+                                target="_blank">PDF FILE</a>
                         </div>
                     </div>
                 </div>
                 <div class=" card-footer d-grid gap-2 d-md-flex justify-content-md-center">
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
-                    <button class="btn btn-success" type="button">เพิ่มข้อเสนอแนะ</button>
+                    <form action="" method="post">
+                        <input type="hidden" name="research_id" id="research_id" value="{{ $data[0]->research_id }}">
+                        <a href="{{ route('view-refer',$data[0]->research_id) }}" class="btn btn-info" type="button">เพิ่มข้อเสนอแนะ</a>
+                    </form>
+
                 </div>
             </div>
         </div>
     </div>
-   
+
 @endsection

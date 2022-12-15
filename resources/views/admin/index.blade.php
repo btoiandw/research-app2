@@ -21,11 +21,11 @@
                 {{-- <a class="btn btn-primary" href="{{ route('research.index') }}">เพิ่มโครงร่างงานวิจัย</a> --}}
             </div>
         </div>
-        
+
         <div class="row justify-content-center">
             @if (!$list_res->isEmpty())
                 <div class="card">
-                    <table class="table table-hover text-center justify-content-center">
+                    <table class="table table-hover text-center justify-content-center" id='empTable'>
                         <thead>
                             <tr align="center">
                                 <th scope="col">ลำดับ</th>
@@ -53,7 +53,7 @@
 
                                     <td>
                                         <a href="{{ route('admin.show', $items->research_id) }}" {{-- data-bs-target="#show" --}}
-                                            class="btn btn-secondary" {{-- data-bs-toggle="modal" --}}>
+                                            class="btn btn-secondary {{-- viewdetails' data-id='{{ $items->research_id }}' --}} " {{-- data-bs-toggle="modal" --}}>
                                             {{--  <button > --}}
                                             รายละเอียด
                                             {{-- </button> --}}
@@ -76,10 +76,11 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button class="btn btn-info">
+                                        <a href="{{ route('view-refer', $items->research_id) }}" class="btn btn-info"
+                                            {{-- data-bs-toggle="modal" data-bs-target="#refer" --}}>
                                             <i class="fa-solid fa-plus"></i>
                                             ข้อเสนอแนะ
-                                        </button>
+                                        </a>
                                     </td>
                                     <td>
                                         <button class="btn btn-success">
@@ -87,18 +88,6 @@
                                             กรรมการ
                                         </button>
                                     </td>
-                                    {{-- <td>
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                                            <button class="btn btn-warning me-md-1" type="button">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                                แก้ไข
-                                            </button>
-                                            <button class="btn btn-danger" type="button">
-                                                <i class="fa-solid fa-xmark"></i>
-                                                ยกเลิก
-                                            </button>
-                                        </div>
-                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
@@ -108,25 +97,39 @@
         </div>
 
     </div>
-    {{-- start detail modal --}}
-    <div class="modal fade" id="show" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1"aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    <!-- Script -->
+    {{-- <script type='text/javascript'>
+        $(document).ready(function() {
 
+            $('#empTable').on('click', '.viewdetails', function() {
+                var empid = $(this).attr('data-id');
+
+                if (empid > 0) {
+
+                    // AJAX request
+                    var url = "{{ route('show', [':empid']) }}";
+                    url = url.replace(':empid', empid);
+
+                    // Empty modal data
+                    $('#tblempinfo tbody').empty();
+
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        success: function(response) {
+
+                            // Add employee details
+                            $('#tblempinfo tbody').html(response.html);
+
+                            // Display Modal
+                            $('#empModal').modal('show');
+                        }
+                    });
+                }
+            });
+
+        });
+    </script> --}}
 @endsection

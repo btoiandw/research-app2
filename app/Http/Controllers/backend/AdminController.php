@@ -29,19 +29,21 @@ class AdminController extends Controller
         return view('admin.index', compact('list_res'));
     }
 
-    public function viewFilePDF($id){
+    public function viewFilePDF($id)
+    {
         //dd($id);
-        $p=DB::table('research')->select('*')->where('research_id','=',$id)->get();
-        $pdf=$p[0]->pdf_file;
-        $path='uploads/research/'.$p[0]->year_research.'/'.$p[0]->research_id;
-        $file=$path.'/'.$pdf;
+        $p = DB::table('research')->select('*')->where('research_id', '=', $id)->get();
+        $pdf = $p[0]->pdf_file;
+        $path = 'uploads/research/' . $p[0]->year_research . '/' . $p[0]->research_id;
+        $file = $path . '/' . $pdf;
         return response()->file($file);
     }
-    public function viewFileWord($id){
-        $p=DB::table('research')->select('*')->where('research_id','=',$id)->get();
-        $word=$p[0]->word_file;
-        $path='uploads/research/'.$p[0]->year_research.'/'.$p[0]->research_id;
-        $file=$path.'/'.$word;
+    public function viewFileWord($id)
+    {
+        $p = DB::table('research')->select('*')->where('research_id', '=', $id)->get();
+        $word = $p[0]->word_file;
+        $path = 'uploads/research/' . $p[0]->year_research . '/' . $p[0]->research_id;
+        $file = $path . '/' . $word;
         return response()->file($file);
     }
 
@@ -72,19 +74,18 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id=0)
     {
-        
         $data = DB::table('research')
-            ->select('research.*', 'send_research.*', 'users.*','research_sources.*','faculties.*')
+            ->select('research.*', 'send_research.*', 'users.*', 'research_sources.*', 'faculties.*')
             ->join('send_research', 'research.research_id', '=', 'send_research.research_id')
-            ->join('research_sources','research.research_source_id','=','research_sources.research_sources_id')
+            ->join('research_sources', 'research.research_source_id', '=', 'research_sources.research_sources_id')
             ->join('users', 'send_research.id', '=', 'users.id')
-            ->join('faculties','users.organization_id','=','faculties.id')
+            ->join('faculties', 'users.organization_id', '=', 'faculties.id')
             ->where('research.research_id', $id)
             ->get();
-        return view('admin.show-detail',['data'=>$data]);
-        
+
+        return view('admin.show-detail', ['data' => $data]);
     }
 
     /**
@@ -119,5 +120,18 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function viewReferDe($id){
+        $data = DB::table('research')
+            ->select('research.*', 'send_research.*', 'users.*', 'research_sources.*', 'faculties.*')
+            ->join('send_research', 'research.research_id', '=', 'send_research.research_id')
+            ->join('research_sources', 'research.research_source_id', '=', 'research_sources.research_sources_id')
+            ->join('users', 'send_research.id', '=', 'users.id')
+            ->join('faculties', 'users.organization_id', '=', 'faculties.id')
+            ->where('research.research_id', $id)
+            ->get();
+
+        return view('admin.refer-de', ['data' => $data]);
     }
 }
