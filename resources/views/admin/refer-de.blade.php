@@ -48,19 +48,30 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="mb-3 row">
+                        <div class="col-sm-10">
+                            <div class="form-check form-check-inline">
+                                <input onclick="sugges()" class="form-check-input" type="checkbox" id="mustAddFile"
+                                    name="mustAddFile" value="mustAddFile">
+                                <label class="form-check-label text-danger"
+                                    for="mustAddFile">ต้องการเพิ่มไฟล์ข้อเสนอแนะ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row " id="suggestion">
                         <label class="col-sm-2 col-form-label fw-bold">ข้อเสนอแนะ</label>
                         <div class="col-sm-10">
-                            <textarea {{-- onkeyup="sugges()" --}} class="form-control" name="suggestion" id="suggestion" rows="20"></textarea>
+                            <textarea {{-- onkeyup="sugges()" --}} class="form-control" name="suggestion" {{-- id="suggestion" --}} rows="20"></textarea>
                         </div>
                     </div>
 
                     <div class="mb-3 row" id="suggestionFile">
                         <label class="col-sm-2 col-form-label fw-bold">ไฟล์ข้อเสนอแนะ</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                             <input type="file" class="form-control" name="suggestionFile" id="suggestionFile"
-                                rows="20"></ด>
+                                rows="20">
+                            </ด>
                         </div>
                     </div>
 
@@ -76,15 +87,48 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
         integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   {{--  <script>
-        function sugges(val) {
-            var x = document.getElementById("suggestion");
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.all.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            document.getElementById("suggestionFile").style.display = "none";
+        });
+
+        function sugges() {
+            var ck = document.getElementById('mustAddFile');
+            var x = document.getElementById("suggestionFile");
+            var z = document.getElementById("suggestion");
             //x.value = x.value.toUpperCase();
-            console.log("value is: " + x.value);
-            var file = document.getElementById("suggestionFile");
-            if (x.value !== '') {
-                file.style.display = "none";
+
+            if (ck.checked == true) {
+                console.log('true');
+                Swal.fire({
+                   /*  title: 'คุณแน่ใจ?', */
+                    text: "คุณต้องการเพิ่มไฟล์ข้อเสนอแนะ ?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'ใช่',
+                    cancelButtonText: 'ไม่',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        x.style.display = "";
+                        z.style.display = "none";
+                    }
+                    if (result.dismiss) {
+                        //console.log('false');
+                        ck.checked = false;
+                        x.style.display = "none";
+                        z.style.display = "";
+                    }
+                })
+
+            } else {
+                //console.log('false');
+                x.style.display = "none";
+                z.style.display = "";
             }
+
         }
-    </script> --}}
+    </script>
 @endsection

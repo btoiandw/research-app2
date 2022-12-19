@@ -55,7 +55,7 @@
                                     <a href="{{ route('view-direc3',$items->research_id) }}" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i></a>
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-secondary">รายละเอียด</a>
+                                    <a href="{{ route('send-detail',$items->research_id) }}" class="btn btn-secondary">รายละเอียด</a>
                                 </td>
                                 <td>
                                     <a {{-- href="{{ route('view-refer', $items->research_id) }}" --}} class="btn btn-info"

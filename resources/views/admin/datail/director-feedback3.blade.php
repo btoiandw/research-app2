@@ -29,7 +29,8 @@
                 <div class="card-header" style="background-color: #fff;font-size:20px;">
                     กรรมการท่านที่ 3 
                 </div>
-                <div class=" card-body">{{ $data_user[0]->name }}
+                <div class=" card-body">
+                    {{ $data_user[0]->name }}
                     <div class="mb-3 row">
                         <label class="col-sm-3 col-form-label fw-bold">ชื่อโครงร่างงานวิจัยภาษาไทย</label>
                         <div class="col-sm-9">

@@ -28,6 +28,7 @@ class Research extends Model
         'word_file',
         'pdf_file',
         'research_summary_feedback',
+        'summary_feedback_file',
         'research_status',
         'year_research'
     ];

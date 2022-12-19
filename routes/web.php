@@ -55,6 +55,7 @@ Route::group([
     Route::get('view-director-feedback-1/{id}', 'FeedbackController@direcFeed1')->name('view-direc1');
     Route::get('view-director-feedback-2/{id}', 'FeedbackController@direcFeed2')->name('view-direc2');
     Route::get('view-director-feedback-3/{id}', 'FeedbackController@direcFeed3')->name('view-direc3');
+    Route::get('send-detail/{id}','AdminController@sendDetail')->name('send-detail');
 });
 
 Route::group([

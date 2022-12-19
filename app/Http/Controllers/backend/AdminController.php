@@ -19,14 +19,14 @@ class AdminController extends Controller
     public function index()
     {
         //
-/*         $feed = DB::table('tb_feedback')
+        /*         $feed = DB::table('tb_feedback')
             ->select('research_id', DB::raw('count(research_id) as total'))
             ->orderBy('research_id', 'asc')
             ->groupBy('research_id')
             ->get();
         for ($i = 0; $i < sizeof($feed); $i++) {
             $fee[$i] = $feed[$i]->research_id;
-        }*/ 
+        }*/
 
         $list_res = DB::table('research')
             ->select('research.*')->distinct('research_id')
@@ -187,7 +187,7 @@ class AdminController extends Controller
                 $id_feedback[$i] = $c_data[$i] + 1;
             } */
             DB::insert('insert into tb_feedback (id,research_id,date_send_referess) values (?,?,?)', [$request->referees[$i], $id, $now]);
-            DB::update('update research set research_status = ? where research_id = ?', ['6',$id]);;
+            DB::update('update research set research_status = ? where research_id = ?', ['6', $id]);;
         }
 
         return redirect()->route('admin.dashboard');
@@ -206,5 +206,22 @@ class AdminController extends Controller
             ->groupBy('tb_feedback.research_id')
             ->get();
         return view('admin.pages.re-send-director', ['data_send' => $data_send]);
+    }
+
+    public function sendDetail($id)
+    {
+        $data = DB::table('tb_feedback')
+            ->select('tb_feedback.*', 'research.*', 'users.*')
+            ->join('research', 'tb_feedback.research_id', '=', 'research.research_id')
+            ->join('users', 'tb_feedback.id', '=', 'users.id')
+            ->where('tb_feedback.research_id', '=', $id)
+            ->get();
+        $data_send = DB::table('send_research')
+            ->select('send_research.*', 'users.*', 'faculties.*')
+            ->join('users', 'send_research.id', '=', 'users.id')
+            ->join('faculties', 'users.organization_id', '=', 'faculties.id')
+            ->where('send_research.research_id', '=', $id)
+            ->get();
+        return view('admin.datail.detail-send', ['id' => $id, 'data' => $data, 'data_send' => $data_send]);
     }
 }
