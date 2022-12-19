@@ -1,16 +1,25 @@
 @section('title', 'RDI-KPRU Admin ')
-@extends('layouts.admin')
+@extends('layouts.director')
 
 @section('content')
     <div class="container-fluid py-5 px-lg-5">
         <div class="row justify-content-around mb-4 align-items-center">
-            <div class="col-6 ">
-                <h3>รายละเอียดโครงร่างงานวิจัย</h3>
-                <label>ปี&nbsp;{{ $data[0]->year_research }}&nbsp;&nbsp;id:{{ $data[0]->research_id }}</label>
-                <span>วันเวลาที่ส่ง:&nbsp;{{ $data[0]->date_upload_file }}</span>
+            <div class="col-4 ">
+                <label style="font-size: 20px;" class=" fw-bold">รายละเอียดโครงร่างงานวิจัย</label>
+                <label>รหัสโครงร่างงานวิจัย : {{ $data[0]->research_id }}</label>
             </div>
             <div class="col-4 text-end">
-
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <div class="col-rt-3 equal-height">
+                        <div class="sb-example-3">
+                            <!-- partial:index.partial.html
+                                                <div class="search__container">
+                                                    <input class="search__input" type="text" placeholder="Search">
+                                                </div>-->
+                        </div>
+                    </div>
+                </div>
+                {{-- <a class="btn btn-primary" href="{{ route('research.index') }}">เพิ่มโครงร่างงานวิจัย</a> --}}
             </div>
         </div>
 
@@ -36,8 +45,6 @@
                                 <tr>
                                     <th width="400px">ชื่อ-นามสกุล</th>
                                     <th width="600px">สังกัด/คณะ</th>
-                                    <th width="300px">บทบาทในการวิจัย</th>
-                                    <th width="350px">ร้อยละบทบาทในการวิจัย</th>
                                 </tr>
                             </thead>
                             <tbody id="roleResearch">
@@ -47,12 +54,6 @@
                                         echo '<tr>';
                                         echo '<td align="left">' . $data[$i]->name . '</td>';
                                         echo '<td align="left">' . $data[$i]->major . '&nbsp;&nbsp;' . $data[$i]->organizational . '</td>';
-                                        if ($data[$i]->pc >= 50) {
-                                            echo '<td align="center">หัวหน้าโครงการวิจัย</td>';
-                                        } else {
-                                            echo '<td align="center">ผู้ร่วมโครงการวิจัย</td>';
-                                        }
-                                        echo '<td align="center">' . $data[$i]->pc . '</td>';
                                         echo '</tr>';
                                     }
                                 @endphp
@@ -121,15 +122,15 @@
                     </div>
                 </div>
                 <div class=" card-footer d-grid gap-2 d-md-flex justify-content-md-center">
-                    <a href="{{ route('admin.dashboard') }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
+                    <a href="{{ route('director.dashboard') }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
                     <form action="" method="post">
                         <input type="hidden" name="research_id" id="research_id" value="{{ $data[0]->research_id }}">
-                        <a href="{{ route('view-refer',$data[0]->research_id) }}" class="btn btn-info" type="button">เพิ่มข้อเสนอแนะ</a>
+                        <a href="" class="btn btn-info"
+                            type="button">เพิ่มข้อเสนอแนะ</a>
                     </form>
 
                 </div>
             </div>
         </div>
     </div>
-
 @endsection

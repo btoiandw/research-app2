@@ -70,7 +70,8 @@ Route::group([
 Route::group([
     'prefix' => 'director',
     'middleware' => ['IsDirector'],
-
+    'namespace' => 'App\Http\Controllers\backend',
 ], function () {
-    Route::get('dashboard', [DirectorController::class, 'index'])->name('director.dashboard');
+    Route::get('dashboard', 'DirectorController@index')->name('director.dashboard');
+    Route::get('view-detail/{id}', 'DirectorController@indexDetailView')->name('detail-view');
 });

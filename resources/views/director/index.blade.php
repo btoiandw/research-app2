@@ -45,7 +45,7 @@
                                 <td>{{ $items->research_th }}</td>
                                 <td>{{ $items->research_source_name }}</td>
                                 <td>{{ $items->date_send_referess }}</td>
-                                <td><button class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i>&nbsp;<span>รายละเอียด</span></button></td>
+                                <td><a href="{{ route('detail-view',$items->research_id) }}" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i>&nbsp;<span>รายละเอียด</span></a></td>
                                 <td><button class="btn btn-info"><i class="fa-solid fa-plus"></i>&nbsp;<span>ผลประเมิน/ข้อเสนอแนะ</span></button></td>
                             </tr>
                         @endforeach
