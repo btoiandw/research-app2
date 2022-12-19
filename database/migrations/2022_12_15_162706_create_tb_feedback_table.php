@@ -14,13 +14,14 @@ class CreateTbFeedbackTable extends Migration
     public function up()
     {
         Schema::create('tb_feedback', function (Blueprint $table) {
-            $table->integer('feedback_id')->primary();
             $table->integer('id');
             $table->integer('research_id');
-            $table->dateTime('date_send_referess');
-            $table->text('feedback');
-            $table->string('Assessment_result');
-            $table->dateTime('Date_feedback_research');
+            $table->dateTime('date_send_referess')->nullable();
+            $table->string('status')->default(0);
+            /*0=รอตรวจสอบ ,1=ตรวจสอบแล้ว*/
+            $table->text('feedback')->nullable();
+            $table->string('Assessment_result')->nullable();
+            $table->dateTime('Date_feedback_research')->nullable();
             $table->timestamps();
         });
     }

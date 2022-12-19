@@ -44,7 +44,7 @@
 </head>
 <style>
     .nav {
-        background-color: #2192FF;
+        background-color: #439A97;
         -webkit-box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.5);
         box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.5);
         list-style: none;
@@ -72,7 +72,7 @@
 
     .nav-text:hover {
         display: block;
-        background-color: #BCCEF8;
+        background-color: #EFEFEF;
         color: rgb(35, 35, 35);
 
     }
@@ -145,24 +145,15 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link nav-text" href="{{ route('admin.dashboard') }}">{{ __('หน้าหลัก') }}</a>
+                                <a class="nav-link nav-text" href="{{ route('director.dashboard') }}">{{ __('หน้าหลัก') }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link nav-text" href="{{ route('admin.dashboard') }}">{{ __('แอดมิน') }}</a>
-                            </li>
-
                             <li class="nav-item text dropdown">
                                 <a class="nav-link nav-text dropdown-toggle" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">{{ __('โครงร่างงานวิจัย') }}</a>
                                 <ul class="dropdown-menu dropdown-link">
-                                    {{-- <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">หน้าหลัก</a></li> --}}
-                                    <li><a class="dropdown-item" href="#">แหล่งทุน</a></li>
-                                    <li><a class="dropdown-item" href="#">รายการส่งมอบ</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('send-director-pages') }}">โครงร่างที่เสนอพิจารณา</a></li>
-                                    <li><a class="dropdown-item" href="#">สัญญาทุนวิจัย</a></li>
-                                    <li><a class="dropdown-item" href="#">รายงานงานวิจัย</a></li>
-                                    <li><a class="dropdown-item" href="#">รายงานสรุปทุนวิจัย</a></li>
-
+                                    <li><a class="dropdown-item"
+                                            href="#">โครงร่างที่เสนอพิจารณา</a></li>
+                                    <li><a class="dropdown-item" href="#">โครงร่างงานวิจัยที่ตรวจสอบแล้ว</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">

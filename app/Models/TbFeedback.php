@@ -11,6 +11,6 @@ class TbFeedback extends Model
     protected $table =['tb_feedback'];
 
     protected $fillable = [
-        'feedback_id','id','research_id','feedback','Assessment_result'
+        'id','research_id','feedback','Assessment_result'
     ];
 }

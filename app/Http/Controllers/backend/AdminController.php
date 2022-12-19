@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller as Controller;
 use App\Models\Research;
 use Illuminate\Support\Facades\DB;
+use DateTime;
 
 use Illuminate\Http\Request;
 
@@ -18,14 +19,20 @@ class AdminController extends Controller
     public function index()
     {
         //
+/*         $feed = DB::table('tb_feedback')
+            ->select('research_id', DB::raw('count(research_id) as total'))
+            ->orderBy('research_id', 'asc')
+            ->groupBy('research_id')
+            ->get();
+        for ($i = 0; $i < sizeof($feed); $i++) {
+            $fee[$i] = $feed[$i]->research_id;
+        }*/ 
+
         $list_res = DB::table('research')
             ->select('research.*')->distinct('research_id')
-            //->join('send_research', 'research.research_id', '=', 'send_research.research_id')
-            //->join('users', 'send_research.id', '=', 'users.id')
-
-            /*  ->whereIn('send_research.id',Auth::user()) */
+            ->where('research.research_status', '!=', '6')
             ->get();
-        //dd($list_res);
+        //dd($list_res, $feed, sizeof($feed), $fee);
         return view('admin.index', compact('list_res'));
     }
 
@@ -140,7 +147,7 @@ class AdminController extends Controller
         //DB::update('update research set research_summary_feedback = ?,research_status=? where research_id = ?', [$request->suggestion,'1',$$request->research_id]);
         $data = DB::table('research')
             ->where('research_id', $request->research_id)
-           //->update(['research_summary_feedback'=>$request->suggestion,'research_status'=>'1'])
+            //->update(['research_summary_feedback'=>$request->suggestion,'research_status'=>'1'])
             ->get();
         dd($request->all(), $data[0]);
         return redirect()->route('admin.dashboard');
@@ -158,11 +165,46 @@ class AdminController extends Controller
             ->get();
 
         $list_direc = DB::table('users')
-            ->select('users.*', 'faculties.*')
+            ->select('users.*', 'faculties.organizational', 'major')
             ->join('faculties', 'users.organization_id', '=', 'faculties.id')
             ->where('role', '=', '2')
             ->get();
 
         return view('admin.add-director', ['data' => $data, 'list_direc' => $list_direc]);
+    }
+    public function addDirector(Request $request)
+    {
+        $id = $request->research_id;
+
+
+        $now = new DateTime();
+        //dd($request->all(), $id, sizeof($request->referees), $c_data, $id_feedback,$now);
+        for ($i = 0; $i < sizeof($request->referees); $i++) {
+            /* $c_data[$i] = DB::table('tb_feedback')->count();
+            if ($c_data[$i] == 0) {
+                $id_feedback[$i] = 1;
+            } else {
+                $id_feedback[$i] = $c_data[$i] + 1;
+            } */
+            DB::insert('insert into tb_feedback (id,research_id,date_send_referess) values (?,?,?)', [$request->referees[$i], $id, $now]);
+            DB::update('update research set research_status = ? where research_id = ?', ['6',$id]);;
+        }
+
+        return redirect()->route('admin.dashboard');
+
+        //DB::table('tb_feedback')->insert('feedback_id','id','research_id','date_send_referess');
+
+    }
+
+
+    public function sendDirectorView()
+    {
+        $data_send = DB::table('tb_feedback')
+            ->select('tb_feedback.*', 'research.*', 'users.*')
+            ->join('research', 'tb_feedback.research_id', '=', 'research.research_id')
+            ->join('users', 'tb_feedback.id', '=', 'users.id')
+            ->groupBy('tb_feedback.research_id')
+            ->get();
+        return view('admin.pages.re-send-director', ['data_send' => $data_send]);
     }
 }

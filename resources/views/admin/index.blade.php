@@ -24,6 +24,7 @@
 
         <div class="row justify-content-center">
             @if (!$list_res->isEmpty())
+
                 <div class="card">
                     <table class="table table-hover text-center justify-content-center" id='empTable'>
                         <thead>
@@ -59,7 +60,7 @@
                                             {{-- </button> --}}
                                         </a>
                                     </td>
-                                    {{-- 0=รอตรวจสอบ, 1=ไม่ผ่าน/ปรับปรุงครั้งที่ 1, 2=ไม่ผ่าน/ปรับปรุงครั้งที่ 2, 3=ไม่ผ่าน/ปรับปรุงครั้งที่ 3, 4=ผ่าน, 5=ยกเลิก --}}
+                                    {{-- 0=รอตรวจสอบ, 1=ไม่ผ่าน/ปรับปรุงครั้งที่ 1, 2=ไม่ผ่าน/ปรับปรุงครั้งที่ 2, 3=ไม่ผ่าน/ปรับปรุงครั้งที่ 3, 4=ผ่าน, 5=ยกเลิก,6=รอการตวจสอบจากคระกรรมการ --}}
                                     <td>
                                         @if ($items->research_status == 0)
                                             รอตรวจสอบ
@@ -73,6 +74,8 @@
                                             ผ่าน
                                         @elseif ($items->research_status == 5)
                                             ยกเลิก
+                                        @elseif ($items->research_status == 6)
+                                            รอการตวจสอบจากคระกรรมการ
                                         @endif
                                     </td>
                                     <td>
@@ -83,7 +86,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('view-director',$items->research_id) }}" class="btn btn-success">
+                                        <a href="{{ route('view-director', $items->research_id) }}" class="btn btn-success">
                                             <i class="fa-solid fa-plus"></i>
                                             กรรมการ
                                         </a>
