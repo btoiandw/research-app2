@@ -1,4 +1,4 @@
-@section('title', 'RDI-KPRU Admin ')
+@section('title', 'RDI-KPRU Director ')
 @extends('layouts.director')
 
 @section('content')
@@ -29,15 +29,15 @@
                         <tr align="center">
                             <th scope="col">ลำดับ</th>
                             <th scope="col">ชื่อโครงร่างงานวิจัย</th>
-                            <th scope="col" >แหล่งทุน</th>
-                            <th scope="col">วันที่ส่ง</th>
-                            <th scope="col" >รายละเอียด</th>
-                            <th scope="col">ผลประเมิน/ข้อเสนอแนะ</th>
+                            <th scope="col" width="150px">แหล่งทุน</th>
+                            <th scope="col" width="200px">วันที่ส่ง</th>
+                            <th scope="col" width="150px">รายละเอียด</th>
+                            <th scope="col" width="250px">ผลประเมิน/ข้อเสนอแนะ</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
-                            $i=1
+                            $i = 1;
                         @endphp
                         @foreach ($data as $items)
                             <tr>
@@ -45,8 +45,11 @@
                                 <td>{{ $items->research_th }}</td>
                                 <td>{{ $items->research_source_name }}</td>
                                 <td>{{ $items->date_send_referess }}</td>
-                                <td><a href="{{ route('detail-view',$items->research_id) }}" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i>&nbsp;<span>รายละเอียด</span></a></td>
-                                <td><button class="btn btn-info"><i class="fa-solid fa-plus"></i>&nbsp;<span>ผลประเมิน/ข้อเสนอแนะ</span></button></td>
+                                <td><a href="{{ route('detail-view', $items->research_id) }}" class="btn btn-secondary"><i
+                                            class="fa-solid fa-circle-info"></i>&nbsp;<span>รายละเอียด</span></a></td>
+                                <td><a href="{{ route('add-feed-pages', $items->research_id) }}" class="btn btn-info"><i
+                                            class="fa-solid fa-plus"></i>&nbsp;<span>ผลประเมิน/ข้อเสนอแนะ</span></a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

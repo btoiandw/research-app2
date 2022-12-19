@@ -1,4 +1,4 @@
-@section('title', 'RDI-KPRU Admin ')
+@section('title', 'RDI-KPRU Director ')
 @extends('layouts.director')
 
 @section('content')
@@ -125,10 +125,9 @@
                     <a href="{{ route('director.dashboard') }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
                     <form action="" method="post">
                         <input type="hidden" name="research_id" id="research_id" value="{{ $data[0]->research_id }}">
-                        <a href="" class="btn btn-info"
+                        <a href="{{ route('add-feed-pages',$data[0]->research_id) }}" class="btn btn-info"
                             type="button">เพิ่มข้อเสนอแนะ</a>
                     </form>
-
                 </div>
             </div>
         </div>

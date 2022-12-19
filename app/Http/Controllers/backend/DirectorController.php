@@ -31,4 +31,9 @@ class DirectorController extends Controller
         //dd($data);
         return view('director.pages.detail-view',['id'=>$id,'data'=>$data]);
     }
+
+    public function addFeedback($id){
+        $list = DB::table('research')->where('research_id','=',$id)->get();
+        return view('director.pages.add-feedback',['list'=>$list]);
+    }
 }

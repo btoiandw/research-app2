@@ -74,4 +74,5 @@ Route::group([
 ], function () {
     Route::get('dashboard', 'DirectorController@index')->name('director.dashboard');
     Route::get('view-detail/{id}', 'DirectorController@indexDetailView')->name('detail-view');
+    Route::get('pages-feedback/{id}','DirectorController@addFeedback')->name('add-feed-pages');
 });
