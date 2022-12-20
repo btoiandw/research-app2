@@ -70,7 +70,7 @@
                                     {{-- /*0=รอตรวจสอบ, 1=ไม่ผ่าน/ปรับปรุงครั้งที่ 1, 2=ไม่ผ่าน/ปรับปรุงครั้งที่ 2, 3=ไม่ผ่าน/ปรับปรุงครั้งที่ 3, 4=ผ่าน, 5=ยกเลิก,6=รอการตวจสอบจากคระกรรมการ,7=ไม่ผ่านการตรวจสอบโดยแอดมิน */ --}}
                                     <td>
                                         @if ($items->research_status == 0)
-                                            รอตรวจสอบ
+                                            รอการตรวจสอบ
                                         @elseif ($items->research_status == 1)
                                             ไม่ผ่าน/ปรับปรุงครั้งที่ 1
                                         @elseif ($items->research_status == 2)
@@ -82,21 +82,21 @@
                                         @elseif ($items->research_status == 5)
                                             ยกเลิก
                                         @elseif ($items->research_status == 6)
-                                            รอการตรวจสอบจากผู้ประเมิน
+                                            รอการตรวจสอบ
                                         @elseif ($items->research_status == 7)
                                             ไม่ผ่านการประเมินโดยแอดมิน
                                         @endif
                                     </td>
                                     <td>
                                         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                                            <button class="btn btn-warning me-md-1" type="button">
+                                            <a href="" class="btn btn-warning me-md-1" type="button">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                                 แก้ไข
-                                            </button>
-                                            <button class="btn btn-danger" type="button">
+                                            </a>
+                                            <a href="" class="btn btn-danger" type="button">
                                                 <i class="fa-solid fa-xmark"></i>
                                                 ยกเลิก
-                                            </button>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>

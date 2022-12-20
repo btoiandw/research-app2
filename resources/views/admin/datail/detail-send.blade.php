@@ -39,6 +39,34 @@
                             <textarea type="text" readonly class="form-control-plaintext" value="">{{ $data[2]->research_en }}</textarea>
                         </div>
                     </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label fw-bold">สถานะโครงร่างงานวิจัย</label>
+                        <div class="col-sm-9" align="left">
+                            @if ($data[2]->research_status == 0)
+                                <input type="text" readonly class="form-control-plaintext" value="รอการตรวจสอบ">
+                            @elseif ($data[2]->research_status == 1)
+                                <input type="text" readonly class="form-control-plaintext"
+                                    value="ไม่ผ่าน/ปรับปรุงครั้งที่ 1">
+                            @elseif ($data[2]->research_status == 2)
+                                <input type="text" readonly class="form-control-plaintext"
+                                    value="ไม่ผ่าน/ปรับปรุงครั้งที่ 2">
+                            @elseif ($data[2]->research_status == 3)
+                                <input type="text" readonly class="form-control-plaintext"
+                                    value="ไม่ผ่าน/ปรับปรุงครั้งที่ 3">
+                            @elseif ($data[2]->research_status == 4)
+                                <input type="text" readonly class="form-control-plaintext" value="ผ่าน">
+                            @elseif ($data[2]->research_status == 5)
+                                <input type="text" readonly class="form-control-plaintext" value="ยกเลิก">
+                            @elseif ($data[2]->research_status == 6)
+                                <input type="text" readonly class="form-control-plaintext"
+                                    value="รอการตรวจสอบจากกรรมการ">
+                            @elseif ($data[2]->research_status == 7)
+                                <input type="text" readonly class="form-control-plaintext"
+                                    value="ไม่ผ่านการประเมินโดยแอดมิน">
+                            @endif
+
+                        </div>
+                    </div>
 
                     <div class="mb-3 row">
                         <label class="col-form-label fw-bold">รายชื่อนักวิจัย</label>
@@ -61,7 +89,7 @@
                                             $x = 1 + $i;
                                             echo '<th>' . $x . '</th>';
                                             echo '<td>' . $data_send[$i]->name . '</td>';
-                                            echo '<td>' . $data_send[$i]->major .'&nbsp;&nbsp;'. $data_send[$i]->organizational.'</td>';
+                                            echo '<td>' . $data_send[$i]->major . '&nbsp;&nbsp;' . $data_send[$i]->organizational . '</td>';
                                             echo '<td align="center">' . $data_send[$i]->pc . '</td>';
                                             echo '</tr>';
                                         }
@@ -89,8 +117,8 @@
                                         for ($i = 0; $i < count($data); $i++) {
                                             echo '<tr>';
                                             echo '<td scope="col" align="left">' . $data[$i]->name . '</td>';
-                                            echo '<td scope="col" align="center">'.$data[$i]->date_send_referess.'</td>';
-                                            echo '<td scope="col" align="center">'.$data[$i]->Date_feedback_research.'</td>';
+                                            echo '<td scope="col" align="center">' . $data[$i]->date_send_referess . '</td>';
+                                            echo '<td scope="col" align="center">' . $data[$i]->Date_feedback_research . '</td>';
                                             echo '<td scope="col" align="center">
                                                 <button type="button" class="btn btn-warning">แกไข</button>
                                                 </td>';

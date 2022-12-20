@@ -65,9 +65,9 @@ Route::group([
 ], function () {
     Route::get('dashboard', [UserController::class, 'showResearch'])->name('user.dashboard');
     Route::get('view-detail/{id}',[UserController::class,'detailResearch'])->name('view-datail');
-
-
     Route::resource('research', 'ResearchController');
+    Route::get('view/pdf/{id}', [UserController::class, 'viewFilePDF'])->name('view-pdf');
+    Route::get('view/word/{id}', [UserController::class, 'viewFileWord'])->name('view-word');
     //Route::post('insert-research',[UserController::class,'insertResearch'])->name('insert-research');
 });
 
