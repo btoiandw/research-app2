@@ -192,7 +192,6 @@ class ResearchController extends Controller
                     if ($filew->move($path, $fileName_w)) { //move=>เซฟในโฟลเดอร์ ''=>''แรกชื่อโฟลเดอร์ $name=>ชื่อไฟล์  ->จะอยู่ในโฟลเดอร์ public
                         if ($filep->move($path, $fileName_p)) {
 
-
                             /* DB::beginTransaction();
                             try { */
                             DB::insert(

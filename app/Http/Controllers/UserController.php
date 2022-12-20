@@ -32,6 +32,10 @@ class UserController extends Controller
         return view('user.index', ['list_res' => $list_res]);
     }
 
+    public function detailResearch($id){
+        dd($id);
+    }
+
     /* public function create_research(){
         return 
     } */

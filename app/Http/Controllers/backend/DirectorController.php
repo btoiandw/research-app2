@@ -36,4 +36,15 @@ class DirectorController extends Controller
         $list = DB::table('research')->where('research_id','=',$id)->get();
         return view('director.pages.add-feedback',['list'=>$list]);
     }
+
+    public function addFeed(Request $request){
+        
+        $submit = $request->submit;
+        /* if($submit == "บันทึก"){
+            DB::update();
+        }elseif ($submit == "ยืนยัน") {
+            DB::update();
+        } */
+        dd($request->all(),$submit);
+    }
 }

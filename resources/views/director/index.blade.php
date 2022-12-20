@@ -48,7 +48,7 @@
                                 <td><a href="{{ route('detail-view', $items->research_id) }}" class="btn btn-secondary"><i
                                             class="fa-solid fa-circle-info"></i>&nbsp;<span>รายละเอียด</span></a></td>
                                 <td><a href="{{ route('add-feed-pages', $items->research_id) }}" class="btn btn-info"><i
-                                            class="fa-solid fa-plus"></i>&nbsp;<span>ผลประเมิน/ข้อเสนอแนะ</span></a>
+                                            class="fa-solid fa-plus"></i>&nbsp;<span>ประเมิน</span></a>
                                 </td>
                             </tr>
                         @endforeach

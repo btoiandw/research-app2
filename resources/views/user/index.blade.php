@@ -30,7 +30,7 @@
 
         <div class="row justify-content-center">
 
-            @if (! $list_res->isEmpty())
+            @if (!$list_res->isEmpty())
                 <div class="card">
                     <table class="table table-hover text-center justify-content-center">
                         <thead>
@@ -39,14 +39,13 @@
                                 <th scope="col">ชื่อโครงร่างงานวิจัย</th>
                                 <th scope="col" width="200px">บทบาทในงานวิจัย</th>
                                 <th scope="col" width="150px">รายละเอียด</th>
-                                <th scope="col" width="150px">สถานะ</th>
+                                <th scope="col" width="300px">สถานะ</th>
                                 <th scope="col" width="200px">จัดการ</th>
-
                             </tr>
                         </thead>
                         <tbody>
                             @php
-                                ($i=1)
+                            $i = 1;
                             @endphp
                             @foreach ($list_res as $items)
                                 <tr>
@@ -64,11 +63,11 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button class="btn btn-secondary">
+                                        <a href="{{ route('view-datail',$items->research_id) }}" class="btn btn-secondary">
                                             รายละเอียด
-                                        </button>
+                                        </a>
                                     </td>
-                                    {{-- 0=รอตรวจสอบ, 1=ไม่ผ่าน/ปรับปรุงครั้งที่ 1, 2=ไม่ผ่าน/ปรับปรุงครั้งที่ 2, 3=ไม่ผ่าน/ปรับปรุงครั้งที่ 3, 4=ผ่าน, 5=ยกเลิก --}}
+                                    {{-- /*0=รอตรวจสอบ, 1=ไม่ผ่าน/ปรับปรุงครั้งที่ 1, 2=ไม่ผ่าน/ปรับปรุงครั้งที่ 2, 3=ไม่ผ่าน/ปรับปรุงครั้งที่ 3, 4=ผ่าน, 5=ยกเลิก,6=รอการตวจสอบจากคระกรรมการ,7=ไม่ผ่านการตรวจสอบโดยแอดมิน */ --}}
                                     <td>
                                         @if ($items->research_status == 0)
                                             รอตรวจสอบ
@@ -82,6 +81,10 @@
                                             ผ่าน
                                         @elseif ($items->research_status == 5)
                                             ยกเลิก
+                                        @elseif ($items->research_status == 6)
+                                            รอการตรวจสอบจากผู้ประเมิน
+                                        @elseif ($items->research_status == 7)
+                                            ไม่ผ่านการประเมินโดยแอดมิน
                                         @endif
                                     </td>
                                     <td>

@@ -64,6 +64,9 @@ Route::group([
     'namespace' => 'App\Http\Controllers\backend'
 ], function () {
     Route::get('dashboard', [UserController::class, 'showResearch'])->name('user.dashboard');
+    Route::get('view-detail/{id}',[UserController::class,'detailResearch'])->name('view-datail');
+
+
     Route::resource('research', 'ResearchController');
     //Route::post('insert-research',[UserController::class,'insertResearch'])->name('insert-research');
 });
@@ -76,4 +79,5 @@ Route::group([
     Route::get('dashboard', 'DirectorController@index')->name('director.dashboard');
     Route::get('view-detail/{id}', 'DirectorController@indexDetailView')->name('detail-view');
     Route::get('pages-feedback/{id}','DirectorController@addFeedback')->name('add-feed-pages');
+    Route::post('add-feed','DirectorController@addFeed')->name('add-feed');
 });

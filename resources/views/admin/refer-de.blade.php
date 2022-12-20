@@ -75,10 +75,10 @@
                         </div>
                     </div>
 
-                    <div class=" card-footer d-grid gap-2 d-md-flex justify-content-md-center"
-                        style="background-color: #fff">
-                        <a href="{{ route('admin.dashboard') }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
-                        <input class="btn btn-success" type="submit" name="submit" id="submit" value="บันทึก">
+                    <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-center">
+                        <input class="btn btn-warning" type="submit" name="submit" value="บันทึก">
+                        <input class="btn btn-success" type="submit" name="submit" value="ยืนยัน">
+                        <a href="{{ url()->previous() }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
                     </div>
                 </form>
             </div>
@@ -102,7 +102,7 @@
             if (ck.checked == true) {
                 console.log('true');
                 Swal.fire({
-                   /*  title: 'คุณแน่ใจ?', */
+                    /*  title: 'คุณแน่ใจ?', */
                     text: "คุณต้องการเพิ่มไฟล์ข้อเสนอแนะ ?",
                     icon: 'warning',
                     showCancelButton: true,
