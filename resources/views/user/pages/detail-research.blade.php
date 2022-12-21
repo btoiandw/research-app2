@@ -117,9 +117,9 @@
 
                     <div class="mb-3 row">
                         <div class="d-grid gap-2 d-md-flex mx-auto">
-                            <a class="btn btn-warning" href="{{ route('view-word', $data_de[0]->research_id) }}"
+                            <a class="btn btn-warning" href="{{ route('userview-word', $data_de[0]->research_id) }}"
                                 target="_blank">WORD FILE</a>
-                            <a class="btn btn-warning" href="{{ route('view-pdf', $data_de[0]->research_id) }}"
+                            <a class="btn btn-warning" href="{{ route('userview-pdf', $data_de[0]->research_id) }}"
                                 target="_blank">PDF FILE</a>
                         </div>
                     </div>

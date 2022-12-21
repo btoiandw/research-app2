@@ -217,7 +217,7 @@ class AdminController extends Controller
             } else {
                 $id_feedback[$i] = $c_data[$i] + 1;
             } */
-            DB::insert('insert into tb_feedback (id,research_id,date_send_referess) values (?,?,?)', [$request->referees[$i], $id, $now]);
+            DB::insert('insert into tb_feedback (id,research_id,date_send_referess,status) values (?,?,?,"รอตรวจสอบ")', [$request->referees[$i], $id, $now]);
             DB::update('update research set research_status = ? where research_id = ?', ['6', $id]);;
         }
 

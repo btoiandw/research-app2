@@ -21,6 +21,7 @@ class CreateTbFeedbackTable extends Migration
             /*0=รอตรวจสอบ ,1=ตรวจสอบแล้ว*/
             $table->text('feedback')->nullable();
             $table->string('Assessment_result')->nullable();
+            $table->string('suggestionFile')->nullable();
             $table->dateTime('Date_feedback_research')->nullable();
             $table->timestamps();
         });

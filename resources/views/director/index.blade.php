@@ -31,6 +31,7 @@
                             <th scope="col">ชื่อโครงร่างงานวิจัย</th>
                             <th scope="col" width="150px">แหล่งทุน</th>
                             <th scope="col" width="200px">วันที่ส่ง</th>
+                            <th scope="col">สถานะ</th>
                             <th scope="col" width="150px">รายละเอียด</th>
                             <th scope="col" width="250px">ผลประเมิน/ข้อเสนอแนะ</th>
                         </tr>
@@ -45,10 +46,20 @@
                                 <td>{{ $items->research_th }}</td>
                                 <td>{{ $items->research_source_name }}</td>
                                 <td>{{ $items->date_send_referess }}</td>
+                                <td>{{ $items->status }}</td>
                                 <td><a href="{{ route('detail-view', $items->research_id) }}" class="btn btn-secondary"><i
                                             class="fa-solid fa-circle-info"></i>&nbsp;<span>รายละเอียด</span></a></td>
-                                <td><a href="{{ route('add-feed-pages', $items->research_id) }}" class="btn btn-info"><i
-                                            class="fa-solid fa-plus"></i>&nbsp;<span>ประเมิน</span></a>
+                                <td>
+                                    @if ($items->status == 'รอตรวจสอบ')
+                                        <a href="{{ route('add-feed-pages', $items->research_id) }}" class="btn btn-info"><i
+                                                class="fa-solid fa-plus"></i>&nbsp;<span>ประเมิน</span></a>
+                                    @elseif ($items->status == 'กำลังตรวจสอบ')
+                                        <a href="{{ route('edit-feed', $items->research_id) }}"
+                                            class="btn btn-warning">ประเมินต่อ</a>
+                                    @elseif ($items->status == 'ตรวจสอบแล้ว')
+                                        <a href="" class="btn btn-success">ดู</a>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach
