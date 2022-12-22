@@ -26,7 +26,7 @@
                     </div>
                     <div class="mb-3 row">
                         <label class="col-sm-2 col-form-label fw-bold">ผลการประเมิน</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-10"onclick="pass()">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="AssessmentResults"
                                     id="AssessmentResults1" value="ไม่ผ่าน" checked>
@@ -73,7 +73,7 @@
                             <input class="btn btn-success" type="submit" name="submit" id="ok" value="ยืนยัน">
                             {{-- status=1 --}}
                         </form>
-                        <a href="{{ route('director.dashboard') }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
                     </div>
                 </form>
 
@@ -100,48 +100,65 @@
 
             //x.value = x.value.toUpperCase();
 
-            if (rb.checked == true) {
+            console.log('false');
+            if (ck.checked == true) {
+                console.log('true');
+                Swal.fire({
+                    text: "คุณต้องการเพิ่มไฟล์ข้อเสนอแนะ ?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'ใช่',
+                    cancelButtonText: 'ไม่',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        x.style.display = "";
+                        z.style.display = "none";
+                        bs.style.display = "none";
+                    }
+                    if (result.dismiss) {
+                        //console.log('false');
+                        ck.checked = false;
+                        x.style.display = "none";
+                        z.style.display = "";
+                        bs.style.display = "";
+                    }
+                })
+
+            } else {
+                //console.log('false');
+                ck.style.display = "";
+                x.style.display = "none";
+                z.style.display = "";
+            }
+
+        }
+
+        function pass() {
+            var rb2 = document.getElementById('AssessmentResults2');
+            var rb1 = document.getElementById('AssessmentResults1');
+            //var rb = document.querySelector('input[id="refers2"]:checked').value;
+            var ck = document.getElementById('mustAddFile');
+            var cf = document.getElementById('checkFile');
+            var x = document.getElementById("suggestionFile");
+            var z = document.getElementById("suggestion");
+            var bs = document.getElementById("save");
+
+            //x.value = x.value.toUpperCase();
+
+            if (rb2.checked == true) {
                 cf.style.display = "none";
                 x.style.display = "none";
                 z.style.display = "none";
                 bs.style.display = "none";
                 console.log('true');
-            } else {
-                console.log('false');
-                if (ck.checked == true) {
-                    console.log('true');
-                    Swal.fire({
-
-                        text: "คุณต้องการเพิ่มไฟล์ข้อเสนอแนะ ?",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'ใช่',
-                        cancelButtonText: 'ไม่',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            x.style.display = "";
-                            z.style.display = "none";
-                            bs.style.display = "none";
-                        }
-                        if (result.dismiss) {
-                            //console.log('false');
-                            ck.checked = false;
-                            x.style.display = "none";
-                            z.style.display = "";
-                            bs.style.display = "";
-                        }
-                    })
-
-                } else {
-                    //console.log('false');
-                    x.style.display = "none";
-                    z.style.display = "";
-                }
             }
-
-
+            if (rb1.checked == true) {
+                cf.style.display = "";
+                bs.style.display = "";
+                sugges();
+            }
         }
     </script>
 @endsection
