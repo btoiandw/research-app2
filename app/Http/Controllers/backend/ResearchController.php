@@ -396,7 +396,7 @@ class ResearchController extends Controller
                         'summary_feedback_file' => $feed_file,
                         'research_status' => $status
                     ]);
-                return redirect()->route('send-director-pages');
+                return redirect()->route('admin.dashboard');
             } elseif ($request->submit = "บันทึก") {
                 DB::table('research')
                     ->where('research_id', $research_id)
@@ -404,7 +404,7 @@ class ResearchController extends Controller
                         'research_summary_feedback' => $feed,
                         'summary_feedback_file' => $feed_file,
                     ]);
-                return redirect()->route('send-director-pages');
+                return redirect()->route('admin.dashboard');
             }
         }
 
@@ -415,7 +415,7 @@ class ResearchController extends Controller
 
                     'research_status' => '4'
                 ]);
-            return redirect()->route('send-director-pages');
+            return redirect()->route('admin.dashboard');
         }
         dd($request->all(), $data[0], $feed, $feed_file, $status);
         //DB::update('update research set research_summary_feedback = ?,research_status=? where research_id = ?', [$request->suggestion,'1',$$request->research_id]);

@@ -233,24 +233,27 @@ class AdminController extends Controller
         $data_send = DB::table('tb_feedback')
             ->select('tb_feedback.*', 'research.*')
             ->join('research', 'tb_feedback.research_id', '=', 'research.research_id')
-            ->where('research.research_status','=','6')
+            ->where('research.research_status', '=', '6')
             ->groupBy('tb_feedback.research_id')
             ->get();
 
-        for ($i = 0; $i < sizeof($data_send); $i++) {
-            $id[$i] = $data_send[$i]->research_id;
+        $data_r = DB::table('research')
+            ->where('research.research_status', '=', '6')
+            ->get();
+        for ($i = 0; $i < sizeof($data_r); $i++) {
             $data_l[$i] = DB::table('tb_feedback')
-                            ->where('research_id', '=', $id[$i])
-                            ->get();
+                ->where('research_id', '=', $data_r[$i]->research_id)
+                ->get();
         }
+
         /* for ($j = 0; $j < sizeof($data_l); $j++) {
             $data_u = DB::table('tb_feedback')
                 ->where('research_id', '=', $data_l[$j]->research_id)
                 ->get();
         } */
 
-        //dd($data_send, $data_l/* , $data_u */);
-        return view('admin.pages.re-send-director', ['data_send' => $data_send, 'data_u' => $data_l]);
+        //dd($data_send, $data_r, $data_l[0]/* , $data_u */);
+        return view('admin.pages.re-send-director', ['data_send' => $data_send, 'data_l' => $data_l[0]]);
     }
 
     public function sendDetail($id)

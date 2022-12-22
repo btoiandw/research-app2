@@ -37,6 +37,7 @@
                             <th scope="col">สัญญาทุน</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @php
                             $i = 1;
@@ -46,23 +47,52 @@
                                 <th>{{ $i++ }}</th>
                                 <td>{{ $items->research_th }}</td>
                                 <td>
-                                    <a href="{{ route('view-direc1', [$items->research_id]) }}" class="btn btn-secondary"><i
-                                            class="fa-solid fa-circle-info"></i></a>
+                                    @if ($data_l[0]->Assessment_result == 'ผ่าน')
+                                        <a href="{{ route('view-direc1', [$items->research_id]) }}"
+                                            class="btn btn-success"><i class="fa-solid fa-circle-info"></i></a>
+                                    @elseif ($data_l[0]->Assessment_result == 'ไม่ผ่าน')
+                                        <a href="{{ route('view-direc1', [$items->research_id]) }}"
+                                            class="btn btn-danger"><i class="fa-solid fa-circle-info"></i></a>
+                                    @else
+                                        <a href="{{ route('view-direc1', [$items->research_id]) }}"
+                                            class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i></a>
+                                    @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('view-direc2', [$items->research_id]) }}" class="btn btn-secondary"><i
-                                            class="fa-solid fa-circle-info"></i></a>
+                                    @if ($data_l[1]->Assessment_result == 'ผ่าน')
+                                        <a href="{{ route('view-direc2', [$items->research_id]) }}"
+                                            class="btn btn-success"><i class="fa-solid fa-circle-info"></i></a>
+                                    @elseif ($data_l[1]->Assessment_result == 'ไม่ผ่าน')
+                                        <a href="{{ route('view-direc2', [$items->research_id]) }}"
+                                            class="btn btn-danger"><i class="fa-solid fa-circle-info"></i></a>
+                                    @else
+                                        <a href="{{ route('view-direc2', [$items->research_id]) }}"
+                                            class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i></a>
+                                    @endif
+                                    {{-- <a href="{{ route('view-direc2', [$items->research_id]) }}" class="btn btn-secondary"><i
+                                            class="fa-solid fa-circle-info"></i></a> --}}
                                 </td>
                                 <td>
-                                    <a href="{{ route('view-direc3', [$items->research_id]) }}" class="btn btn-secondary"><i
-                                            class="fa-solid fa-circle-info"></i></a>
+                                    @if ($data_l[2]->Assessment_result == 'ผ่าน')
+                                        <a href="{{ route('view-direc3', [$items->research_id]) }}"
+                                            class="btn btn-success"><i class="fa-solid fa-circle-info"></i></a>
+                                    @elseif ($data_l[2]->Assessment_result == 'ไม่ผ่าน')
+                                        <a href="{{ route('view-direc3', [$items->research_id]) }}"
+                                            class="btn btn-danger"><i class="fa-solid fa-circle-info"></i></a>
+                                    @else
+                                        <a href="{{ route('view-direc3', [$items->research_id]) }}"
+                                            class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i></a>
+                                    @endif
+                                    {{-- <a href="{{ route('view-direc3', [$items->research_id]) }}" class="btn btn-secondary"><i
+                                            class="fa-solid fa-circle-info"></i></a> --}}
                                 </td>
                                 <td>
+
                                     <a href="{{ route('send-detail', $items->research_id) }}"
                                         class="btn btn-secondary">รายละเอียด</a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('sum-feed',$items->research_id) }}" class="btn btn-info">
+                                    <a href="{{ route('sum-feed', $items->research_id) }}" class="btn btn-info">
                                         <i class="fa-solid fa-plus"></i>
                                         สรุปข้อเสนอแนะ
                                     </a>
@@ -76,5 +106,6 @@
                 </table>
             </div>
         </div>
+
     </div>
 @endsection

@@ -103,6 +103,15 @@
                                         @endif
 
                                     </td>
+                                    @if ($items->research_status == 4)
+                                        <td scope="col">
+                                            <a href="" class="btn btn-dark"
+                                                style="background-color: #4B56D2; border:none">
+                                                <i class="fa-solid fa-file-contract"></i>
+                                                <span>อนุมัติสัญญาทุน</span>
+                                            </a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
