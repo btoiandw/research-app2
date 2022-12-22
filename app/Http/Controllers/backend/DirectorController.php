@@ -19,6 +19,7 @@ class DirectorController extends Controller
             ->join('research', 'tb_feedback.research_id', '=', 'research.research_id')
             ->join('research_sources', 'research.research_source_id', '=', 'research_sources.research_sources_id')
             ->whereIn('id', Auth::user())
+            //->where('tb_feedback.status','!=','ตรวจสอบแล้ว')
             ->get();
         //dd($data);
         return view('director.index', ['data' => $data]);
@@ -47,6 +48,7 @@ class DirectorController extends Controller
     public function addFeed(Request $request)
     {
         $research_id = $request->research_id;
+
         //DB::update('update research set research_summary_feedback = ?,research_status=? where research_id = ?', [$request->suggestion,'1',$$request->research_id]);
         $data = DB::table('research')
             ->where('research_id', '=', $research_id)
@@ -64,7 +66,8 @@ class DirectorController extends Controller
         $suggestion = $request->suggestion;
         $filefeed = $request->file('suggestionFile');
         $now = new DateTime();
-
+        $u = Auth::user()->id;
+        //dd($u,$filefeed);
         if ($suggestion != '') {
             $feedResult = $suggestion;
         } else {
@@ -75,10 +78,11 @@ class DirectorController extends Controller
             $file_name = $filefeed->getClientOriginalName();
             $eNamep = explode('.', $file_name);
             $infop = end($eNamep);
-            $file = $research_id . "_0_Feedback." . $infop;
+
+            $file = $research_id . "_0_" . $u . "_Feedback." . $infop;
             $path = 'uploads/research/' . $reYear . '/' . $research_id; //path save file
 
-            $filefeed->move(public_path($path), $file);
+            $filefeed->move($path, $file);
         } else {
             $file = null;
         }
@@ -156,8 +160,94 @@ class DirectorController extends Controller
             ->whereIn('tb_feedback.id', Auth::user())
             ->where('tb_feedback.research_id', $id)
             ->get();
-        
-        return view('director.pages.edit-refer',['list'=>$data_editfeed]);
+
+        return view('director.pages.edit-refer', ['list' => $data_editfeed]);
         //dd($id, $data_editfeed);
+    }
+
+    public function updateFeed(Request $request)
+    {
+        $research_id = $request->research_id;
+        //DB::update('update research set research_summary_feedback = ?,research_status=? where research_id = ?', [$request->suggestion,'1',$$request->research_id]);
+        $data = DB::table('research')
+            ->where('research_id', '=', $research_id)
+            //->update(['research_summary_feedback'=>$request->suggestion,'research_status'=>'1'])
+            ->get();
+        $data_feed = DB::table('tb_feedback')
+            ->select('tb_feedback.*', 'users.*')
+            ->join('users', 'tb_feedback.id', '=', 'users.id')
+            ->whereIn('tb_feedback.id', Auth::user())
+            ->where('tb_feedback.research_id', $research_id)
+            ->get();
+
+        $submit = $request->submit;
+        $suggestion = $request->suggestion;
+        $now = new DateTime();
+        if ($suggestion != '') {
+            $feedResult = $suggestion;
+        } else {
+            $feedResult = null;
+        }
+        if ($submit == "บันทึก") {
+
+            DB::table('tb_feedback')
+                ->whereIn('id', Auth::user())
+                ->where('research_id', $research_id)
+                ->update(['status' => 'กำลังตรวจสอบ', 'feedback' => $feedResult, 'Assessment_result' => $request->AssessmentResults]);
+
+            return redirect()->route('director.dashboard');
+
+            //DB::update();
+        } elseif ($submit == "ยืนยัน") {
+            /// DB::update();
+
+            DB::table('tb_feedback')
+                ->whereIn('id', Auth::user())
+                ->where('research_id', $research_id)
+                ->update([
+                    'status' => 'ตรวจสอบแล้ว',
+                    'feedback' => $feedResult,
+                    'Assessment_result' => $request->AssessmentResults,
+                    'Date_feedback_research' => $now
+                ]);
+            return redirect()->route('director.dashboard');
+        }
+        //dd($request->all());
+    }
+
+    public function viewFeed($id)
+    {
+
+        //DB::update('update research set research_summary_feedback = ?,research_status=? where research_id = ?', [$request->suggestion,'1',$$request->research_id]);
+        $data = DB::table('research')
+            ->where('research_id', '=', $id)
+            //->update(['research_summary_feedback'=>$request->suggestion,'research_status'=>'1'])
+            ->get();
+        $data_feed = DB::table('tb_feedback')
+            ->select('tb_feedback.*', 'users.*', 'research.*')
+            ->join('users', 'tb_feedback.id', '=', 'users.id')
+            ->join('research', 'tb_feedback.research_id', '=', 'research.research_id')
+            ->whereIn('tb_feedback.id', Auth::user())
+            ->where('tb_feedback.research_id', $id)
+            ->get();
+
+        return view('director.pages.view-detail-feed', ['list' => $data_feed]);
+        //dd($id,  $data_feed[0]);
+    }
+    public function viewFileFeed($id, $name)
+    {
+
+        $p = DB::table('research')->select('*')->where('research_id', '=', $id)->get();
+        $path = 'uploads/research/' . $p[0]->year_research . '/' . $p[0]->research_id;
+        $u = Auth::user()->id;
+        $d = DB::table('tb_feedback')
+            ->where('id', '=', $u)
+            ->where('research_id', '=', $id)
+            ->get();
+        //dd($id, $name,$path,$d);
+        $file_name = $d[0]->suggestionFile;
+
+        $file = $path . '/' . $file_name;
+        return response()->file($file);
     }
 }

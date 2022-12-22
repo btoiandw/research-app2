@@ -16,8 +16,9 @@
 
         <div class="row justify-content-center">
             <div class="card col-sm-12">
-                <form action="{{ route('add-feed') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('update-feed') }}" method="post" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="research_id" id="research_id" value="{{ $list[0]->research_id }}">
                     <div class="mb-3 row">
                         <label class="col-sm-3 col-form-label fw-bold">ชื่อโครงร่างงานวิจัยภาษาไทย</label>
                         <div class="col-sm-9">
@@ -27,34 +28,17 @@
                     <div class="mb-3 row">
                         <label class="col-sm-2 col-form-label fw-bold">ผลการประเมิน</label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class=" form-control-plaintext" name="" id="" value="{{ $list[0]->Assessment_result }}">
-                        </div>
-                    </div>
-                    {{-- <div class="mb-3 row"id="checkFile">
-                        <div class="col-sm-10">
-                            <div class="form-check form-check-inline">
-                                <input " class="form-check-input" type="checkbox" id="mustAddFile"
-                                    name="mustAddFile" value="mustAddFile">
-                                <label class="form-check-label text-danger"
-                                    for="mustAddFile">ต้องการเพิ่มไฟล์ข้อเสนอแนะ</label>
-                            </div>
+                            <label>{{ $list[0]->Assessment_result }}</label>
+                            {{-- <input type="text" readonly class="form-control-plaintext" name="Assessment_result"
+                                id="Assessment_result" value=""> --}}
                         </div>
                     </div>
                     <div class="mb-3 row " id="suggestion">
                         <label class="col-sm-2 col-form-label fw-bold">ข้อเสนอแนะ</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="suggestion"  rows="20"></textarea>
+                            <textarea class="form-control" name="suggestion" rows="20">{{ $list[0]->feedback }}</textarea>
                         </div>
                     </div>
-
-                    <div class="mb-3 row" id="suggestionFile">
-                        <label class="col-sm-2 col-form-label fw-bold">ไฟล์ข้อเสนอแนะ</label>
-                        <div class="col-sm-9">
-                            <input type="file" class="form-control" name="suggestionFile" id="suggestionFile"
-                                rows="20">
-                            </ด>
-                        </div>
-                    </div> --}}
                     <div class=" card-footer d-grid gap-2 d-md-flex justify-content-md-center">
 
 

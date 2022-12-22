@@ -39,27 +39,30 @@
                     </thead>
                     <tbody>
                         @php
-                            $i=1
+                            $i = 1;
                         @endphp
                         @foreach ($data_send as $items)
                             <tr>
                                 <th>{{ $i++ }}</th>
                                 <td>{{ $items->research_th }}</td>
                                 <td>
-                                    <a href="{{ route('view-direc1',$items->research_id) }}" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i></a>
+                                    <a href="{{ route('view-direc1', [$items->research_id]) }}" class="btn btn-secondary"><i
+                                            class="fa-solid fa-circle-info"></i></a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('view-direc2',$items->research_id) }}" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i></a>
+                                    <a href="{{ route('view-direc2', [$items->research_id]) }}" class="btn btn-secondary"><i
+                                            class="fa-solid fa-circle-info"></i></a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('view-direc3',$items->research_id) }}" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i></a>
+                                    <a href="{{ route('view-direc3', [$items->research_id]) }}" class="btn btn-secondary"><i
+                                            class="fa-solid fa-circle-info"></i></a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('send-detail',$items->research_id) }}" class="btn btn-secondary">รายละเอียด</a>
+                                    <a href="{{ route('send-detail', $items->research_id) }}"
+                                        class="btn btn-secondary">รายละเอียด</a>
                                 </td>
                                 <td>
-                                    <a {{-- href="{{ route('view-refer', $items->research_id) }}" --}} class="btn btn-info"
-                                        {{-- data-bs-toggle="modal" data-bs-target="#refer" --}}>
+                                    <a href="{{ route('sum-feed',$items->research_id) }}" class="btn btn-info">
                                         <i class="fa-solid fa-plus"></i>
                                         สรุปข้อเสนอแนะ
                                     </a>

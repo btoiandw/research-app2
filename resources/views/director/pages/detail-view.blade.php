@@ -123,11 +123,11 @@
                 </div>
                 <div class=" card-footer d-grid gap-2 d-md-flex justify-content-md-center">
                     <a href="{{ route('director.dashboard') }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
-                    <form action="" method="post">
+                    {{-- <form action="" method="post">
                         <input type="hidden" name="research_id" id="research_id" value="{{ $data[0]->research_id }}">
                         <a href="{{ route('add-feed-pages',$data[0]->research_id) }}" class="btn btn-info"
                             type="button">เพิ่มข้อเสนอแนะ</a>
-                    </form>
+                    </form> --}}
                 </div>
             </div>
         </div>

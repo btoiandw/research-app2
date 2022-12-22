@@ -45,7 +45,7 @@
                         </thead>
                         <tbody>
                             @php
-                            $i = 1;
+                                $i = 1;
                             @endphp
                             @foreach ($list_res as $items)
                                 <tr>
@@ -63,7 +63,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('view-datail',$items->research_id) }}" class="btn btn-secondary">
+                                        <a href="{{ route('view-datail', $items->research_id) }}" class="btn btn-secondary">
                                             รายละเอียด
                                         </a>
                                     </td>
@@ -72,7 +72,7 @@
                                         @if ($items->research_status == 0)
                                             รอการตรวจสอบ
                                         @elseif ($items->research_status == 1)
-                                            ไม่ผ่าน/ปรับปรุงครั้งที่ 1
+                                            <a href="" class="btn btn-warning">ไม่ผ่าน/ปรับปรุงครั้งที่ 1</a>
                                         @elseif ($items->research_status == 2)
                                             ไม่ผ่าน/ปรับปรุงครั้งที่ 2
                                         @elseif ($items->research_status == 3)
@@ -89,16 +89,28 @@
                                     </td>
                                     <td>
                                         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                                            <a href="" class="btn btn-warning me-md-1" type="button">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                                แก้ไข
-                                            </a>
-                                            <a href="" class="btn btn-danger" type="button">
-                                                <i class="fa-solid fa-xmark"></i>
-                                                ยกเลิก
-                                            </a>
+                                            @if ($items->research_status != 0 && $items->research_status != 6)
+                                                <a href="" class="btn btn-danger" type="button">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                    ยกเลิก
+                                                </a>
+                                            @else
+                                                <a href="" class="btn btn-warning me-md-1" type="button">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                    แก้ไข
+                                                </a>
+                                                <a href="" class="btn btn-danger" type="button">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                    ยกเลิก
+                                                </a>
+                                            @endif
+
                                         </div>
                                     </td>
+
+                                    @if ($items->research_status == 4)
+                                        <a href="" class="btn btn-primary">สัญญาทุน</a>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

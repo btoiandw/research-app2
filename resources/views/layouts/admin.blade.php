@@ -145,7 +145,8 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link nav-text" href="{{ route('admin.dashboard') }}">{{ __('หน้าหลัก') }}</a>
+                                <a class="nav-link nav-text"
+                                    href="{{ route('admin.dashboard') }}">{{ __('หน้าหลัก') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link nav-text" href="{{ route('admin.dashboard') }}">{{ __('แอดมิน') }}</a>
@@ -158,7 +159,8 @@
                                     {{-- <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">หน้าหลัก</a></li> --}}
                                     <li><a class="dropdown-item" href="#">แหล่งทุน</a></li>
                                     <li><a class="dropdown-item" href="#">รายการส่งมอบ</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('send-director-pages') }}">โครงร่างที่เสนอพิจารณา</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('send-director-pages') }}">โครงร่างที่เสนอพิจารณา</a></li>
                                     <li><a class="dropdown-item" href="#">สัญญาทุนวิจัย</a></li>
                                     <li><a class="dropdown-item" href="#">รายงานงานวิจัย</a></li>
                                     <li><a class="dropdown-item" href="#">รายงานสรุปทุนวิจัย</a></li>

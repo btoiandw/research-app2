@@ -16,6 +16,8 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
+use DateTime;
 
 class ResearchController extends Controller
 {
@@ -219,8 +221,8 @@ class ResearchController extends Controller
                             for ($i = 0; $i < sizeof($rc); $i++) {
                                 DB::insert(
                                     'insert into send_research (research_id,id,pc) values (?, ?,?)',
-                                    $ur=
-                                    [$id_re, $result[$i], $request->pc[$i]]
+                                    $ur =
+                                        [$id_re, $result[$i], $request->pc[$i]]
                                 );
                             }
 
@@ -320,5 +322,103 @@ class ResearchController extends Controller
     public function destroy(Research $research)
     {
         //
+    }
+
+
+    public function sumFeedDirec($id)
+    {
+        $data_sum = DB::table('research')
+            ->where('research_id', '=', $id)
+            ->orderByDesc('date_upload_file')
+            ->get();
+        //dd($data_sum[0]);
+        return view('admin.pages.sum-feed-director', ['list' => $data_sum]);
+    }
+
+    public function addSumFeed(Request $request)
+    {
+        $research_id = $request->research_id;
+        $data = DB::table('research')
+            ->where('research_id', '=', $research_id)
+            //->update(['research_summary_feedback'=>$request->suggestion,'research_status'=>'1'])
+            ->get();
+        $c_research = $data->count();
+        $sumfeed = $data[0]->research_summary_feedback;
+
+        /*
+        0=รอตรวจสอบ, 
+        1=ไม่ผ่าน/ปรับปรุงครั้งที่ 1, 
+        2=ไม่ผ่าน/ปรับปรุงครั้งที่ 2, 
+        3=ไม่ผ่าน/ปรับปรุงครั้งที่ 3, 
+        4=ผ่าน, 
+        5=ยกเลิก,
+        6=รอการตวจสอบจากคระกรรมการ,
+        7=ไม่ผ่านการตรวจสอบโดยแอดมิน 
+        */
+        if ($c_research == 1) {
+            $status = "1";
+        } elseif ($c_research == 2) {
+            $status = "2";
+        } elseif ($c_research == 3) {
+            $status = "3";
+        } elseif ($c_research == 4) {
+            $status = "ไม่ผ่าน/ปรับปรุงครั้งที่ 4";
+        } elseif ($c_research == 5) {
+            $status = "ไม่ผ่าน/ปรับปรุงครั้งที่ 5";
+        }
+        $filefeed = $request->file('suggestionFile');
+        $reYear = $data[0]->year_research;
+
+        if ($request->AssessmentResults == "ไม่ผ่าน") {
+            if ($request->suggestion != '') {
+                $feed = $request->suggestion;
+            } else {
+                $feed = null;
+            }
+            if ($filefeed != '') {
+                $file_name = $filefeed->getClientOriginalName();
+                $eNamep = explode('.', $file_name);
+                $infop = end($eNamep);
+                $file = $research_id . "_" . $status . "." . $infop;
+                $path = 'uploads/research/' . $reYear . '/' . $research_id; //path save file
+
+                /* $filefeed->move($path, $file);*/
+                $feed_file = $file;
+            } else {
+                $feed_file = null;
+            }
+
+            if ($request->submit = "ยืนยัน") {
+                DB::table('research')
+                    ->where('research_id', $research_id)
+                    ->update([
+                        'research_summary_feedback' => $feed,
+                        'summary_feedback_file' => $feed_file,
+                        'research_status' => $status
+                    ]);
+                return redirect()->route('send-director-pages');
+            } elseif ($request->submit = "บันทึก") {
+                DB::table('research')
+                    ->where('research_id', $research_id)
+                    ->update([
+                        'research_summary_feedback' => $feed,
+                        'summary_feedback_file' => $feed_file,
+                    ]);
+                return redirect()->route('send-director-pages');
+            }
+        }
+
+        if ($request->AssessmentResults == "ผ่าน") {
+            DB::table('research')
+                ->where('research_id', $research_id)
+                ->update([
+
+                    'research_status' => '4'
+                ]);
+            return redirect()->route('send-director-pages');
+        }
+        dd($request->all(), $data[0], $feed, $feed_file, $status);
+        //DB::update('update research set research_summary_feedback = ?,research_status=? where research_id = ?', [$request->suggestion,'1',$$request->research_id]);
+
     }
 }

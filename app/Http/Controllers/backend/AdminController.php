@@ -231,12 +231,26 @@ class AdminController extends Controller
     public function sendDirectorView()
     {
         $data_send = DB::table('tb_feedback')
-            ->select('tb_feedback.*', 'research.*', 'users.*')
+            ->select('tb_feedback.*', 'research.*')
             ->join('research', 'tb_feedback.research_id', '=', 'research.research_id')
-            ->join('users', 'tb_feedback.id', '=', 'users.id')
+            ->where('research.research_status','=','6')
             ->groupBy('tb_feedback.research_id')
             ->get();
-        return view('admin.pages.re-send-director', ['data_send' => $data_send]);
+
+        for ($i = 0; $i < sizeof($data_send); $i++) {
+            $id[$i] = $data_send[$i]->research_id;
+            $data_l[$i] = DB::table('tb_feedback')
+                            ->where('research_id', '=', $id[$i])
+                            ->get();
+        }
+        /* for ($j = 0; $j < sizeof($data_l); $j++) {
+            $data_u = DB::table('tb_feedback')
+                ->where('research_id', '=', $data_l[$j]->research_id)
+                ->get();
+        } */
+
+        //dd($data_send, $data_l/* , $data_u */);
+        return view('admin.pages.re-send-director', ['data_send' => $data_send, 'data_u' => $data_l]);
     }
 
     public function sendDetail($id)

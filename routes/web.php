@@ -51,11 +51,15 @@ Route::group([
     Route::post('refer/add', 'AdminController@addRefer')->name('refer-add');
     Route::post('director/add', 'AdminController@addDirector')->name('director-add');
 
+    Route::get('sum-feed/{id}','ResearchController@sumFeedDirec')->name('sum-feed');
+    Route::post('add-sum-feed/admin','ResearchController@addSumFeed')->name('add-sum-feed');
     Route::get('re-send-director', 'AdminController@sendDirectorView')->name('send-director-pages');
     Route::get('view-director-feedback-1/{id}', 'FeedbackController@direcFeed1')->name('view-direc1');
     Route::get('view-director-feedback-2/{id}', 'FeedbackController@direcFeed2')->name('view-direc2');
     Route::get('view-director-feedback-3/{id}', 'FeedbackController@direcFeed3')->name('view-direc3');
     Route::get('send-detail/{id}', 'AdminController@sendDetail')->name('send-detail');
+
+    Route::get('admin/view-file-feed/{id}/{uid}','FeedbackController@viewFileFeed')->name('view-file-feed-admin');
 });
 
 Route::group([
@@ -81,6 +85,10 @@ Route::group([
     Route::get('pages-feedback/{id}', 'DirectorController@addFeedback')->name('add-feed-pages');
     Route::post('add-feed', 'DirectorController@addFeed')->name('add-feed');
     Route::get('edit-feed/{id}', 'DirectorController@editFeed')->name('edit-feed');
+    Route::post('update-feed', 'DirectorController@updateFeed')->name('update-feed');
+    Route::get('view-feed/{id}','DirectorController@viewFeed')->name('view-feed');
+
     Route::get('directorview/pdf/{id}', 'DirectorController@viewFilePDF')->name('directorview-pdf');
     Route::get('directorview/word/{id}', 'DirectorController@viewFileWord')->name('directorview-word');
+    Route::get('director/view-file-feed/{id}/{name}','DirectorController@viewFileFeed')->name('view-file-feed');
 });

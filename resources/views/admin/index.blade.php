@@ -65,7 +65,7 @@
                                         @if ($items->research_status == 0)
                                             รอตรวจสอบ
                                         @elseif ($items->research_status == 1)
-                                            ไม่ผ่าน/ปรับปรุงครั้งที่ 1
+                                            <a href="" class="btn btn-warning">ไม่ผ่าน/ปรับปรุงครั้งที่ 1</a>
                                         @elseif ($items->research_status == 2)
                                             ไม่ผ่าน/ปรับปรุงครั้งที่ 2
                                         @elseif ($items->research_status == 3)
@@ -81,17 +81,27 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('view-refer', $items->research_id) }}" class="btn btn-info"
-                                            {{-- data-bs-toggle="modal" data-bs-target="#refer" --}}>
-                                            <i class="fa-solid fa-plus"></i>
-                                            ข้อเสนอแนะ
-                                        </a>
+                                        @if ($items->research_status != 0)
+                                            <button class="btn btn-secondary"><i
+                                                    class="fa-solid fa-circle-info"></i></button>
+                                        @else
+                                            <a href="{{ route('view-refer', $items->research_id) }}" class="btn btn-info"
+                                                {{-- data-bs-toggle="modal" data-bs-target="#refer" --}}>
+                                                <i class="fa-solid fa-plus"></i>
+                                                ข้อเสนอแนะ
+                                            </a>
+                                        @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('view-director', $items->research_id) }}" class="btn btn-success">
-                                            <i class="fa-solid fa-plus"></i>
-                                            กรรมการ
-                                        </a>
+                                        @if ($items->research_status != 0)
+                                        @else
+                                            <a href="{{ route('view-director', $items->research_id) }}"
+                                                class="btn btn-success">
+                                                <i class="fa-solid fa-plus"></i>
+                                                กรรมการ
+                                            </a>
+                                        @endif
+
                                     </td>
                                 </tr>
                             @endforeach

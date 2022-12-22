@@ -23,6 +23,7 @@
         </div>
 
         <div class="row justify-content-center">
+        
             <div class=" card">
                 <table class="table table-hover text-center justify-content-center" id='empTable'>
                     <thead>
@@ -57,9 +58,8 @@
                                         <a href="{{ route('edit-feed', $items->research_id) }}"
                                             class="btn btn-warning">ประเมินต่อ</a>
                                     @elseif ($items->status == 'ตรวจสอบแล้ว')
-                                        <a href="" class="btn btn-success">ดู</a>
+                                        <a href="{{ route('view-feed',$items->research_id) }}" class="btn btn-success">ดู</a>
                                     @endif
-
                                 </td>
                             </tr>
                         @endforeach

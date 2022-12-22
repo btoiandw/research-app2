@@ -119,8 +119,18 @@
                                             echo '<td scope="col" align="left">' . $data[$i]->name . '</td>';
                                             echo '<td scope="col" align="center">' . $data[$i]->date_send_referess . '</td>';
                                             echo '<td scope="col" align="center">' . $data[$i]->Date_feedback_research . '</td>';
-                                            echo '<td scope="col" align="center">
-                                                <button type="button" class="btn btn-warning">แกไข</button>
+                                            echo '<td scope="col" align="center">';
+                                            if ($i == 0) {
+                                                echo '<a href=' . route('view-direc1', $data[0]->research_id) . ' class="btn btn-success" name="view" >ดู</a>';
+                                            }
+                                            if ($i == 1) {
+                                                echo '<a href=' . route('view-direc2', $data[1]->research_id) . ' class="btn btn-success" name="view" >ดู</a>';
+                                            }
+                                            if ($i == 2) {
+                                                echo '<a href=' . route('view-direc3', $data[2]->research_id) . ' class="btn btn-success" name="view" >ดู</a>';
+                                            }
+                                        
+                                            echo '
                                                 </td>';
                                             echo '</tr>';
                                         }
@@ -128,18 +138,10 @@
                                 </tbody>
                             </table>
                         </div>
-
-
                     </div>
-
                 </div>
                 <div class=" card-footer d-grid gap-2 d-md-flex justify-content-md-center">
-                    {{-- <form action="" method="post">
-                        <input type="hidden" name="research_id" id="research_id" value="{{ $list[0]->research_id }}">
-                        <input class="btn btn-warning" type="submit" name="submit" value="บันทึก">
-                        <input class="btn btn-success" type="submit" name="submit" value="ยืนยัน">
-                    </form> --}}
-                    <a href="{{ url()->previous() }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
+                    <a href="{{ route('send-director-pages') }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
                 </div>
             </div>
         </div>

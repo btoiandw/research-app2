@@ -29,26 +29,43 @@
                 <div class="card-header" style="background-color: #fff;font-size:20px;">
                     กรรมการท่านที่ 3 
                 </div>
-                <div class=" card-body">
-                    {{ $data_user[0]->name }}
+                <div class=" card-body">{{ $data_user[0]->name }}
                     <div class="mb-3 row">
                         <label class="col-sm-3 col-form-label fw-bold">ชื่อโครงร่างงานวิจัยภาษาไทย</label>
                         <div class="col-sm-9">
-                            <textarea type="text" readonly class="form-control-plaintext" value="">{{ $data[2]->research_th }}</textarea>
+                            <textarea type="text" readonly class="form-control-plaintext" value="">{{ $data[0]->research_th }}</textarea>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label class="col-sm-3 col-form-label fw-bold">ผลการประเมิน</label>
-                        <div class="col-sm-9">
-                            <input type="text" readonly class="form-control-plaintext" value="">
+                        <label class="col-sm-2 col-form-label fw-bold">ผลการประเมิน</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class=" form-control-plaintext" name="Assessment_result"
+                                id="Assessment_result" value="{{ $data_user[0]->Assessment_result }}">
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <label class="col-sm-3 col-form-label fw-bold">ข้อเสนอแนะ</label>
-                        <div class="col-sm-9">
-                            <input type="text" readonly class="form-control-plaintext" value="">
+                    @if ($data_user[0]->feedback != '')
+                        <div class="mb-3 row ">
+                            <label class="col-sm-2 col-form-label fw-bold">ข้อเสนอแนะ</label>
+                            <div class="col-sm-10">
+                                <textarea readonly class=" form-control-plaintext" name="suggestion" >{{ $data_user[0]->feedback }}</textarea>
+                            </div>
                         </div>
-                    </div>
+                    @elseif ($data_user[0]->suggestionFile != '')
+                        <div class="mb-3 row ">
+                            <label class="col-sm-2 col-form-label fw-bold">ข้อเสนอแนะ</label>
+                            <div class="col-sm-10">
+                                <a href="{{ route('view-file-feed-admin',[$data[0]->research_id,$data_user[0]->id]) }}" class="btn btn-warning" name="suggestionFile"
+                                    target="_blank">ดูไฟล์</a>
+                            </div>
+                        </div>
+                    @else
+                        <div class="mb-3 row ">
+                            <label class="col-sm-2 col-form-label fw-bold">ข้อเสนอแนะ</label>
+                            <div class="col-sm-10">
+                                <input type="text" class=" form-control-plaintext" readonly value="ไม่มีข้อเสนอแนะ">
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <div class=" card-footer d-grid gap-2 d-md-flex justify-content-md-center" style="background-color: #fff">
                     <a href="{{ url()->previous() }}" class="btn btn-danger" type="button">ย้อนกลับ</a>
