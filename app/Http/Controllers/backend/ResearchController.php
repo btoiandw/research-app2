@@ -421,4 +421,18 @@ class ResearchController extends Controller
         //DB::update('update research set research_summary_feedback = ?,research_status=? where research_id = ?', [$request->suggestion,'1',$$request->research_id]);
 
     }
+
+
+    public function cancleResearch($id)
+    {
+        $data = DB::table('research')
+            ->where('research_id', '=', $id)
+            ->get();
+        $data_u = DB::table('research')
+            ->where('research_id', '=', $id)
+            ->update([
+                'research_status' => '5'
+            ]);
+        return redirect()->route('user.dashboard');
+    }
 }

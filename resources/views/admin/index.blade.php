@@ -82,8 +82,7 @@
                                     </td>
                                     <td>
                                         @if ($items->research_status != 0)
-                                            <button class="btn btn-secondary"><i
-                                                    class="fa-solid fa-circle-info"></i></button>
+                                           
                                         @else
                                             <a href="{{ route('view-refer', $items->research_id) }}" class="btn btn-info"
                                                 {{-- data-bs-toggle="modal" data-bs-target="#refer" --}}>

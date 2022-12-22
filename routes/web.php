@@ -72,6 +72,8 @@ Route::group([
     Route::resource('research', 'ResearchController');
     Route::get('userview/pdf/{id}', [UserController::class, 'viewFilePDF'])->name('userview-pdf');
     Route::get('userview/word/{id}', [UserController::class, 'viewFileWord'])->name('userview-word');
+
+    Route::get('user/cancle-research/{id}','ResearchController@cancleResearch')->name('cancle-research-user');
     //Route::post('insert-research',[UserController::class,'insertResearch'])->name('insert-research');
 });
 

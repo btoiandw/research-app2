@@ -88,29 +88,39 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                                            @if ($items->research_status != 0 && $items->research_status != 6)
-                                                <a href="" class="btn btn-danger" type="button">
-                                                    <i class="fa-solid fa-xmark"></i>
-                                                    ยกเลิก
-                                                </a>
-                                            @else
-                                                <a href="" class="btn btn-warning me-md-1" type="button">
-                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                    แก้ไข
-                                                </a>
-                                                <a href="" class="btn btn-danger" type="button">
-                                                    <i class="fa-solid fa-xmark"></i>
-                                                    ยกเลิก
-                                                </a>
-                                            @endif
+                                        @if ($items->research_status != 5)
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                                @if ($items->pc >= 50)
+                                                    @if ($items->research_status != 0 && $items->research_status != 6)
+                                                        <a href="{{ route('cancle-research-user', $items->research_id) }}"
+                                                            class="btn btn-danger" type="button">
+                                                            <i class="fa-solid fa-xmark"></i>
+                                                            ยกเลิก
+                                                        </a>
+                                                    @else
+                                                        <a href="" class="btn btn-warning me-md-1" type="button">
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                            แก้ไข
+                                                        </a>
+                                                        <a href="{{ route('cancle-research-user', $items->research_id) }}"
+                                                            class="btn btn-danger" type="button">
+                                                            <i class="fa-solid fa-xmark"></i>
+                                                            ยกเลิก
+                                                        </a>
+                                                    @endif
+                                                @else
+                                                @endif
+                                            </div>
+                                        @else
+                                        @endif
 
-                                        </div>
                                     </td>
 
-                                    @if ($items->research_status == 4)
-                                        <a href="" class="btn btn-primary">สัญญาทุน</a>
-                                    @endif
+                                    {{-- @if ($items->research_status == 4)
+                                        <td>
+                                            <a href="" class="btn btn-primary">สัญญาทุน</a>
+                                        </td>
+                                    @endif --}}
                                 </tr>
                             @endforeach
                         </tbody>
