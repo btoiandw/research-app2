@@ -75,6 +75,11 @@ Route::group([
 
     Route::get('user/cancle-research/{id}','ResearchController@cancleResearch')->name('cancle-research-user');
     //Route::post('insert-research',[UserController::class,'insertResearch'])->name('insert-research');
+
+    /* ปรับปรุงแก้ไข*/
+    Route::get('user/view/edit-1/{id}','ResearchController@viewEdit1')->name('view-edit1');
+    Route::get('view-file-feed/{id}','ResearchController@viewFileFeed1')->name('view-file-feed-1');
+    Route::get('modify1/{id}',[UserController::class,'modifyPages1'])->name('modify-view-1');
 });
 
 Route::group([

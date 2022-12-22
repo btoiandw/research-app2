@@ -382,7 +382,7 @@ class ResearchController extends Controller
                 $file = $research_id . "_" . $status . "." . $infop;
                 $path = 'uploads/research/' . $reYear . '/' . $research_id; //path save file
 
-                /* $filefeed->move($path, $file);*/
+                $filefeed->move($path, $file);
                 $feed_file = $file;
             } else {
                 $feed_file = null;
@@ -425,14 +425,38 @@ class ResearchController extends Controller
 
     public function cancleResearch($id)
     {
-        $data = DB::table('research')
+        /* DB::table('research')
             ->where('research_id', '=', $id)
-            ->get();
-        $data_u = DB::table('research')
+            ->get(); */
+        DB::table('research')
             ->where('research_id', '=', $id)
             ->update([
                 'research_status' => '5'
             ]);
         return redirect()->route('user.dashboard');
+    }
+
+    public function viewEdit1($id)
+    {
+        $data = DB::table('research')
+            ->where('research_id', $id)
+            //->and('research_status','=','1')
+            ->orWhere('research_status', '=', '1')
+            ->get();
+
+        return view('user.pages.1.modify-r1', ['data' => $data]);
+        //dd($id, $data[0]);
+    }
+
+    public function viewFileFeed1($id)
+    {
+        $p = DB::table('research')->select('*')->where('research_id', '=', $id)->get();
+        $path = 'uploads/research/' . $p[0]->year_research . '/' . $p[0]->research_id;
+        //$u = Auth::user()->id;
+
+        $file_name = $p[0]->summary_feedback_file;
+        //dd($d);
+        $file = $path . '/' . $file_name;
+        return response()->file($file);
     }
 }

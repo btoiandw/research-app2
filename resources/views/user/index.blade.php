@@ -72,19 +72,19 @@
                                         @if ($items->research_status == 0)
                                             รอการตรวจสอบ
                                         @elseif ($items->research_status == 1)
-                                            <a href="" class="btn btn-warning">ไม่ผ่าน/ปรับปรุงครั้งที่ 1</a>
+                                            <a href="{{ route('view-edit1',$items->research_id) }}" class="btn btn-warning">ไม่ผ่าน/ปรับปรุงครั้งที่ 1</a>
                                         @elseif ($items->research_status == 2)
-                                            ไม่ผ่าน/ปรับปรุงครั้งที่ 2
+                                            <a href="" class="btn btn-warning">ไม่ผ่าน/ปรับปรุงครั้งที่ 2</a>
                                         @elseif ($items->research_status == 3)
-                                            ไม่ผ่าน/ปรับปรุงครั้งที่ 3
+                                            <a href="" class="btn btn-warning">ไม่ผ่าน/ปรับปรุงครั้งที่ 3</a>
                                         @elseif ($items->research_status == 4)
-                                            ผ่าน
+                                            <a href="" class="btn btn-warning">ผ่าน</a>
                                         @elseif ($items->research_status == 5)
-                                            ยกเลิก
+                                            <a href="" class="btn btn-warning">ยกเลิก</a>
                                         @elseif ($items->research_status == 6)
                                             รอการตรวจสอบ
                                         @elseif ($items->research_status == 7)
-                                            ไม่ผ่านการประเมินโดยแอดมิน
+                                            <a href="" class="btn btn-warning">ไม่ผ่านการประเมินโดยแอดมิน</a>
                                         @endif
                                     </td>
                                     <td>

@@ -33,12 +33,4 @@ class Research extends Model
         'year_research'
     ];
 
-    public function user()
-    {
-        return $this->belongsToMany(User::class);
-    }
-    public function source()
-    {
-        return $this->hasOne(ResearchSource::class, 'research_source_id', 'research_source_id');
-    }
 }

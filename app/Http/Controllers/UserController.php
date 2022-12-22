@@ -64,6 +64,19 @@ class UserController extends Controller
         return response()->file($file);
     }
 
+    public function modifyPages1($id)
+    {
+        $data = DB::table('send_research')
+            ->select('send_research.*', 'research.*', 'users.*', 'faculties.*', 'research_sources.*')
+            ->join('research', 'send_research.research_id', '=', 'research.research_id')
+            ->join('users', 'send_research.id', '=', 'users.id')
+            ->join('faculties', 'users.organization_id', '=', 'faculties.id')
+            ->join('research_sources', 'research.research_source_id', '=', 'research_sources.research_sources_id')
+            ->where('send_research.research_id', '=', $id)
+            ->get();
+       // dd($data[0]);
+        return view('user.pages.1.add-modify1', ['data' => $data]);
+    }
     /* public function create_research(){
         return 
     } */

@@ -19,9 +19,4 @@ class ResearchSource extends Model
         'type_research_source',
         'ex_research',
     ];
-
-    public function research()
-    {
-        return $this->belongsTo(Research::class, 'research_source_id', 'research_source_id');
-    }
 }
