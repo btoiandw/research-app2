@@ -272,4 +272,14 @@ class AdminController extends Controller
             ->get();
         return view('admin.datail.detail-send', ['id' => $id, 'data' => $data, 'data_send' => $data_send]);
     }
+
+
+    public function viewFeedforModify1($id){
+        $data_feed=DB::table('tb_feedback')
+                    ->select('tb_feedback.*','research.*')
+                    ->join('research','tb_feedback.research_id','=','research.research_id')
+                    ->where('tb_feedback.research_id','=',$id)
+                    ->get();
+        dd($id,$data_feed);
+    }
 }

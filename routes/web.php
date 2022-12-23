@@ -59,6 +59,7 @@ Route::group([
     Route::get('view-director-feedback-3/{id}', 'FeedbackController@direcFeed3')->name('view-direc3');
     Route::get('send-detail/{id}', 'AdminController@sendDetail')->name('send-detail');
 
+    Route::get('view-feed/for-modify/{id}','AdminController@viewFeedforModify1')->name('view-Feed-for-Modify1');
     Route::get('admin/view-file-feed/{id}/{uid}','FeedbackController@viewFileFeed')->name('view-file-feed-admin');
 });
 
