@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use DateTime;
 
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
 {
@@ -240,11 +241,19 @@ class AdminController extends Controller
         $data_r = DB::table('research')
             ->where('research.research_status', '=', '6')
             ->get();
-        for ($i = 0; $i < sizeof($data_r); $i++) {
-            $data_l[$i] = DB::table('tb_feedback')
-                ->where('research_id', '=', $data_r[$i]->research_id)
-                ->get();
+
+        if (count($data_r) > 0) {
+            for ($i = 0; $i < sizeof($data_r); $i++) {
+                $data_l[$i] = DB::table('tb_feedback')
+                    ->where('research_id', '=', $data_r[$i]->research_id)
+                    ->get();
+            }
+            return view('admin.pages.re-send-director', ['data_send' => $data_send, 'data_l' => $data_l[0]]);
+        } else {
+            Alert::error('ไม่พบข้อมูลการเสนอโครงร่างงานวิจัยให้แก่คณะกรรมการพิจารณา');
+            return redirect()->route('admin.dashboard');
         }
+
 
         /* for ($j = 0; $j < sizeof($data_l); $j++) {
             $data_u = DB::table('tb_feedback')
@@ -253,7 +262,7 @@ class AdminController extends Controller
         } */
 
         //dd($data_send, $data_r, $data_l[0]/* , $data_u */);
-        return view('admin.pages.re-send-director', ['data_send' => $data_send, 'data_l' => $data_l[0]]);
+
     }
 
     public function sendDetail($id)
@@ -274,12 +283,14 @@ class AdminController extends Controller
     }
 
 
-    public function viewFeedforModify1($id){
-        $data_feed=DB::table('tb_feedback')
-                    ->select('tb_feedback.*','research.*')
-                    ->join('research','tb_feedback.research_id','=','research.research_id')
-                    ->where('tb_feedback.research_id','=',$id)
-                    ->get();
-        dd($id,$data_feed);
+    public function viewFeedforModify1($id)
+    {
+        $data_feed = DB::table('tb_feedback')
+            ->select('tb_feedback.*', 'research.*')
+            ->join('research', 'tb_feedback.research_id', '=', 'research.research_id')
+            ->where('tb_feedback.research_id', '=', $id)
+            ->get();
+        //dd($id, $data_feed);
+        return view('admin.pages.view-modify.view1',['data_feed'=>$data_feed]);
     }
 }

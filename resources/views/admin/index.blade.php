@@ -65,7 +65,8 @@
                                         @if ($items->research_status == 0)
                                             รอตรวจสอบ
                                         @elseif ($items->research_status == 1)
-                                            <a href="{{ route('view-Feed-for-Modify1',$items->research_id) }}" class="btn btn-warning">ไม่ผ่าน/ปรับปรุงครั้งที่ 1</a>
+                                            <a href="{{ route('view-Feed-for-Modify1', $items->research_id) }}"
+                                                class="btn btn-warning">ไม่ผ่าน/ปรับปรุงครั้งที่ 1</a>
                                         @elseif ($items->research_status == 2)
                                             ไม่ผ่าน/ปรับปรุงครั้งที่ 2
                                         @elseif ($items->research_status == 3)
@@ -82,7 +83,6 @@
                                     </td>
                                     <td>
                                         @if ($items->research_status != 0)
-                                           
                                         @else
                                             <a href="{{ route('view-refer', $items->research_id) }}" class="btn btn-info"
                                                 {{-- data-bs-toggle="modal" data-bs-target="#refer" --}}>
